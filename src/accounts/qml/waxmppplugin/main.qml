@@ -331,6 +331,7 @@ PageStackWindow {
         ListElement{name: "Yemen"; cc:"+967"}
         ListElement{name: "Zambia"; cc:"+260"}
         ListElement{name: "Zimbabwe"; cc:"+263"}
+        ListElement{name: "Israel"; cc: "+972"}
     }
 
 
