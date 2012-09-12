@@ -23,14 +23,52 @@ class Contact(Model):
 		self.name = "";
 		self.picture = "none";
 		self.alphabet = "";
+		self.pushname = "";
 	
 	def setRealTimeData(self,name,picture):
+		if name == '':
+			return
 		self.name = name;
 		self.picture = picture;
-		self.alphabet = name[0];
+		self.alphabet = name[0].upper();
+		self.pushname = self.pushname
 		
 		self.modelData.append("name");
 		self.modelData.append("picture");
 		self.modelData.append("alphabet");
+		self.modelData.append("pushname");
 		
-	
+
+	def setRealTimeDataPush(self,name,pushname):
+		if name == '':
+			return
+		self.name = name;
+		self.picture = self.picture;
+		self.alphabet = name[0].upper();
+		self.pushname = pushname
+
+		self.modelData.append("name");
+		self.modelData.append("picture");
+		self.modelData.append("alphabet");
+		self.modelData.append("pushname");
+
+	def getOrCreateContactByJid(self,jid):
+		
+		contact = self.findFirst({'jid':jid})
+		
+		if not contact:
+			contact = self.create()
+			contact.setData({"jid":jid,"number":jid.split('@')[0]})
+			contact.save()
+		
+		return contact
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
