@@ -4,7 +4,7 @@
     <message>
         <location filename="../UI/Groups/AddContacts.qml" line="175"/>
         <source>Add contacts</source>
-        <translation>اضف جهات إتصال</translation>
+        <translation>Añadir Contactos</translation>
     </message>
     <message>
         <location filename="../UI/Groups/AddContacts.qml" line="207"/>
