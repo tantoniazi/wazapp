@@ -1,0 +1,3224 @@
+diff -urN client//constants.py wazapp//constants.py
+--- client//constants.py	2012-10-07 13:17:42.495559539 -0300
++++ wazapp//constants.py	2012-09-20 09:16:39.000000000 -0300
+@@ -33,8 +33,6 @@
+ 	CACHE_PATH = os.path.expanduser('~/.cache/wazapp');
+ 	CACHE_CONTACTS = CACHE_PATH+"/contacts"
+ 	CACHE_PROFILE = CACHE_PATH+"/profile"
+-	
+-	CACHE_CONV = STORE_PATH+"/exported_conversations"
+ 
+ 	THUMBS_PATH = os.path.expanduser('/home/user/.thumbnails');
+ 		
+Los archivos binarios client//i18n/en.qm y wazapp//i18n/en.qm son distintos
+diff -urN client//i18n/en.ts wazapp//i18n/en.ts
+--- client//i18n/en.ts	2012-10-07 13:17:42.495559539 -0300
++++ wazapp//i18n/en.ts	2012-09-19 10:02:52.000000000 -0300
+@@ -4,22 +4,22 @@
+ <context>
+     <name>AddContacts</name>
+     <message>
+-        <location filename="../UI/Groups/AddContacts.qml" line="184"/>
++        <location filename="../UI/Groups/AddContacts.qml" line="175"/>
+         <source>Add contacts</source>
+         <translation>Add contacts</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/AddContacts.qml" line="216"/>
++        <location filename="../UI/Groups/AddContacts.qml" line="207"/>
+         <source>Quick search</source>
+         <translation>Quick search</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/AddContacts.qml" line="283"/>
++        <location filename="../UI/Groups/AddContacts.qml" line="274"/>
+         <source>No contacts yet. Try to resync</source>
+         <translation>No contacts yet. Try to resync</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/AddContacts.qml" line="341"/>
++        <location filename="../UI/Groups/AddContacts.qml" line="332"/>
+         <source>Done</source>
+         <translation>Done</translation>
+     </message>
+@@ -106,49 +106,57 @@
+         <translation>Fetching group subject</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="104"/>
++        <location filename="../UI/Chats/Chat.qml" line="99"/>
+         <source>You</source>
+         <translation>You</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="284"/>
+-        <source>%1 joined the group</source>
+-        <translation>%1 joined the group</translation>
++        <location filename="../UI/Chats/Chat.qml" line="273"/>
++        <source>%1 has join the group</source>
++        <translation>%1 has join the group</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="285"/>
+-        <source>%1 left the group</source>
+-        <translation>%1 left the group</translation>
++        <location filename="../UI/Chats/Chat.qml" line="274"/>
++        <source>%1 has left the group</source>
++        <translation>%1 has left the group</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="287"/>
+-        <location filename="../UI/Chats/Chat.qml" line="288"/>
+-        <source>%1 changed the subject to %2</source>
+-        <translation>%1 changed the subject to %2</translation>
++        <location filename="../UI/Chats/Chat.qml" line="277"/>
++        <source>%1 has changed the subject to %2</source>
++        <translation>%1 has changed the subject to %2</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="290"/>
+-        <location filename="../UI/Chats/Chat.qml" line="291"/>
+-        <source>%1 changed the group picture</source>
+-        <translation>%1 changed the group picture</translation>
++        <location filename="../UI/Chats/Chat.qml" line="276"/>
++        <source>%1 have changed the subject to %2</source>
++        <translation>%1 have changed the subject to %2</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="292"/>
++        <location filename="../UI/Chats/Chat.qml" line="279"/>
++        <source>%1 have changed the group picture</source>
++        <translation>%1 have changed the group picture</translation>
++    </message>
++    <message>
++        <location filename="../UI/Chats/Chat.qml" line="280"/>
++        <source>%1 has changed the group picture</source>
++        <translation>%1 has changed the group picture</translation>
++    </message>
++    <message>
++        <location filename="../UI/Chats/Chat.qml" line="281"/>
+         <source>(no messages)</source>
+         <translation>(no messages)</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="303"/>
++        <location filename="../UI/Chats/Chat.qml" line="292"/>
+         <source>is writing a message...</source>
+         <translation>is writing a message...</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="314"/>
++        <location filename="../UI/Chats/Chat.qml" line="303"/>
+         <source>Today</source>
+         <translation>Today</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chat.qml" line="314"/>
++        <location filename="../UI/Chats/Chat.qml" line="303"/>
+         <source>Yesterday</source>
+         <translation>Yesterday</translation>
+     </message>
+@@ -156,64 +164,64 @@
+ <context>
+     <name>Chats</name>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="147"/>
++        <location filename="../UI/Chats/Chats.qml" line="144"/>
+         <source>Chats</source>
+         <translation>Chats</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="169"/>
++        <location filename="../UI/Chats/Chats.qml" line="167"/>
+         <source>No conversations yet</source>
+         <translation>No conversations yet</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="202"/>
++        <location filename="../UI/Chats/Chats.qml" line="199"/>
+         <source>Delete and exit group</source>
+         <translation>Delete and exit group</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="202"/>
++        <location filename="../UI/Chats/Chats.qml" line="199"/>
+         <source>Delete Conversation</source>
+         <translation>Delete Conversation</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="236"/>
++        <location filename="../UI/Chats/Chats.qml" line="233"/>
+         <source>View group information</source>
+         <translation>View group information</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="236"/>
++        <location filename="../UI/Chats/Chats.qml" line="233"/>
+         <source>View contact profile</source>
+         <translation>View contact profile</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="250"/>
++        <location filename="../UI/Chats/Chats.qml" line="247"/>
+         <source>Confirm Delete</source>
+         <translation>Confirm Delete</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="251"/>
++        <location filename="../UI/Chats/Chats.qml" line="248"/>
+         <source>Are you sure you want to delete this conversation and all its messages?</source>
+         <translation>Are you sure you want to delete this conversation and all its messages?</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="252"/>
+-        <location filename="../UI/Chats/Chats.qml" line="264"/>
++        <location filename="../UI/Chats/Chats.qml" line="249"/>
++        <location filename="../UI/Chats/Chats.qml" line="261"/>
+         <source>Yes</source>
+         <translation>Yes</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="253"/>
+-        <location filename="../UI/Chats/Chats.qml" line="265"/>
++        <location filename="../UI/Chats/Chats.qml" line="250"/>
++        <location filename="../UI/Chats/Chats.qml" line="262"/>
+         <source>No</source>
+         <translation>No</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="262"/>
++        <location filename="../UI/Chats/Chats.qml" line="259"/>
+         <source>Confirm Delete and Exit</source>
+         <translation>Confirm Delete and Exit</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Chats/Chats.qml" line="263"/>
++        <location filename="../UI/Chats/Chats.qml" line="260"/>
+         <source>Are you sure you want to delete this conversation and exit this group?</source>
+         <translation>Are you sure you want to delete this conversation and exit this group?</translation>
+     </message>
+@@ -270,47 +278,47 @@
+         <translation>Contacts</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="226"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="196"/>
+         <source>Quick search</source>
+         <translation>Quick search</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="293"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="263"/>
+         <source>No contacts yet. Try to resync</source>
+         <translation>No contacts yet. Try to resync</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="346"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="316"/>
+         <source>Block contact</source>
+         <translation>Block contact</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="346"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="316"/>
+         <source>Unblock contact</source>
+         <translation>Unblock contact</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="357"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="327"/>
+         <source>View contact profile</source>
+         <translation>View contact profile</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="387"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="357"/>
+         <source>Confirm delete</source>
+         <translation>Confirm delete</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="388"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="358"/>
+         <source>Are you sure you want to delete %1?</source>
+         <translation>Are you sure you want to delete %1?</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="389"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="359"/>
+         <source>Yes</source>
+         <translation>Yes</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Contacts/Contacts.qml" line="390"/>
++        <location filename="../UI/Contacts/Contacts.qml" line="360"/>
+         <source>No</source>
+         <translation>No</translation>
+     </message>
+@@ -318,58 +326,58 @@
+ <context>
+     <name>Conversation</name>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="68"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="66"/>
+         <source>Fetching group subject</source>
+         <translation>Fetching group subject</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="410"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="433"/>
+         <source>Back</source>
+         <translation>Back</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="497"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="513"/>
+         <source>You</source>
+         <translation>You</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="621"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="637"/>
+         <source>Loading conversation...</source>
+         <translation>Loading conversation...</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="778"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="794"/>
+         <source>Contact blocked</source>
+         <translation>Contact blocked</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="779"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="795"/>
+         <source>Write your message here</source>
+         <translation>Write your message here</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="835"/>
+-        <location filename="../UI/Conversations/Conversation.qml" line="1009"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="851"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="1025"/>
+         <source>Send</source>
+         <translation>Send</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="1030"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="1046"/>
+         <source>Copy content</source>
+         <translation>Copy content</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="1042"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="1058"/>
+         <source>Remove message</source>
+         <translation>Remove message</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="1058"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="1074"/>
+         <source>View contact profile</source>
+         <translation>View contact profile</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Conversations/Conversation.qml" line="1080"/>
++        <location filename="../UI/Conversations/Conversation.qml" line="1096"/>
+         <source>Load more...</source>
+         <translation>Load more...</translation>
+     </message>
+@@ -377,32 +385,32 @@
+ <context>
+     <name>CreateGroup</name>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="187"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="186"/>
+         <source>Create group</source>
+         <translation>Create group</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="212"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="211"/>
+         <source>Select picture</source>
+         <translation>Select picture</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="228"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="227"/>
+         <source>Group subject</source>
+         <translation>Group subject</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="303"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="302"/>
+         <source>Group participants</source>
+         <translation>Group participants</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="322"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="321"/>
+         <source>Add</source>
+         <translation>Add</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/CreateGroup.qml" line="364"/>
++        <location filename="../UI/Groups/CreateGroup.qml" line="363"/>
+         <source>Create</source>
+         <translation>Create</translation>
+     </message>
+@@ -423,50 +431,50 @@
+         <translation>Save changes</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="90"/>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="272"/>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="375"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="89"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="271"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="374"/>
+         <source>You</source>
+         <translation>You</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="121"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="120"/>
+         <source>Error reading group information</source>
+         <translation>Error reading group information</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="128"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="127"/>
+         <source>Subject created by</source>
+         <translation>Subject created by</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="129"/>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="321"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="128"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="320"/>
+         <source>Group participants:</source>
+         <translation>Group participants:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="272"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="271"/>
+         <source>Group owner:</source>
+         <translation>Group owner:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="278"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="277"/>
+         <source>Creation date:</source>
+         <translation>Creation date:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="291"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="290"/>
+         <source>Change group subject</source>
+         <translation>Change group subject</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="301"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="300"/>
+         <source>Change group picture</source>
+         <translation>Change group picture</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Groups/GroupProfile.qml" line="341"/>
++        <location filename="../UI/Groups/GroupProfile.qml" line="340"/>
+         <source>Add</source>
+         <translation>Add</translation>
+     </message>
+@@ -641,13 +649,6 @@
+     </message>
+ </context>
+ <context>
+-    <name>SelectionItemTr</name>
+-    <message>
+-        <source>(no sound)</source>
+-        <translation>(no sound)</translation>
+-    </message>
+-</context>
+-<context>
+     <name>SendAudio</name>
+     <message>
+         <location filename="../UI/Conversations/SendAudio.qml" line="42"/>
+@@ -810,187 +811,183 @@
+ <context>
+     <name>SettingsNew</name>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="35"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="116"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="37"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="102"/>
+         <source>This is a %1 version.</source>
+         <translation>This is a %1 version.</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="36"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="117"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="38"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="103"/>
+         <source>You are trying it at your own risk.</source>
+         <translation>You are trying it at your own risk.</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="37"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="118"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="39"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="104"/>
+         <source>Please report any bugs to</source>
+         <translation>Please report any bugs to</translation>
+     </message>
+     <message>
++        <location filename="../UI/Settings/SettingsNew.qml" line="59"/>
+         <source>Quit Wazapp</source>
+-        <translation type="obsolete">Quit Wazapp</translation>
++        <translation>Quit Wazapp</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="115"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="641"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="101"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="676"/>
+         <source>version</source>
+         <translation>version</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="123"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="109"/>
+         <source>Settings</source>
+         <translation>Settings</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="157"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="190"/>
+         <source>Chats</source>
+         <translation>Chats</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="160"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="193"/>
+         <source>Enter key sends the message</source>
+         <translation>Enter key sends the message</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="169"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="202"/>
+         <source>Media sending</source>
+         <translation>Media sending</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="172"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="205"/>
+         <source>Resize images before sending</source>
+         <translation>Resize images before sending</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="182"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="215"/>
+         <source>Language</source>
+         <translation>Language</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="185"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="218"/>
+         <source>Current language</source>
+         <translation>Current language</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="216"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="249"/>
+         <source>*Restart Wazapp to apply the new language</source>
+         <translation>*Restart Wazapp to apply the new language</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="253"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="287"/>
+         <source>Appearance</source>
+         <translation>Appearance</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="257"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="291"/>
+         <source>Orientation:</source>
+         <translation>Orientation:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="262"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="296"/>
+         <source>Automatic</source>
+         <translation>Automatic</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="271"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="305"/>
+         <source>Portrait</source>
+         <translation>Portrait</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="280"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="314"/>
+         <source>Landscape</source>
+         <translation>Landscape</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="292"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="326"/>
+         <source>Theme color:</source>
+         <translation>Theme color:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="298"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="332"/>
+         <source>White</source>
+         <translation>White</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="307"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="341"/>
+         <source>Black</source>
+         <translation>Black</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="318"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="352"/>
+         <source>Bubble color:</source>
+         <translation>Bubble color:</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="325"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="359"/>
+         <source>Cyan</source>
+         <translation>Cyan</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="334"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="368"/>
+         <source>Green</source>
+         <translation>Green</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="343"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="377"/>
+         <source>Pink</source>
+         <translation>Pink</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="352"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="386"/>
+         <source>Orange</source>
+         <translation>Orange</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="383"/>
+-        <source>(no sound)</source>
+-        <translation>(no sound)</translation>
+-    </message>
+-    <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="441"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="476"/>
+         <source>Personal messages</source>
+         <translation>Personal messages</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="444"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="466"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="479"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="500"/>
+         <source>Notification tone</source>
+         <translation>Notification tone</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="453"/>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="476"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="488"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="510"/>
+         <source>Vibrate</source>
+         <translation>Vibrate</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="463"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="497"/>
+         <source>Group messages</source>
+         <translation>Group messages</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="526"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="560"/>
+         <source>Profile picture</source>
+         <translation>Profile picture</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="548"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="582"/>
+         <source>Change picture</source>
+         <translation>Change picture</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="556"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="590"/>
+         <source>Status</source>
+         <translation>Status</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="561"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="595"/>
+         <source>Change current status</source>
+         <translation>Change current status</translation>
+     </message>
+     <message>
+-        <location filename="../UI/Settings/SettingsNew.qml" line="621"/>
++        <location filename="../UI/Settings/SettingsNew.qml" line="656"/>
+         <source>About</source>
+         <translation>About</translation>
+     </message>
+@@ -998,22 +995,22 @@
+ <context>
+     <name>StanzaReader</name>
+     <message>
+-        <location filename="../waxmpp.py" line="1474"/>
++        <location filename="../waxmpp.py" line="1470"/>
+         <source>Image</source>
+         <translation>Image</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="1477"/>
++        <location filename="../waxmpp.py" line="1473"/>
+         <source>Audio</source>
+         <translation>Audio</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="1481"/>
++        <location filename="../waxmpp.py" line="1477"/>
+         <source>Video</source>
+         <translation>Video</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="1492"/>
++        <location filename="../waxmpp.py" line="1488"/>
+         <source>Location</source>
+         <translation>Location</translation>
+     </message>
+@@ -1027,25 +1024,33 @@
+     </message>
+     <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="25"/>
+-        <source>&lt;b&gt;%1&lt;/b&gt; joined the group</source>
+-        <translation>&lt;b&gt;%1&lt;/b&gt; joined the group</translation>
++        <source>&lt;b&gt;%1&lt;/b&gt; has joined the group</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; has joined the group</translation>
+     </message>
+     <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="26"/>
+-        <source>&lt;b&gt;%1&lt;/b&gt; left the group</source>
+-        <translation>&lt;b&gt;%1&lt;/b&gt; left the group</translation>
++        <source>&lt;b&gt;%1&lt;/b&gt; has left the group</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; has left the group</translation>
+     </message>
+     <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="28"/>
++        <source>&lt;b&gt;%1&lt;/b&gt; have changed the subject to &lt;b&gt;%2&lt;/b&gt;</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; have changed the subject to &lt;b&gt;%2&lt;/b&gt;</translation>
++    </message>
++    <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="29"/>
+-        <source>&lt;b&gt;%1&lt;/b&gt; changed the subject to &lt;b&gt;%2&lt;/b&gt;</source>
+-        <translation>&lt;b&gt;%1&lt;/b&gt; changed the subject to &lt;b&gt;%2&lt;/b&gt;</translation>
++        <source>&lt;b&gt;%1&lt;/b&gt; has changed the subject to &lt;b&gt;%2&lt;/b&gt;</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; has changed the subject to &lt;b&gt;%2&lt;/b&gt;</translation>
+     </message>
+     <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="31"/>
++        <source>&lt;b&gt;%1&lt;/b&gt; have changed the group picture</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; have changed the group picture</translation>
++    </message>
++    <message>
+         <location filename="../UI/Conversations/Bubbles/TextBubble.qml" line="32"/>
+-        <source>&lt;b&gt;%1&lt;/b&gt; changed the group picture</source>
+-        <translation>&lt;b&gt;%1&lt;/b&gt; changed the group picture</translation>
++        <source>&lt;b&gt;%1&lt;/b&gt; has changed the group picture</source>
++        <translation>&lt;b&gt;%1&lt;/b&gt; has changed the group picture</translation>
+     </message>
+ </context>
+ <context>
+@@ -1079,48 +1084,52 @@
+ <context>
+     <name>WAEventHandler</name>
+     <message>
+-        <location filename="../waxmpp.py" line="461"/>
++        <location filename="../waxmpp.py" line="463"/>
+         <source>Location</source>
+         <translation>Location</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="591"/>
++        <location filename="../waxmpp.py" line="593"/>
+         <source>Image</source>
+         <translation>Image</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="633"/>
++        <location filename="../waxmpp.py" line="635"/>
+         <source>Video</source>
+         <translation>Video</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="654"/>
++        <location filename="../waxmpp.py" line="656"/>
+         <source>Audio</source>
+         <translation>Audio</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="715"/>
+         <location filename="../waxmpp.py" line="717"/>
+-        <source>%1 changed the group picture</source>
+-        <translation>%1 changed the group picture</translation>
++        <source>%1 have changed the group picture</source>
++        <translation>%1 have changed the group picture</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="720"/>
+-        <source>%1 joined the group</source>
+-        <translation>%1 joined the group</translation>
++        <location filename="../waxmpp.py" line="719"/>
++        <source>%1 has changed the group picture</source>
++        <translation>%1 has changed the group picture</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="723"/>
+-        <source>%1 left the group</source>
+-        <translation>%1 left the group</translation>
++        <location filename="../waxmpp.py" line="722"/>
++        <source>%1 has joined the group</source>
++        <translation>%1 has joined the group</translation>
+     </message>
+     <message>
+-        <location filename="../waxmpp.py" line="726"/>
+-        <source>%1 changed the subject to %2</source>
+-        <translation>%1 changed the subject to %2</translation>
++        <location filename="../waxmpp.py" line="725"/>
++        <source>%1 has left the group</source>
++        <translation>%1 has left the group</translation>
+     </message>
+     <message>
+         <location filename="../waxmpp.py" line="728"/>
++        <source>%1 has changed the subject to %2</source>
++        <translation>%1 has changed the subject to %2</translation>
++    </message>
++    <message>
++        <location filename="../waxmpp.py" line="730"/>
+         <source>You</source>
+         <translation>You</translation>
+     </message>
+@@ -1177,94 +1186,104 @@
+ <context>
+     <name>main</name>
+     <message>
+-        <location filename="../UI/main.qml" line="412"/>
++        <location filename="../UI/main.qml" line="405"/>
+         <source>Retrieving contacts list...</source>
+         <translation>Retrieving contacts list...</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="414"/>
++        <location filename="../UI/main.qml" line="407"/>
+         <source>Fetching contacts...</source>
+         <translation>Fetching contacts...</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="416"/>
++        <location filename="../UI/main.qml" line="409"/>
+         <source>Loading contacts...</source>
+         <translation>Loading contacts...</translation>
+     </message>
+     <message>
++        <location filename="../UI/main.qml" line="697"/>
+         <source>Chats</source>
+-        <translation type="obsolete">Chats</translation>
++        <translation>Chats</translation>
+     </message>
+     <message>
++        <location filename="../UI/main.qml" line="704"/>
+         <source>Contacts</source>
+-        <translation type="obsolete">Contacts</translation>
++        <translation>Contacts</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="762"/>
++        <location filename="../UI/main.qml" line="731"/>
+         <source>Update Contacts</source>
+         <translation>Update Contacts</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="763"/>
++        <location filename="../UI/main.qml" line="732"/>
+         <source>The Phone contacts database has changed. Do you want to sync contacts now?</source>
+         <translation>The Phone contacts database has changed. Do you want to sync contacts now?</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="764"/>
+-        <location filename="../UI/main.qml" line="773"/>
++        <location filename="../UI/main.qml" line="733"/>
++        <location filename="../UI/main.qml" line="742"/>
+         <source>Yes</source>
+         <translation>Yes</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="765"/>
+-        <location filename="../UI/main.qml" line="774"/>
++        <location filename="../UI/main.qml" line="734"/>
++        <location filename="../UI/main.qml" line="743"/>
+         <source>No</source>
+         <translation>No</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="771"/>
++        <location filename="../UI/main.qml" line="740"/>
+         <source>Confirm Quit</source>
+         <translation>Confirm Quit</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="772"/>
++        <location filename="../UI/main.qml" line="741"/>
+         <source>Are you sure you want to quit Wazapp?</source>
+         <translation>Are you sure you want to quit Wazapp?</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="782"/>
++        <location filename="../UI/main.qml" line="751"/>
+         <source>version</source>
+         <translation>version</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="783"/>
++        <location filename="../UI/main.qml" line="752"/>
+         <source>This is a %1 version.</source>
+         <translation>This is a %1 version.</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="784"/>
++        <location filename="../UI/main.qml" line="753"/>
+         <source>You are trying it at your own risk.</source>
+         <translation>You are trying it at your own risk.</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="785"/>
++        <location filename="../UI/main.qml" line="754"/>
+         <source>Please report any bugs to</source>
+         <translation>Please report any bugs to</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="796"/>
++        <location filename="../UI/main.qml" line="765"/>
+         <source>Wazapp %1 is now available for update!</source>
+         <translation>Wazapp %1 is now available for update!</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="798"/>
++        <location filename="../UI/main.qml" line="767"/>
+         <source>Details</source>
+         <translation>Details</translation>
+     </message>
+     <message>
+-        <location filename="../UI/main.qml" line="799"/>
++        <location filename="../UI/main.qml" line="768"/>
+         <source>Cancel</source>
+         <translation>Cancel</translation>
+     </message>
+ </context>
++<context>
++    <name>SelectionItemTr</name>
++    <message>
++        <location filename="../UI/Settings/SettingsNew.qml" line="418"/>
++        <source>(no sound)</source>
++        <translation>(no sound)</translation>
++    </message>
++</context>
+ </TS>
+Los archivos binarios client//i18n/es_AR.qm y wazapp//i18n/es_AR.qm son distintos
+diff -urN client//messagestore.py wazapp//messagestore.py
+--- client//messagestore.py	2012-10-07 13:17:42.495559539 -0300
++++ wazapp//messagestore.py	2012-09-24 18:49:06.000000000 -0300
+@@ -31,7 +31,6 @@
+ 	messageStatusUpdated = QtCore.Signal(str,int,int);
+ 	messagesReady = QtCore.Signal(dict,bool);
+ 	conversationReady = QtCore.Signal(dict);
+-	conversationExported = QtCore.Signal(str, str); #jid, exportePath
+ 	
+ 	currKeyId = 0
+ 
+@@ -87,57 +86,7 @@
+ 
+ 
+ 	def removeSingleContact(self, jid):
+-		self._d("Removing contact: "+jid);
+-		
+-
+-	def exportConversation(self, jid):
+-		self._d("Exporting conversations")
+-		exportDir = WAConstants.CACHE_CONV
+-		exportPath = "%s/%s.txt"%(exportDir, jid)
+-
+-		if not os.path.exists(exportDir):
+-			os.makedirs(exportDir)
+-			
+-		conv = self.getOrCreateConversationByJid(jid)
+-		conv.loadMessages(offset=0, limit=0)
+-		
+-		cachedContacts = self.store.getCachedContacts()
+-		
+-		contacts = {}
+-		
+-		if not conv.isGroup():
+-			contact = conv.getContact()
+-			try:
+-				contacts[contact.id] = cachedContacts[contact.number].name or contact.number
+-			except:
+-				contacts[contact.id] = contact.number
+-				
+-		else:
+-			contacts = conv.getContacts()
+-			for c in contacts:
+-				try:
+-					contacts[c.id] = cachedContacts[c.number].name or c.number
+-				except:
+-					contacts[c.id] = c.number
+-		
+-		buf = ""
+-
+-		for m in conv.messages:
+-			if not conv.isGroup():
+-				if m.type == m.TYPE_SENT and m.status != m.STATUS_DELIVERED:
+-					continue
+-			
+-			t = datetime.datetime.fromtimestamp(int(m.timestamp)/1000).strftime('%d-%m-%Y %H:%M')
+-			author= contacts[m.contact_id] if conv.isGroup() else (contacts[conv.contact_id] if m.type == m.TYPE_RECEIVED else "You")
+-			content = m.content if not m.media_id else "[media omitted]"
+-			buf+="[%s]%s: %s\n"%(t,author,content)
+-		
+-		f = open(exportPath, 'w')
+-		f.write(buf)
+-		f.close()
+-		self.conversationExported.emit(jid, exportPath)
+-		return exportPath
+-		
++		seld._d("Removing contact: "+jid);
+ 	
+ 	
+ 	def loadConversations(self):
+diff -urN client//Models/conversation.py wazapp//Models/conversation.py
+--- client//Models/conversation.py	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//Models/conversation.py	2012-09-20 09:16:21.000000000 -0300
+@@ -58,7 +58,7 @@
+ 		if offset:
+ 			conditions["id<"] = offset;
+ 		
+-		messages = self.store.Message.findAll(conditions,order=["id DESC"],limit=limit) if limit else self.store.Message.findAll(conditions,order=["id DESC"])
++		messages = self.store.Message.findAll(conditions,order=["id DESC"],limit=limit)
+ 		
+ 		messages.reverse();
+ 		
+diff -urN client//notifier.py wazapp//notifier.py
+--- client//notifier.py	2012-10-07 13:17:42.499559539 -0300
++++ wazapp//notifier.py	2012-10-06 15:17:19.000000000 -0300
+@@ -26,31 +26,44 @@
+ from QtMobility.MultimediaKit import QMediaPlayer
+ from PySide.phonon import Phonon
+ from wadebug import NotifierDebug
++import dbus
+ 
+ class Notifier():
+-	def __init__(self,audio=True,vibra=False):
++	def __init__(self,audio=True,vibra=True):
+ 		_d = NotifierDebug();
+ 		self._d = _d.d;
+-		
++
+ 		self.manager = MNotificationManager('wazappnotify','WazappNotify');
+ 		self.vibra = vibra
+ 
+-
+ 		self.personalRingtone = WAConstants.DEFAULT_SOUND_NOTIFICATION;
+ 		self.personalVibrate = True;
+ 		self.groupRingtone = WAConstants.DEFAULT_SOUND_NOTIFICATION;
+ 		self.groupVibrate = True;
+ 		
+-		QCoreApplication.setApplicationName("Wazapp");
++		#QCoreApplication.setApplicationName("Wazapp");  used to get media volume
++
+ 
+ 		self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, None)
+ 		self.mediaObject = Phonon.MediaObject(None)
+ 		Phonon.createPath(self.mediaObject, self.audioOutput)		
++
++		bus = dbus.SessionBus()
++		mybus = bus.get_object('com.nokia.profiled', '/com/nokia/profiled')
++		self.nface = dbus.Interface(mybus, 'com.nokia.profiled')
++		self.nface.connect_to_signal("profile_changed", self.profileChanged)
++		prof = self.getCurrentProfile()
++		reply = self.nface.get_value(prof,"ringing.alert.volume");
++		self.currentProfile = prof
++		self.currentVolume = "1.0" if reply=="100" else "0." + reply
++		self._d("Checking current profile: " + prof + " - Volume: " + self.currentVolume)
++		self.audioOutput.setVolume(float(self.currentVolume))
++
+ 		
+ 		#self.newMessageSound = WAConstants.DEFAULT_SOUND_NOTIFICATION #fetch from settings
+ 		self.devInfo = QSystemDeviceInfo();
+ 		
+-		self.devInfo.currentProfileChanged.connect(self.profileChanged);
++		#self.devInfo.currentProfileChanged.connect(self.profileChanged);
+ 		
+ 		self.audio = True
+ 		'''if audio:
+@@ -72,9 +85,26 @@
+ 			self.vibra.setIntensity(1.0);
+ 			self.vibra.setDuration(200);
+ 	
++
++	def getCurrentProfile(self):
++		bus = dbus.SessionBus()
++		notifierbus = bus.get_object('com.nokia.profiled', '/com/nokia/profiled')
++		nface = dbus.Interface(notifierbus, 'com.nokia.profiled')
++		reply = nface.get_profile();
++		return reply;
++
+ 	
+-	def profileChanged(self):
++	def profileChanged(self,arg1,arg2,profile,arg4):
+ 		self._d("Profile changed");
++		nbus = dbus.SessionBus()
++		mynbus = nbus.get_object('com.nokia.profiled', '/com/nokia/profiled')
++		nface = dbus.Interface(mynbus, 'com.nokia.profiled')
++		reply = nface.get_value(profile,"ringing.alert.volume");
++		self.currentProfile = profile
++		self.currentVolume = "1.0" if reply=="100" else "0." + reply
++		self._d("Checking current profile: " + profile + " - Volume: " + self.currentVolume)
++		self.audioOutput.setVolume(float(self.currentVolume))
++
+ 	
+ 	def enable(self):
+ 		self.enabled = True
+@@ -87,15 +117,11 @@
+ 		
+ 	
+ 	def getCurrentSoundPath(self,ringtone):
+-		activeProfile = self.devInfo.currentProfile();
++		#activeProfile = self.devInfo.currentProfile();
+ 		
+-		if activeProfile in (QSystemDeviceInfo.Profile.NormalProfile,QSystemDeviceInfo.Profile.LoudProfile):
+-			#if self.enabled:
+-			return ringtone #self.newMessageSound;
+-			#else:
+-			#	return WAConstants.FOCUSED_SOUND_NOTIFICATION
+-				
+-		elif activeProfile == QSystemDeviceInfo.Profile.BeepProfile:
++		if self.currentProfile == "general":
++			return ringtone
++		elif self.currentProfile == "meeting":
+ 			return WAConstants.FOCUSED_SOUND_NOTIFICATION
+ 		else:
+ 			return WAConstants.NO_SOUND
+@@ -127,6 +153,7 @@
+ 		self.mediaObject.clear()
+ 
+ 	def playSound(self,soundfile):
++		self.mediaObject.clear()
+ 		self.mediaObject.setCurrentSource(Phonon.MediaSource(soundfile))
+ 		self.mediaObject.play()
+ 
+diff -urN client//status.py wazapp//status.py
+--- client//status.py	2012-10-07 13:17:42.499559539 -0300
++++ wazapp//status.py	1969-12-31 21:00:00.000000000 -0300
+@@ -1,60 +0,0 @@
+-'''
+-Copyright (c) 2012, Tarek Galal <tarek@wazapp.im>
+-
+-This file is part of Wazapp, an IM application for Meego Harmattan platform that
+-allows communication with Whatsapp users
+-
+-Wazapp is free software: you can redistribute it and/or modify it under the 
+-terms of the GNU General Public License as published by the Free Software 
+-Foundation, either version 2 of the License, or (at your option) any later 
+-version.
+-
+-Wazapp is distributed in the hope that it will be useful, but WITHOUT ANY 
+-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+-PARTICULAR PURPOSE. See the GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along with 
+-Wazapp. If not, see http://www.gnu.org/licenses/.
+-'''
+-from utilities import Utilities
+-from warequeststatus import WARequestStatus
+-from PySide.QtCore import QObject
+-from PySide import QtCore;
+-import thread
+-
+-class WAChangeStatus(WARequestStatus):
+-	'''
+-	Interfaces with whatsapp contacts server to get contact list
+-	'''
+-	#contactsRefreshSuccess = QtCore.Signal();
+-	#contactsRefreshFail = QtCore.Signal();
+-	def __init__(self,store):
+-		self.store = store;
+-		self.base_url = "s.whatsapp.net";
+-		self.req_file = "/client/iphone/u.php";
+-		super(WAChangeStatus,self).__init__();
+-
+-	def sync(self, msg):
+-		print "TRYING TO CHANGE STATUS..." + msg;
+-		self.clearParams();
+-		self.addParam("me",self.store.account.phoneNumber);
+-		self.addParam("s",msg)
+-		self.addParam("cc","31")
+-		data = self.sendRequest();
+-		
+-		self.exit();
+-
+-		
+-	def onRefreshing(self):
+-		self.start();
+-
+-	def run(self):
+-		try:
+-			self.sync();
+-		except:
+-			print sys.exc_info()[1]
+-		#self.exec_();
+-
+-if __name__ == "__main__":
+-	cs = WAChangeStatus();
+-	cs.start();
+diff -urN client//UI/common/FastScroll.qml wazapp//UI/common/FastScroll.qml
+--- client//UI/common/FastScroll.qml	1969-12-31 21:00:00.000000000 -0300
++++ wazapp//UI/common/FastScroll.qml	2012-09-20 09:16:22.000000000 -0300
+@@ -0,0 +1,226 @@
++import QtQuick 1.1
++import com.nokia.meego 1.0
++import "js/FastScroll.js" as Sections
++
++/*@@TODO Make generic */
++
++Item {
++    id: root
++
++    property ListView listView
++
++    property int __topPageMargin: 0
++    property int __bottomPageMargin: 0
++    property int __leftPageMargin: 0
++    property int __rightPageMargin: 0
++    property bool __hasPageWidth : false
++    property bool __hasPageHeight : false
++
++    property int __hideTimeout: 500
++
++    property Style platformStyle: FastScrollStyle {}
++
++    // This function ensures that we always anchor the decorator correctly according
++    // to the page margins.
++    function __updatePageMargin() {
++        if (!listView)
++            return
++        var p = listView.parent
++        while (p) {
++            if (p.hasOwnProperty("__isPage")) {
++                __hasPageWidth = function() { return p.width == listView.width }
++                __topPageMargin = function() { return p.anchors.topMargin }
++                __bottomPageMargin = function() { return p.anchors.bottomMargin }
++                __leftPageMargin = function() { return p.anchors.leftMargin }
++                __rightPageMargin = function() { return p.anchors.rightMargin }
++                return;
++            } else {
++                p = p.parent;
++            }
++        }
++    }
++
++    onListViewChanged: {
++        if (listView && listView.model) {
++            internal.initDirtyObserver();
++        } else if (listView) {
++            listView.modelChanged.connect(function() {
++                if (listView.model) {
++                    internal.initDirtyObserver();
++                }
++            });
++        }
++        __updatePageMargin()
++    }
++
++    anchors.fill: parent
++
++    //FIXME: Item
++    Item {
++        anchors.fill: parent
++        anchors.leftMargin: __hasPageWidth ? -__leftPageMargin : 0
++        anchors.rightMargin: __hasPageWidth ? -__rightPageMargin : 0
++        anchors.topMargin: __hasPageWidth ? -__topPageMargin : 0
++        anchors.bottomMargin: __hasPageWidth ? -__bottomPageMargin : 0
++
++        MouseArea {
++            id: dragArea
++            objectName: "dragArea"
++            anchors.right: parent.right
++            anchors.top: parent.top
++            anchors.bottom: parent.bottom
++            width: 70
++            drag.target: magnifier
++            drag.axis: Drag.YAxis
++            drag.minimumY: 0 // listView.y
++            drag.maximumY: dragArea.height - magnifier.height // listView.y + listView.height - magnifier.height
++
++            onPressed: {
++                magnifier.positionAtY(dragArea.mouseY);
++            }
++
++            onPositionChanged: {
++                internal.adjustContentPosition(dragArea.mouseY);
++            }
++
++            Image {
++                id: rail
++                source: platformStyle.railImage
++                opacity: 0
++                anchors.fill: parent
++
++                property bool dragging: dragArea.drag.active
++
++                Image {
++                    id: handle
++                    opacity: !rail.dragging ? 0.7 : 0
++                    anchors.horizontalCenter: parent.horizontalCenter
++                    source: platformStyle.handleImage
++                    y: 18 + (rail.height - 36 - height)/(1.0 - listView.visibleArea.heightRatio) * listView.visibleArea.yPosition
++                }
++
++                states: State {
++                    name: "visible"
++                    when: listView.moving || rail.dragging
++                    PropertyChanges {
++                        target: rail
++                        opacity: 1
++                    }
++                }
++
++                transitions: [
++                    Transition {
++                        from: ""; to: "visible"
++                        NumberAnimation {
++                            properties: "opacity"
++                            duration: root.__hideTimeout
++                        }
++                    },
++                    Transition {
++                        from: "visible"; to: ""
++                        NumberAnimation {
++                            properties: "opacity"
++                            duration: root.__hideTimeout
++                        }
++                    }
++                ]
++            }
++        }
++
++        Image {
++            id: magnifier
++            objectName: "popup"
++            opacity: rail.dragging ? 1 : 0
++            anchors.left: parent.left
++            anchors.right: parent.right
++            height: 150
++            source: platformStyle.magnifierImage
++
++            function positionAtY(yCoord) {
++                magnifier.y = Math.max(dragArea.drag.minimumY, Math.min(yCoord - magnifier.height/2, dragArea.drag.maximumY));
++            }
++
++            Text {
++                id: magnifierLabel
++                objectName: "magnifierLabel"
++                height: 150
++                width: parent.width
++                x: 14
++                verticalAlignment: Text.AlignVCenter
++                wrapMode: Text.WordWrap
++                font.pixelSize: 46
++                //font.family: "Nokia Pure Text Bold"
++                color: platformStyle.textColor
++                text: internal.currentSection
++            }
++        }
++    }
++
++    Timer {
++        id: dirtyTimer
++        interval: 100
++        running: false
++        onTriggered: {
++            Sections.initSectionData(listView);
++            internal.modelDirty = false;
++        }
++    }
++
++    Connections {
++        target: root.listView
++        onCurrentSectionChanged: internal.curSect = rail.dragging ? internal.curSect : ""
++    }
++
++    QtObject {
++        id: internal
++
++        property string currentSection: listView.currentSection
++        property string curSect: ""
++        property string curPos: "first"
++        property int oldY: 0
++        property bool modelDirty: false
++        property bool down: true
++
++        function initDirtyObserver() {
++            Sections.initialize(listView);
++            function dirtyObserver() {
++                if (!internal.modelDirty) {
++                    internal.modelDirty = true;
++                    dirtyTimer.running = true;
++                }
++            }
++
++            if (listView.model.countChanged)
++                listView.model.countChanged.connect(dirtyObserver);
++
++            if (listView.model.itemsChanged)
++                listView.model.itemsChanged.connect(dirtyObserver);
++
++            if (listView.model.itemsInserted)
++                listView.model.itemsInserted.connect(dirtyObserver);
++
++            if (listView.model.itemsMoved)
++                listView.model.itemsMoved.connect(dirtyObserver);
++
++            if (listView.model.itemsRemoved)
++                listView.model.itemsRemoved.connect(dirtyObserver);
++        }
++
++        function adjustContentPosition(y) {
++            if (y < 0 || y > dragArea.height) return;
++
++            internal.down = (y > internal.oldY);
++            var sect = Sections.getClosestSection((y / dragArea.height), internal.down);
++            internal.oldY = y;
++            if (internal.curSect != sect) {
++                internal.curSect = sect;
++                internal.curPos = Sections.getSectionPositionString(internal.curSect);
++                var sec = Sections.getRelativeSections(internal.curSect);
++                internal.currentSection = internal.curSect;
++                var idx = Sections.getIndexFor(sect);
++                listView.positionViewAtIndex(idx, ListView.Beginning);
++            }
++        }
++
++    }
++}
+diff -urN client//UI/common/FastScrollStyle.qml wazapp//UI/common/FastScrollStyle.qml
+--- client//UI/common/FastScrollStyle.qml	1969-12-31 21:00:00.000000000 -0300
++++ wazapp//UI/common/FastScrollStyle.qml	2012-09-20 09:16:22.000000000 -0300
+@@ -0,0 +1,16 @@
++import QtQuick 1.1
++import com.nokia.meego 1.0 // for Style
++
++Style {
++
++    // Font
++    property int fontPixelSize: 68
++    property bool fontBoldProperty: true
++
++    // Color
++    property color textColor: inverted?"#000":"#fff"
++
++    property string handleImage: "image://theme/meegotouch-fast-scroll-handle"+__invertedString
++    property string magnifierImage: "image://theme/meegotouch-fast-scroll-magnifier"+__invertedString
++    property string railImage: "image://theme/meegotouch-fast-scroll-rail"+__invertedString
++}
+Los archivos binarios client//UI/common/images/buttons/button-left-inverted.png y wazapp//UI/common/images/buttons/button-left-inverted.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-left-inverted-pressed.png y wazapp//UI/common/images/buttons/button-left-inverted-pressed.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-left.png y wazapp//UI/common/images/buttons/button-left.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-left-pressed.png y wazapp//UI/common/images/buttons/button-left-pressed.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-right-inverted.png y wazapp//UI/common/images/buttons/button-right-inverted.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-right-inverted-pressed.png y wazapp//UI/common/images/buttons/button-right-inverted-pressed.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-right.png y wazapp//UI/common/images/buttons/button-right.png son distintos
+Los archivos binarios client//UI/common/images/buttons/button-right-pressed.png y wazapp//UI/common/images/buttons/button-right-pressed.png son distintos
+Los archivos binarios client//UI/common/images/done-black.png y wazapp//UI/common/images/done-black.png son distintos
+Los archivos binarios client//UI/common/images/done-white.png y wazapp//UI/common/images/done-white.png son distintos
+diff -urN client//UI/common/js/FastScroll.js wazapp//UI/common/js/FastScroll.js
+--- client//UI/common/js/FastScroll.js	1969-12-31 21:00:00.000000000 -0300
++++ wazapp//UI/common/js/FastScroll.js	2012-09-20 09:16:22.000000000 -0300
+@@ -0,0 +1,84 @@
++// FastScroll.js - this is just SectionScroller.js with a fix for
++// section.criteria == ViewSection.FirstCharacter
++var sectionData = [];
++var _sections = [];
++
++function initialize(list) {
++    initSectionData(list);
++}
++
++function initSectionData(list) {
++    if (!list || !list.model) return;
++    sectionData = [];
++    _sections = [];
++    var current = "",
++        prop = list.section.property,
++        item;
++
++
++
++    if (list.section.criteria == ViewSection.FullString) {
++        for (var i = 0, count = list.count; i < count; i++) {
++            list.currentIndex = i;
++            item = list.currentItem.contactName
++            if (item !== current) {
++                current = item;
++                _sections.push(current);
++                sectionData.push({ index: i, header: current });
++            }
++        }
++    } else if (list.section.criteria == ViewSection.FirstCharacter) {
++        for (var i2 = 0, count2 = list.count; i2 < count2; i2++) {
++            list.currentIndex = i2;
++            item = list.currentItem.contactName.substring(0,1)
++            if (item !== current) {
++                current = item;
++                _sections.push(current);
++                sectionData.push({ index: i2, header: current });
++            }
++        }
++    }
++}
++
++function getSectionPositionString(name) {
++    var val = _sections.indexOf(name);
++    return val === 0 ? "first" :
++           val === _sections.length - 1 ? "last" : false;
++}
++
++function getAt(pos) {
++    return _sections[pos] ? _sections[pos] : "";
++}
++
++function getRelativeSections(current) {
++    var val = _sections.indexOf(current),
++        sect = [],
++        sl = _sections.length;
++
++    val = val < 1 ? 1 : val >= sl-1 ? sl-2 : val;
++    sect = [getAt(val - 1), getAt(val), getAt(val + 1)];
++
++    return sect;
++}
++
++function getClosestSection(pos, down) {
++    var tmp = (_sections.length) * pos;
++    var val = Math.ceil(tmp) // TODO: better algorithm
++    val = val < 2 ? 1 : val;
++    return _sections[val-1];
++}
++
++function getNextSection(current) {
++    var val = _sections.indexOf(current);
++    return (val > -1 ? _sections[(val < _sections.length - 1 ? val + 1 : val)] : _sections[0]) || "";
++}
++
++function getPreviousSection(current) {
++    var val = _sections.indexOf(current);
++    return (val > -1 ? _sections[(val > 0 ? val - 1 : val)] : _sections[0]) || "";
++}
++
++function getIndexFor(sectionName) {
++    var val = sectionData[_sections.indexOf(sectionName)].index;
++    return val === 0 || val > 0 ? val : -1;
++}
+diff -urN client//UI/common/js/modelworker.js wazapp//UI/common/js/modelworker.js
+--- client//UI/common/js/modelworker.js	2012-10-07 13:17:42.495559539 -0300
++++ wazapp//UI/common/js/modelworker.js	1969-12-31 21:00:00.000000000 -0300
+@@ -1,12 +0,0 @@
+-WorkerScript.onMessage=function(msg) {
+-
+-    var model = msg.model;
+-    var data = msg.data
+-    console.log("Worker live")
+-    for(var i=0; i<data.length; i++){
+-        model.append(data[i])
+-    }
+-    model.sync()
+-    WorkerScript.sendMessage({"result":"OK"})
+-
+-}
+diff -urN client//UI/common/WAListView/Components/FastScroll.qml wazapp//UI/common/WAListView/Components/FastScroll.qml
+--- client//UI/common/WAListView/Components/FastScroll.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/Components/FastScroll.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,224 +0,0 @@
+-// FastScroll.qml
+-import QtQuick 1.1
+-import com.nokia.meego 1.0 // for Style
+-import "js/FastScroll.js" as Sections
+-
+-Item {
+-    id: root
+-
+-    property ListView listView
+-
+-    property int __topPageMargin: 0
+-    property int __bottomPageMargin: 0
+-    property int __leftPageMargin: 0
+-    property int __rightPageMargin: 0
+-    property bool __hasPageWidth : false
+-    property bool __hasPageHeight : false
+-
+-    property int __hideTimeout: 500
+-
+-    property Style platformStyle: FastScrollStyle {}
+-
+-    // This function ensures that we always anchor the decorator correctly according
+-    // to the page margins.
+-    function __updatePageMargin() {
+-        if (!listView)
+-            return
+-        var p = listView.parent
+-        while (p) {
+-            if (p.hasOwnProperty("__isPage")) {
+-                __hasPageWidth = function() { return p.width == listView.width }
+-                __topPageMargin = function() { return p.anchors.topMargin }
+-                __bottomPageMargin = function() { return p.anchors.bottomMargin }
+-                __leftPageMargin = function() { return p.anchors.leftMargin }
+-                __rightPageMargin = function() { return p.anchors.rightMargin }
+-                return;
+-            } else {
+-                p = p.parent;
+-            }
+-        }
+-    }
+-
+-    onListViewChanged: {
+-        if (listView && listView.model) {
+-            internal.initDirtyObserver();
+-        } else if (listView) {
+-            listView.modelChanged.connect(function() {
+-                if (listView.model) {
+-                    internal.initDirtyObserver();
+-                }
+-            });
+-        }
+-        __updatePageMargin()
+-    }
+-
+-    anchors.fill: parent
+-
+-    //FIXME: Item
+-    Item {
+-        anchors.fill: parent
+-        anchors.leftMargin: __hasPageWidth ? -__leftPageMargin : 0
+-        anchors.rightMargin: __hasPageWidth ? -__rightPageMargin : 0
+-        anchors.topMargin: __hasPageWidth ? -__topPageMargin : 0
+-        anchors.bottomMargin: __hasPageWidth ? -__bottomPageMargin : 0
+-
+-        MouseArea {
+-            id: dragArea
+-            objectName: "dragArea"
+-            anchors.right: parent.right
+-            anchors.top: parent.top
+-            anchors.bottom: parent.bottom
+-            width: 70
+-            drag.target: magnifier
+-            drag.axis: Drag.YAxis
+-            drag.minimumY: 0 // listView.y
+-            drag.maximumY: dragArea.height - magnifier.height // listView.y + listView.height - magnifier.height
+-
+-            onPressed: {
+-                magnifier.positionAtY(dragArea.mouseY);
+-            }
+-
+-            onPositionChanged: {
+-                internal.adjustContentPosition(dragArea.mouseY);
+-            }
+-
+-            Image {
+-                id: rail
+-                source: platformStyle.railImage
+-                opacity: 0
+-                anchors.fill: parent
+-
+-                property bool dragging: dragArea.drag.active
+-
+-                Image {
+-                    id: handle
+-                    opacity: !rail.dragging ? 1 : 0
+-                    anchors.horizontalCenter: parent.horizontalCenter
+-                    source: platformStyle.handleImage
+-                    y: 18 + (rail.height - 36 - height)/(1.0 - listView.visibleArea.heightRatio) * listView.visibleArea.yPosition
+-                }
+-
+-                states: State {
+-                    name: "visible"
+-                    when: listView.moving || rail.dragging
+-                    PropertyChanges {
+-                        target: rail
+-                        opacity: 1
+-                    }
+-                }
+-
+-                transitions: [
+-                    Transition {
+-                        from: ""; to: "visible"
+-                        NumberAnimation {
+-                            properties: "opacity"
+-                            duration: root.__hideTimeout
+-                        }
+-                    },
+-                    Transition {
+-                        from: "visible"; to: ""
+-                        NumberAnimation {
+-                            properties: "opacity"
+-                            duration: root.__hideTimeout
+-                        }
+-                    }
+-                ]
+-            }
+-        }
+-
+-        Image {
+-            id: magnifier
+-            objectName: "popup"
+-            opacity: rail.dragging ? 1 : 0
+-            anchors.left: parent.left
+-            anchors.right: parent.right
+-            height: 150
+-            source: platformStyle.magnifierImage
+-
+-            function positionAtY(yCoord) {
+-                magnifier.y = Math.max(dragArea.drag.minimumY, Math.min(yCoord - magnifier.height/2, dragArea.drag.maximumY));
+-            }
+-
+-            Text {
+-                id: magnifierLabel
+-                objectName: "magnifierLabel"
+-                x: 14
+-                y: 40
+-
+-                font.pixelSize: platformStyle.fontPixelSize
+-                //font.family: "Nokia Pure Text Bold"
+-                color: platformStyle.textColor
+-
+-                text: internal.currentSection
+-            }
+-        }
+-    }
+-
+-    Timer {
+-        id: dirtyTimer
+-        interval: 100
+-        running: false
+-        onTriggered: {
+-            Sections.initSectionData(listView);
+-            internal.modelDirty = false;
+-        }
+-    }
+-
+-    Connections {
+-        target: root.listView
+-        onCurrentSectionChanged: internal.curSect = rail.dragging ? internal.curSect : ""
+-    }
+-
+-    QtObject {
+-        id: internal
+-
+-        property string currentSection: listView.currentSection
+-        property string curSect: ""
+-        property string curPos: "first"
+-        property int oldY: 0
+-        property bool modelDirty: false
+-        property bool down: true
+-
+-        function initDirtyObserver() {
+-            Sections.initialize(listView);
+-            function dirtyObserver() {
+-                if (!internal.modelDirty) {
+-                    internal.modelDirty = true;
+-                    dirtyTimer.running = true;
+-                }
+-            }
+-
+-            if (listView.model.countChanged)
+-                listView.model.countChanged.connect(dirtyObserver);
+-
+-            if (listView.model.itemsChanged)
+-                listView.model.itemsChanged.connect(dirtyObserver);
+-
+-            if (listView.model.itemsInserted)
+-                listView.model.itemsInserted.connect(dirtyObserver);
+-
+-            if (listView.model.itemsMoved)
+-                listView.model.itemsMoved.connect(dirtyObserver);
+-
+-            if (listView.model.itemsRemoved)
+-                listView.model.itemsRemoved.connect(dirtyObserver);
+-        }
+-
+-        function adjustContentPosition(y) {
+-            if (y < 0 || y > dragArea.height) return;
+-
+-            internal.down = (y > internal.oldY);
+-            var sect = Sections.getClosestSection((y / dragArea.height), internal.down);
+-            internal.oldY = y;
+-            if (internal.curSect != sect) {
+-                internal.curSect = sect;
+-                internal.curPos = Sections.getSectionPositionString(internal.curSect);
+-                var sec = Sections.getRelativeSections(internal.curSect);
+-                internal.currentSection = internal.curSect;
+-                var idx = Sections.getIndexFor(sect);
+-                listView.positionViewAtIndex(idx, ListView.Beginning);
+-            }
+-        }
+-
+-    }
+-}
+diff -urN client//UI/common/WAListView/Components/FastScrollStyle.qml wazapp//UI/common/WAListView/Components/FastScrollStyle.qml
+--- client//UI/common/WAListView/Components/FastScrollStyle.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/Components/FastScrollStyle.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,17 +0,0 @@
+-// FastScrollStyle.qml
+-import QtQuick 1.1
+-import com.nokia.meego 1.0 // for Style
+-
+-Style {
+-
+-    // Font
+-    property int fontPixelSize: 68
+-    property bool fontBoldProperty: true
+-
+-    // Color
+-    property color textColor: inverted?"#000":"#fff"
+-
+-    property string handleImage: "image://theme/meegotouch-fast-scroll-handle"+__invertedString
+-    property string magnifierImage: "image://theme/meegotouch-fast-scroll-magnifier"+__invertedString
+-    property string railImage: "image://theme/meegotouch-fast-scroll-rail"+__invertedString
+-}
+diff -urN client//UI/common/WAListView/Components/js/FastScroll.js wazapp//UI/common/WAListView/Components/js/FastScroll.js
+--- client//UI/common/WAListView/Components/js/FastScroll.js	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/Components/js/FastScroll.js	1969-12-31 21:00:00.000000000 -0300
+@@ -1,81 +0,0 @@
+-// FastScroll.js - this is just SectionScroller.js with a fix for
+-// section.criteria == ViewSection.FirstCharacter
+-var sectionData = [];
+-var _sections = [];
+-
+-function initialize(list) {
+-    initSectionData(list);
+-}
+-
+-function initSectionData(list) {
+-    if (!list || !list.model) return;
+-    sectionData = [];
+-    _sections = [];
+-    var current = "",
+-        prop = list.section.property,
+-        item;
+-
+-    if (list.section.criteria == ViewSection.FullString) {
+-        for (var i = 0, count = list.model.count; i < count; i++) {
+-            item = list.model.get(i);
+-            if (item[prop] !== current) {
+-                current = item[prop];
+-                _sections.push(current);
+-                sectionData.push({ index: i, header: current });
+-            }
+-        }
+-    } else if (list.section.criteria == ViewSection.FirstCharacter) {
+-        for (var i = 0, count = list.model.count; i < count; i++) {
+-            item = list.model.get(i)
+-
+-            if (item[prop].substring(0, 1) !== current) {
+-                current = item[prop].substring(0, 1);
+-                _sections.push(current);
+-                sectionData.push({ index: i, header: current });
+-            }
+-        }
+-    }
+-}
+-
+-function getSectionPositionString(name) {
+-    var val = _sections.indexOf(name);
+-    return val === 0 ? "first" :
+-           val === _sections.length - 1 ? "last" : false;
+-}
+-
+-function getAt(pos) {
+-    return _sections[pos] ? _sections[pos] : "";
+-}
+-
+-function getRelativeSections(current) {
+-    var val = _sections.indexOf(current),
+-        sect = [],
+-        sl = _sections.length;
+-
+-    val = val < 1 ? 1 : val >= sl-1 ? sl-2 : val;
+-    sect = [getAt(val - 1), getAt(val), getAt(val + 1)];
+-
+-    return sect;
+-}
+-
+-function getClosestSection(pos, down) {
+-    var tmp = (_sections.length) * pos;
+-    var val = Math.ceil(tmp) // TODO: better algorithm
+-    val = val < 2 ? 1 : val;
+-    return _sections[val-1];
+-}
+-
+-function getNextSection(current) {
+-    var val = _sections.indexOf(current);
+-    return (val > -1 ? _sections[(val < _sections.length - 1 ? val + 1 : val)] : _sections[0]) || "";
+-}
+-
+-function getPreviousSection(current) {
+-    var val = _sections.indexOf(current);
+-    return (val > -1 ? _sections[(val > 0 ? val - 1 : val)] : _sections[0]) || "";
+-}
+-
+-function getIndexFor(sectionName) {
+-    var val = sectionData[_sections.indexOf(sectionName)].index;
+-    return val === 0 || val > 0 ? val : -1;
+-}
+diff -urN client//UI/common/WAListView/Components/ListViewFast.qml wazapp//UI/common/WAListView/Components/ListViewFast.qml
+--- client//UI/common/WAListView/Components/ListViewFast.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/Components/ListViewFast.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,45 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-import "../../../common"
+-
+-Item {
+-    property alias model:walistview.model
+-    property alias delegate:walistview.delegate
+-    anchors.fill: parent
+-    ListView {
+-
+-        id: walistview
+-        anchors.fill: parent
+-        clip: true
+-        spacing: 1
+-        cacheBuffer: 30000
+-        highlightFollowsCurrentItem: false
+-
+-        section.property: "name"
+-        section.criteria: ViewSection.FirstCharacter
+-
+-        section.delegate: GroupSeparator {
+-            anchors.left: parent.left
+-            anchors.leftMargin: 16
+-            width: parent.width - 44
+-            height: 50//searchInput.text==="" ? 50 : 0
+-            title: section
+-        }
+-
+-        Component.onCompleted: {  fast.listViewChanged();}
+-        onCountChanged: { fast.listViewChanged();
+-
+-        }
+-
+-    }
+-
+-    FastScroll {
+-        id: fast
+-        listView: walistview
+-        enabled: allowFastScroll
+-        visible: allowFastScroll
+-
+-        //enabled: searchInput.text===""
+-    }
+-}
+-
+diff -urN client//UI/common/WAListView/Components/ListViewSimple.qml wazapp//UI/common/WAListView/Components/ListViewSimple.qml
+--- client//UI/common/WAListView/Components/ListViewSimple.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/Components/ListViewSimple.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,13 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-
+-ListView {
+-
+-    anchors.fill: parent
+-    clip: true
+-    spacing: 1
+-    cacheBuffer: 30000
+-    highlightFollowsCurrentItem: false
+-
+-}
+-
+diff -urN client//UI/common/WAListView/js/walistview.js wazapp//UI/common/WAListView/js/walistview.js
+--- client//UI/common/WAListView/js/walistview.js	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/js/walistview.js	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-var items = new Array();
+-var selectedIndices = new Array()
+-
+diff -urN client//UI/common/WAListView/WAListView.qml wazapp//UI/common/WAListView/WAListView.qml
+--- client//UI/common/WAListView/WAListView.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/common/WAListView/WAListView.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,351 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-import com.nokia.meego 1.0
+-
+-import "Components"
+-import "../../common"
+-import "js/walistview.js" as WAlvhelper
+-
+-
+-Rectangle {
+-    id:walistviewroot
+-    property ListModel model;
+-    property string defaultPicture;
+-    property bool multiSelectMode:false
+-    property bool allowSelect:true
+-    property bool allowRemove:false
+-    property bool allowFastScroll:true
+-    property bool useRoundedImages:true
+-    property string emptyLabelText:qsTr("No data")
+-
+-    property int _removedCount:0;
+-
+-    signal removed(int index)
+-    state: model?"loaded":"loading"
+-    signal selected(variant selectedItem)
+-
+-    /**********************/
+-
+-    states: [
+-
+-        State {
+-            name: "loading"
+-            PropertyChanges {
+-                target: busyIndicator
+-                visible:true
+-            }
+-
+-            PropertyChanges {
+-                target: walistview
+-                visible:false
+-            }
+-        },
+-        State {
+-            name: "loaded"
+-            PropertyChanges {
+-                target: busyIndicator
+-                visible:false
+-            }
+-
+-            PropertyChanges {
+-                target: walistview
+-                visible: model.count - _removedCount > 0
+-            }
+-
+-            PropertyChanges {
+-                target: emptyLabel
+-                visible:model.count - _removedCount == 0
+-            }
+-        }
+-    ]
+-
+-
+-    function reset(){
+-        _removedCount=0
+-        WAlvhelper.items = new Array()
+-        WAlvhelper.selectedIndices = new Array()
+-    }
+-
+-
+-    function getItems(){
+-        return WAlvhelper.items
+-    }
+-
+-
+-    function select(ind){
+-
+-        if(isSelected())
+-            return
+-
+-        consoleDebug("SELECTING "+ind)
+-        WAlvhelper.selectedIndices.push(ind)
+-
+-        if(ind < WAlvhelper.items.length)
+-            WAlvhelper.items[ind].isSelected = true
+-
+-    }
+-
+-    function unSelect(ind){
+-
+-        var tmpind = WAlvhelper.selectedIndices.indexOf(ind)
+-        if(tmpind >= 0) {
+-            consoleDebug("SPLICED! "+tmpind)
+-            WAlvhelper.selectedIndices.splice(tmpind,1)
+-        }
+-        consoleDebug(ind+":::::>>>>>"+WAlvhelper.items.length)
+-        if(ind < WAlvhelper.items.length) {
+-            consoleDebug("CHANGE!")
+-            WAlvhelper.items[ind].isSelected = false
+-
+-         }
+-    }
+-
+-    function isSelected(ind){
+-        //return  WAlvhelper.items[ind].isSelected
+-        return (WAlvhelper.selectedIndices.indexOf(ind) >= 0)
+-    }
+-
+-    function getSelected(){
+-       //return WAlvhelper.selectedItems;
+-        var selectedItems = new Array();
+-        for(var i=0; i<WAlvhelper.items.length; i++) {
+-            if(WAlvhelper.items[i].isSelected)
+-                selectedItems.push({selectedIndex:i, data:WAlvhelper.items[i].modelData})
+-        }
+-
+-        return selectedItems;
+-    }
+-
+-    anchors.top: parent.top
+-    //anchors.topMargin: 73 + searchbar.height
+-    width:parent.width
+-    height:parent.height - 73 //- searchbar.height
+-    color: "transparent"
+-    clip: true
+-
+-
+-    Loader{
+-       id:walistview
+-       sourceComponent: allowFastScroll?listviewfast:listviewsimple
+-        anchors.fill: parent
+-    }
+-
+-
+-    Component{
+-        id:listviewsimple
+-        ListViewSimple {
+-            model: walistviewroot.model
+-            delegate:listDelegate
+-            anchors.fill: parent
+-        }
+-    }
+-
+-    Component{
+-        id:listviewfast
+-        ListViewFast {
+-             model:walistviewroot.model
+-             delegate: listDelegate
+-             anchors.fill: parent
+-        }
+-    }
+-
+-    BusyIndicator {
+-        id: busyIndicator
+-        implicitWidth: 96
+-        anchors.centerIn: parent
+-        visible:false
+-        running: visible
+-    }
+-
+-    Label {
+-        id:emptyLabel
+-        anchors.centerIn: parent
+-        text:emptyLabelText
+-        visible:false
+-    }
+-
+-    Component{
+-        id:listDelegate
+-
+-        Rectangle
+-        {
+-            id:item
+-
+-            Component.onCompleted: {
+-                WAlvhelper.items.push(item)
+-
+-                item.isSelected = walistviewroot.isSelected(index);
+-            }
+-
+-           /* Connections{
+-                target: walistviewroot
+-                onItemClicked:{
+-                    console.log("INSIDE CONNECTION")
+-                    console.log(clickedIndex)
+-                    if(clickedIndex == index){isSelected = walistviewroot.isSelected(index);}
+-
+-                }
+-            }*/
+-
+-            property variant modelData: model
+-            //property bool filtered: model.name.match(new RegExp(searchInput.text,"i")) != null
+-
+-            property string itemName: model.name
+-            //property string showContactName: searchInput.text.length>0 ? replaceText(model.name, searchInput.text) : model.name
+-            property string itemPicture: model.picture || defaultPicture
+-            property string itemDescription:model.description || ""
+-
+-            property bool isSelected
+-            property bool isRemoved
+-
+-
+-            //height: filtered ? 80 : 0
+-            height:isRemoved?0:80
+-            visible:!isRemoved
+-            width: appWindow.inPortrait? 480:854
+-            color: "transparent"
+-            clip: true
+-
+-            Rectangle {
+-                anchors.fill: parent
+-                color: theme.inverted? "darkgray" : "lightgray"
+-                opacity: theme.inverted? 0.2 : 0.8
+-                visible: allowSelect?(mouseArea.pressed || isSelected):false
+-            }
+-
+-            /*RoundedImage {
+-                id: item_picture
+-                x: 16
+-                size:62
+-                imgsource: itemPicture
+-                anchors.topMargin: -2
+-                y: 8
+-            }*/
+-
+-
+-            Loader{
+-               sourceComponent: useRoundedImages?item_picture_rounded:item_picture_rect
+-            }
+-
+-            Component{
+-                id:item_picture_rect
+-                Image {
+-                    id: item_picture
+-                    x: 16
+-
+-                    width: 62
+-                    height: 62
+-                    source: itemPicture
+-                    anchors.topMargin: -2
+-                    y: 8
+-                }
+-
+-            }
+-
+-            Component{
+-                id:item_picture_rounded
+-
+-                RoundedImage {
+-                    id: item_picture
+-                    x: 16
+-                    size:62
+-                    imgsource: itemPicture
+-                    anchors.topMargin: -2
+-                    y: 8
+-                }
+-
+-            }
+-
+-            Column{
+-                y: 2
+-                x: 90
+-                width: parent.width -100
+-                anchors.verticalCenter: parent.verticalCenter
+-                Label{
+-                    y: 2
+-                    text: itemName
+-                    font.pointSize: 18
+-                    elide: Text.ElideRight
+-                    width: parent.width -56
+-                    font.bold: true
+-                }
+-            }
+-
+-            Item {
+-                id: removeButton
+-                width:100
+-                height:parent.height
+-                anchors.right: parent.right
+-                //anchors.rightMargin: 5
+-                visible: !item.isSelected && allowRemove
+-
+-
+-                BorderImage {
+-
+-                    anchors.centerIn: parent
+-                    width: 42
+-                    height: 42
+-                    z:1
+-
+-
+-                    source: "image://theme/meegotouch-sheet-button-"+(theme.inverted?"inverted-":"")+
+-                            "background" + (rmArea.pressed? "-pressed" : "")
+-                    border { left: 22; right: 22; bottom: 22; top: 22; }
+-                    Image {
+-                        y: 2
+-                        source: "image://theme/icon-m-toolbar-cancle"+(theme.inverted?"-white":"")
+-                        anchors.verticalCenter: parent.verticalCenter
+-                        anchors.horizontalCenter: parent.horizontalCenter
+-                    }
+-
+-                }
+-
+-
+-                MouseArea {
+-                    id: rmArea
+-                    anchors.fill: parent
+-                    onClicked: {
+-                       item.isSelected = false
+-                       item.isRemoved = true
+-                        _removedCount++
+-                       removed(index)
+-                    }
+-                    z: 2
+-                }
+-            }
+-
+-
+-
+-            Image {
+-                anchors.right: parent.right
+-                anchors.rightMargin: 16
+-                anchors.verticalCenter: parent.verticalCenter
+-                source: "../images/done-" + (theme.inverted? "white" : "black") + ".png"
+-                visible: allowSelect?isSelected:false
+-            }
+-
+-            MouseArea{
+-                id:mouseArea
+-                anchors.fill: parent
+-                anchors.right:removeButton.left
+-                anchors.rightMargin: 10
+-                onClicked:{
+-                    if(!allowSelect)
+-                        return
+-                    consoleDebug("Clicked")
+-
+-                    if(!multiSelectMode)
+-                        walistviewroot.selected(model)
+-                    else{
+-                        if(!walistviewroot.isSelected(index))
+-                            select(index)
+-                        else
+-                            unSelect(index)
+-                    }
+-                }
+-            }
+-
+-        }
+-    }
+-
+-}
+diff -urN client//UI/Contacts/Contacts.qml wazapp//UI/Contacts/Contacts.qml
+--- client//UI/Contacts/Contacts.qml	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//UI/Contacts/Contacts.qml	2012-09-21 10:59:12.000000000 -0300
+@@ -24,7 +24,6 @@
+ 
+ import "js/contacts.js" as ContactsManager
+ import "../common/js/Global.js" as Helpers
+-import "../common/WAListView/Components"
+ import "../common"
+ import "../Menu"
+ 
+@@ -129,7 +128,7 @@
+         Contact{
+             property bool filtered: model.name.match(new RegExp(searchInput.text,"i")) != null
+             id: contactComp
+-            height: model.iscontact =="yes" && filtered ? 80 : 0
++            height: filtered ? 80 : 0
+ 			visible: height!=0
+             Component.onCompleted: {
+                 ContactsManager.contactsViews.push(contactComp)
+@@ -312,7 +311,7 @@
+             spacing: 1
+ 			cacheBuffer: 30000 // contactsModel.count * 81 --> this should work too.
+ 			highlightFollowsCurrentItem: false
+-            section.property: "name"
++            section.property: "alphabet"
+             section.criteria: ViewSection.FirstCharacter
+ 
+             section.delegate: GroupSeparator {
+diff -urN client//UI/Contacts/PhoneContactsList.qml wazapp//UI/Contacts/PhoneContactsList.qml
+--- client//UI/Contacts/PhoneContactsList.qml	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//UI/Contacts/PhoneContactsList.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,79 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-import com.nokia.meego 1.0
+-import "../common"
+-import "../common/WAListView"
+-
+-WAPage{
+-    id:phoneContactsSelectorPage
+-    property alias title:header.title
+-    property alias multiSelectmode:contactlist.multiSelectMode
+-    property alias allowFastScroll:contactlist.allowFastScroll
+-    property alias allowRemove:contactlist.allowRemove
+-    property alias state:contactlist.state
+-
+-    property bool _loadedSent:false
+-
+-    signal loadedPhoneContacts()
+-    signal removed(int index);
+-    signal selected(variant selectedItem);
+-
+-    onStatusChanged: {
+-        if(status == PageStatus.Active){
+-            loadPhoneContacts();
+-        }
+-    }
+-
+-    function loadPhoneContacts(){
+-        if (phoneContactsModel.count==0) {
+-
+-            appWindow.phoneContactsReady.connect(onPhoneContactsReady)
+-            populatePhoneContacts()
+-
+-        } else{
+-                onPhoneContactsReady();
+-            }
+-    }
+-
+-    function select(ind){return contactlist.select(ind);}
+-    function unSelect(ind){return contactlist.unSelect(ind);}
+-
+-    function getSelected(){
+-        return contactlist.getSelected()
+-    }
+-
+-    function getPhoneContactsViews(){
+-        return contactlist.getItems()
+-    }
+-
+-    function onPhoneContactsReady() {
+-
+-        if(!_loadedSent){
+-            console.log("GOT IT")
+-            contactlist.model = phoneContactsModel;
+-            loadedPhoneContacts()
+-            _loadedSent = true
+-        }
+-
+-    }
+-
+-
+-    WAHeader{
+-        id:header
+-        anchors.top:parent.top
+-        width:parent.width
+-        height: 73
+-    }
+-
+-
+-    WAListView{
+-        id: contactlist
+-        defaultPicture: "../common/images/user.png"
+-        anchors.top:header.bottom
+-        //model: getPhoneContacts()
+-
+-        onSelected:{phoneContactsSelectorPage.selected(selectedItem);}
+-        onRemoved: {phoneContactsSelectorPage.removed(index)}
+-    }
+-
+-}
+diff -urN client//UI/Contacts/SelectContacts.qml wazapp//UI/Contacts/SelectContacts.qml
+--- client//UI/Contacts/SelectContacts.qml	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//UI/Contacts/SelectContacts.qml	2012-09-20 09:16:38.000000000 -0300
+@@ -24,7 +24,6 @@
+ 
+ import "../common"
+ import "../Contacts"
+-import "../common/WAListView/Components"
+ 
+ WAPage {
+     id: contactsContainer
+@@ -33,8 +32,6 @@
+ 
+ 	property int total: 0
+ 
+-
+-
+     onStatusChanged: {
+         if(status == PageStatus.Activating){
+ 			selectedContacts = ""
+@@ -42,15 +39,8 @@
+ 		}
+ 		if(status == PageStatus.Active){
+ 			searchbar.height = 0
+-            if (phoneContactsModel.count==0) {
+-                 appWindow.phoneContactsReady.connect(onPhoneContactsReady)
+-
++			if (phoneContactsModel.count==0)
+ 				populatePhoneContacts()
+-
+-            } else {
+-                 list_view1.model = phoneContactsModel
+-            }
+-
+ 		}
+         if(status == PageStatus.Inactive){
+ 			searchInput.text = ""
+@@ -58,10 +48,6 @@
+ 		}
+ 	}
+ 
+-    function onPhoneContactsReady(){
+-          list_view1.model = phoneContactsModel
+-    }
+-
+ 	tools: contactsTool
+ 
+ 
+@@ -292,6 +278,8 @@
+         transitions: Transition {
+             NumberAnimation { properties: "opacity"; easing.type: Easing.InOutQuad; duration: 300 }
+         }
++
++
+ 	}
+ 
+     Rectangle {
+@@ -320,13 +308,13 @@
+             id: list_view1
+ 			anchors.fill: parent
+             clip: true
+-            //model: phoneContactsModel
++            model: phoneContactsModel
+             delegate: myDelegate
+             spacing: 1
+ 			cacheBuffer: 30000
+ 			highlightFollowsCurrentItem: false
+ 
+-            section.property: "name"
++            section.property: "displayLabel"
+             section.criteria: ViewSection.FirstCharacter
+ 
+             section.delegate: GroupSeparator {
+diff -urN client//UI/Contacts/SyncedContactsList.qml wazapp//UI/Contacts/SyncedContactsList.qml
+--- client//UI/Contacts/SyncedContactsList.qml	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//UI/Contacts/SyncedContactsList.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,33 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-import "../common"
+-import "../common/WAListView"
+-
+-WAPage{
+-    id:contactsSelectorPage
+-    property alias title:header.title
+-    property alias multiSelectmode:contactlist.multiSelectMode
+-
+-    signal selected(variant selectedItem);
+-
+-    function getSelected(){
+-        return contactlist.getSelected()
+-    }
+-
+-    WAHeader{
+-        id:header
+-        anchors.top:parent.top
+-        width:parent.width
+-        height: 73
+-    }
+-
+-    WAListView{
+-        id: contactlist
+-        defaultPicture: "../common/images/user.png"
+-        anchors.top:header.bottom
+-        model: getContacts()
+-
+-        onSelected:{ consoleDebug("from contacts"); contactsSelectorPage.selected(selectedItem);}
+-    }
+-
+-}
+diff -urN client//UI/Conversations/Conversation.qml wazapp//UI/Conversations/Conversation.qml
+--- client//UI/Conversations/Conversation.qml	2012-10-07 13:17:42.435559539 -0300
++++ wazapp//UI/Conversations/Conversation.qml	2012-09-24 19:53:35.000000000 -0300
+@@ -811,24 +811,23 @@
+ 					}
+ 					
+                     onTextChanged: {
+-                        sendMediaWindow.opacity = 0
++						sendMediaWindow.opacity = 0
+ 
+-                        //chat_text.text = Helpers.emojify2(chat_text.text)
++						//chat_text.text = Helpers.emojify2(chat_text.text)
+                         if(!typingEnabled)
+                         {
+                             //to prevent initial set of placeHolderText from firing textChanged signal
+                             typingEnabled = true
+                             return
+                         }
+-                        if(!isGroup()) {
+-                            if(!iamtyping) {
+-                                consoleDebug("TYPING");
+-                                sendTyping(jid);
+-                            }
+-                            iamtyping = true;
+-                            typing_timer.restart();
+ 
++                        if(!iamtyping)
++                        {
++                            consoleDebug("TYPING");
++                            sendTyping(jid);
+                         }
++                        iamtyping = true;
++                        typing_timer.restart();
+                     }
+ 
+                     platformSipAttributes: SipAttributes {
+diff -urN client//UI/Conversations/Location.qml wazapp//UI/Conversations/Location.qml
+--- client//UI/Conversations/Location.qml	2012-10-07 13:17:42.435559539 -0300
++++ wazapp//UI/Conversations/Location.qml	2012-09-20 09:16:38.000000000 -0300
+@@ -12,7 +12,6 @@
+     id: mainPage
+     property string latitudeStr: qsTr("Resolving...")
+     property string longitudeStr: qsTr("Resolving...")
+-    property  bool resolved: false
+     property Coordinate currentCoord
+ 
+     tools: statusTools
+@@ -178,8 +177,6 @@
+         currentCoord = positionSource.position.coordinate
+         latitudeStr = currentCoord.latitude
+         longitudeStr = currentCoord.longitude
+-
+-        resolved = true;
+     }
+ 
+     Column {
+@@ -236,7 +233,6 @@
+ 				sendLocation(currentJid,latitudeStr,longitudeStr,appWindow.inPortrait?"true":"false")
+ 				pageStack.pop()
+ 			}
+-            enabled:resolved
+         }
+        
+     }
+diff -urN client//UI/.gitignore wazapp//UI/.gitignore
+--- client//UI/.gitignore	2012-10-07 13:17:42.431559539 -0300
++++ wazapp//UI/.gitignore	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-*.qmlproject.user
+diff -urN client//UI/Groups/AddContacts.qml wazapp//UI/Groups/AddContacts.qml
+--- client//UI/Groups/AddContacts.qml	2012-10-07 13:17:42.435559539 -0300
++++ wazapp//UI/Groups/AddContacts.qml	2012-10-01 09:14:39.000000000 -0300
+@@ -25,7 +25,6 @@
+ import "../Contacts/js/contacts.js" as ContactsManager
+ import "../common/js/Global.js" as Helpers
+ import "../common"
+-import "../common/WAListView/Components"
+ import "../Contacts"
+ 
+ WAPage {
+@@ -43,7 +42,6 @@
+         if(status == PageStatus.Activating){
+ 			contactRemoved()
+ 			list_view1.positionViewAtBeginning()
+-
+ 		}
+ 		if(status == PageStatus.Active){
+ 			searchbar.height = 0
+diff -urN client//UI/Groups/CreateGroup.qml wazapp//UI/Groups/CreateGroup.qml
+--- client//UI/Groups/CreateGroup.qml	2012-10-07 13:17:42.435559539 -0300
++++ wazapp//UI/Groups/CreateGroup.qml	2012-09-20 09:16:38.000000000 -0300
+@@ -41,7 +41,7 @@
+         status_text.forceActiveFocus();
+     }
+ 
+-    function getCurrentContacts() {
++	function getCurrentContacts() {
+ 		for (var i=0; i<participantsModel.count; ++i) {
+ 			selectedContacts = selectedContacts + (selectedContacts!==""? ",":"") + participantsModel.get(i).contactJid;
+ 		}
+@@ -388,9 +388,7 @@
+ 			addParticipants(groupId,participants)
+ 		}
+ 		onAddedParticipants: {
+-
+-            if(selectedGroupPicture !== "/opt/waxmppplugin/bin/wazapp/UI/common/images/group.png")
+-                setPicture(groupId, selectedGroupPicture)
++			setPicture(groupId, selectedGroupPicture)
+         	openConversation(groupId);
+ 		}
+ 	}
+diff -urN client//UI/Groups/GroupsList.qml wazapp//UI/Groups/GroupsList.qml
+--- client//UI/Groups/GroupsList.qml	2012-10-07 13:17:42.435559539 -0300
++++ wazapp//UI/Groups/GroupsList.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,51 +0,0 @@
+-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
+-import QtQuick 1.1
+-import com.nokia.meego 1.0
+-import "../common"
+-import "../common/WAListView"
+-
+-
+-WAPage{
+-    id:groupsSelectorPage
+-    property alias title:header.title
+-
+-    signal selected(variant selectedItem);
+-
+-    onStatusChanged: {
+-
+-        consoleDebug("STATUS CHANGED")
+-
+-        if(status == PageStatus.Activating) {
+-
+-            consoleDebug("ACTIVATING!!");
+-            var groups = getGroups();
+-            groupslist.model = groups
+-
+-            consoleDebug("OK")
+-
+-        }
+-    }
+-
+-
+-
+-
+-    WAHeader{
+-        id:header
+-        anchors.top:parent.top
+-        width:parent.width
+-        height: 73
+-    }
+-
+-
+-
+-    WAListView{
+-        id: groupslist
+-        defaultPicture: "../common/images/user.png"
+-        anchors.top:header.bottom
+-       // model: getGroups();
+-
+-
+-        onSelected:{ consoleDebug("from groups");groupsSelectorPage.selected(selectedItem);}
+-    }
+-
+-}
+diff -urN client//UI/main.qml wazapp//UI/main.qml
+--- client//UI/main.qml	2012-10-07 13:17:42.495559539 -0300
++++ wazapp//UI/main.qml	2012-10-01 09:31:19.000000000 -0300
+@@ -21,7 +21,6 @@
+ ****************************************************************************/
+ import QtQuick 1.1
+ import com.nokia.meego 1.0
+-import com.nokia.extras 1.0
+ import QtMobility.gallery 1.1
+ 
+ import "Chats"
+@@ -130,7 +129,6 @@
+ 	signal stopRecording();
+ 	signal playRecording();
+ 	signal deleteRecording();
+-    signal exportConversation(string jid);
+ 
+ 
+ 	signal openContactPicker(string multi, string title); //TESTING...
+@@ -286,9 +284,6 @@
+         aboutDialog.open();
+     }
+ 
+-    function onConversationExported(jid, path){
+-        consoleDebug(jid+":::"+path)
+-    }
+ 
+ 	function onContactsChanged() {
+ 
+@@ -422,52 +417,6 @@
+ 		}
+     }
+ 
+-
+-
+-    function getContacts(){
+-
+-        return contactsModel;
+-    }
+-
+-    function getGroups(){
+-
+-        consoleDebug("Getting groups")
+-        var convs = getConversations();
+-        consoleDebug(convs)
+-        var modelData = Qt.createQmlObject("import QtQuick 1.0; ListModel{}", appWindow, "groupsModel")
+-
+-        for(var i=0; i < convs.count; i++) {
+-
+-            var conv = convs.get(i).conversation;
+-            consoleDebug(conv);
+-            consoleDebug(conv.isGroup());
+-
+-            if(conv.isGroup()) {
+-
+-                consoleDebug("Appending")
+-
+-                modelData.append({name:conv.title, picture:conv.picture, jid:conv.jid})
+-                consoleDebug("Pass")
+-
+-            }
+-
+-        }
+-
+-        consoleDebug("Returning")
+-        consoleDebug(modelData.length);
+-
+-        return modelData;
+-
+-    }
+-
+-
+-    function getConversations(){
+-
+-        return conversationsModel;
+-    }
+-
+-
+-
+ 	property string currentContacts: ""
+ 	property int newContacts: 0
+ 
+@@ -491,37 +440,15 @@
+ 		}
+     }
+ 
+-
+-    signal phoneContactsReady()
+     function pushPhoneContacts(contacts){
+         phoneContactsModel.clear()
+ 		consoleDebug("APPENDING PHONE CONTACTS:" + contacts.length)
+-
+-        var tmpModelData = new Array
+ 		for (var i=0; i<contacts.length; i++) {
+-           // phoneContactsModel.insert(phoneContactsModel.count,{"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
+-            //							"numbers":contacts[i][2].toString(), "selected":false})
+-
+-            tmpModelData.push({"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
+-                                                            "numbers":contacts[i][2].toString(), "selected":false})
++			phoneContactsModel.insert(phoneContactsModel.count,{"name":contacts[i][0], "picture":contacts[i][1], 
++										"numbers":contacts[i][2].toString(), "selected":false})
+ 		}
+-
+-        modelworker.sendMessage({"model":phoneContactsModel,"data":tmpModelData})
+-
+-    }
+-
+-    WorkerScript{
+-        id:modelworker
+-        source: "common/js/modelworker.js"
+-        onMessage: {
+-            console.log("EMITING READY")
+-            phoneContactsReady()
+-            console.log("EMIT")
+-        }
+     }
+ 
+-
+-
+     function onContactsSyncStatusChanged(s) {
+         switch(s){
+         case "GETTING": loadingPage.operation = qsTr("Retrieving contacts list...");
+@@ -822,13 +749,6 @@
+             }
+         }
+ 
+-        InfoBanner {
+-            id:osd_notify
+-            topMargin: 10
+-           // iconSource: "system_banner_thumbnail.png"
+-            timerEnabled: true
+-        }
+-
+         ToolBarLayout {
+ 
+             id:mainTools
+diff -urN client//UI/Selectors/ContactsGroupsSelector.qml wazapp//UI/Selectors/ContactsGroupsSelector.qml
+--- client//UI/Selectors/ContactsGroupsSelector.qml	2012-10-07 13:17:42.439559539 -0300
++++ wazapp//UI/Selectors/ContactsGroupsSelector.qml	1969-12-31 21:00:00.000000000 -0300
+@@ -1,69 +0,0 @@
+-import "../Contacts"
+-import "../Groups"
+-import "../common"
+-import QtQuick 1.1
+-import com.nokia.meego 1.0
+-WAPage {
+-    id: selectorroot
+-    property alias contactsTitle:contactsSelector.title
+-    property alias groupsTitle:groupsSelector.title
+-    property int show:2 //0:all, 1:contacts, 2:groups
+-    property bool multiSelect:false
+-
+-    signal selected(variant selectedItem)
+-
+-    tools:selectorTools
+-
+-
+-    TabGroup {
+-        id: tabGroups
+-        currentTab: contactsSelector
+-
+-       SyncedContactsList{
+-            id:contactsSelector
+-
+-            Connections {
+-                onSelected:selected(selectedItem)
+-            }
+-            height: parent.height
+-        }
+-        GroupsList {
+-            id: groupsSelector
+-            Connections {
+-                onSelected:selected(selectedItem)
+-            }
+-            height: parent.height
+-        }
+-    }
+-
+-    ToolBarLayout {
+-
+-        id:selectorTools
+-
+-        ToolIcon {
+-            platformIconId: "toolbar-back"
+-            onClicked: pageStack.pop()
+-        }
+-
+-        ButtonRow {
+-            style: TabButtonStyle { inverted:theme.inverted }
+-
+-            TabButton {
+-                id: contactsButton
+-                platformStyle: TabButtonStyle{inverted:theme.inverted}
+-                text: qsTr("Contacts")
+-                //iconSource: "image://theme/icon-m-toolbar-new-chat" + (theme.inverted ? "-white" : "")
+-                tab: contactsSelector
+-            }
+-            TabButton {
+-                id: groupsbButton
+-                platformStyle: TabButtonStyle{inverted: theme.inverted}
+-                text: qsTr("Groups")
+-                //iconSource: "common/images/book" + (theme.inverted ? "-white" : "") + ".png";
+-                tab: groupsSelector
+-            }
+-        }
+-
+-
+-    }
+-}
+diff -urN client//UI/Wazapp.qmlproject.user wazapp//UI/Wazapp.qmlproject.user
+--- client//UI/Wazapp.qmlproject.user	1969-12-31 21:00:00.000000000 -0300
++++ wazapp//UI/Wazapp.qmlproject.user	2012-09-20 09:16:22.000000000 -0300
+@@ -0,0 +1,150 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE QtCreatorProject>
++<!-- Written by Qt Creator 2.4.1, 2012-09-19T03:52:44. -->
++<qtcreator>
++ <data>
++  <variable>ProjectExplorer.Project.ActiveTarget</variable>
++  <value type="int">0</value>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.EditorSettings</variable>
++  <valuemap type="QVariantMap">
++   <value type="bool" key="EditorConfiguration.AutoIndent">true</value>
++   <value type="bool" key="EditorConfiguration.AutoSpacesForTabs">false</value>
++   <valuemap type="QVariantMap" key="EditorConfiguration.CodeStyle.0">
++    <value type="QString" key="language">Cpp</value>
++    <valuemap type="QVariantMap" key="value">
++     <value type="QString" key="CurrentPreferences">CppGlobal</value>
++    </valuemap>
++   </valuemap>
++   <valuemap type="QVariantMap" key="EditorConfiguration.CodeStyle.1">
++    <value type="QString" key="language">QmlJS</value>
++    <valuemap type="QVariantMap" key="value">
++     <value type="QString" key="CurrentPreferences">QmlJSGlobal</value>
++    </valuemap>
++   </valuemap>
++   <value type="int" key="EditorConfiguration.CodeStyle.Count">2</value>
++   <value type="QByteArray" key="EditorConfiguration.Codec">System</value>
++   <value type="bool" key="EditorConfiguration.ConstrainTooltips">false</value>
++   <value type="int" key="EditorConfiguration.IndentSize">4</value>
++   <value type="bool" key="EditorConfiguration.MouseNavigation">true</value>
++   <value type="int" key="EditorConfiguration.PaddingMode">1</value>
++   <value type="bool" key="EditorConfiguration.ScrollWheelZooming">true</value>
++   <value type="int" key="EditorConfiguration.SmartBackspaceBehavior">0</value>
++   <value type="bool" key="EditorConfiguration.SpacesForTabs">true</value>
++   <value type="int" key="EditorConfiguration.TabKeyBehavior">0</value>
++   <value type="int" key="EditorConfiguration.TabSize">8</value>
++   <value type="bool" key="EditorConfiguration.UseGlobal">true</value>
++   <value type="int" key="EditorConfiguration.Utf8BomBehavior">1</value>
++   <value type="bool" key="EditorConfiguration.addFinalNewLine">true</value>
++   <value type="bool" key="EditorConfiguration.cleanIndentation">true</value>
++   <value type="bool" key="EditorConfiguration.cleanWhitespace">true</value>
++   <value type="bool" key="EditorConfiguration.inEntireDocument">false</value>
++  </valuemap>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.PluginSettings</variable>
++  <valuemap type="QVariantMap"/>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.Target.0</variable>
++  <valuemap type="QVariantMap">
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">QML Viewer</value>
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">QML Viewer</value>
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmlProjectManager.QmlTarget</value>
++   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">-1</value>
++   <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">-1</value>
++   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
++   <value type="int" key="ProjectExplorer.Target.BuildConfigurationCount">0</value>
++   <value type="int" key="ProjectExplorer.Target.DeployConfigurationCount">0</value>
++   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.0">
++    <value type="bool" key="Analyzer.Project.UseGlobal">true</value>
++    <value type="bool" key="Analyzer.Project.UseGlobal">true</value>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.AddedSuppressionFiles"/>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.AddedSuppressionFiles"/>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.CollectBusEvents">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.CollectBusEvents">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.CollectSystime">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.CollectSystime">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableBranchSim">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableBranchSim">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableCacheSim">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableCacheSim">false</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableEventToolTips">true</value>
++    <value type="bool" key="Analyzer.Valgrind.Callgrind.EnableEventToolTips">true</value>
++    <value type="double" key="Analyzer.Valgrind.Callgrind.MinimumCostRatio">0.01</value>
++    <value type="double" key="Analyzer.Valgrind.Callgrind.MinimumCostRatio">0.01</value>
++    <value type="double" key="Analyzer.Valgrind.Callgrind.VisualisationMinimumCostRatio">10</value>
++    <value type="double" key="Analyzer.Valgrind.Callgrind.VisualisationMinimumCostRatio">10</value>
++    <value type="bool" key="Analyzer.Valgrind.FilterExternalIssues">true</value>
++    <value type="bool" key="Analyzer.Valgrind.FilterExternalIssues">true</value>
++    <value type="int" key="Analyzer.Valgrind.NumCallers">25</value>
++    <value type="int" key="Analyzer.Valgrind.NumCallers">25</value>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.RemovedSuppressionFiles"/>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.RemovedSuppressionFiles"/>
++    <value type="bool" key="Analyzer.Valgrind.TrackOrigins">true</value>
++    <value type="bool" key="Analyzer.Valgrind.TrackOrigins">true</value>
++    <value type="QString" key="Analyzer.Valgrind.ValgrindExecutable">valgrind</value>
++    <value type="QString" key="Analyzer.Valgrind.ValgrindExecutable">valgrind</value>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.VisibleErrorKinds">
++     <value type="int">0</value>
++     <value type="int">1</value>
++     <value type="int">2</value>
++     <value type="int">3</value>
++     <value type="int">4</value>
++     <value type="int">5</value>
++     <value type="int">6</value>
++     <value type="int">7</value>
++     <value type="int">8</value>
++     <value type="int">9</value>
++     <value type="int">10</value>
++     <value type="int">11</value>
++     <value type="int">12</value>
++     <value type="int">13</value>
++     <value type="int">14</value>
++    </valuelist>
++    <valuelist type="QVariantList" key="Analyzer.Valgrind.VisibleErrorKinds">
++     <value type="int">0</value>
++     <value type="int">1</value>
++     <value type="int">2</value>
++     <value type="int">3</value>
++     <value type="int">4</value>
++     <value type="int">5</value>
++     <value type="int">6</value>
++     <value type="int">7</value>
++     <value type="int">8</value>
++     <value type="int">9</value>
++     <value type="int">10</value>
++     <value type="int">11</value>
++     <value type="int">12</value>
++     <value type="int">13</value>
++     <value type="int">14</value>
++    </valuelist>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName"></value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">QML Viewer</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmlProjectManager.QmlRunConfiguration</value>
++    <value type="QString" key="QmlProjectManager.QmlRunConfiguration.MainScript">CurrentFile</value>
++    <value type="QString" key="QmlProjectManager.QmlRunConfiguration.QDeclarativeViewerArguments"></value>
++    <value type="int" key="QmlProjectManager.QmlRunConfiguration.QtVersion">3</value>
++    <valuelist type="QVariantList" key="QmlProjectManager.QmlRunConfiguration.UserEnvironmentChanges"/>
++    <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
++    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
++    <value type="bool" key="RunConfiguration.UseQmlDebugger">true</value>
++    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">false</value>
++   </valuemap>
++   <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
++  </valuemap>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.TargetCount</variable>
++  <value type="int">1</value>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
++  <value type="QString">{9e8d64ad-3238-4e10-85a4-2027547c2a8d}</value>
++ </data>
++ <data>
++  <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
++  <value type="int">10</value>
++ </data>
++</qtcreator>
+diff -urN client//ui.py wazapp//ui.py
+--- client//ui.py	2012-10-07 13:17:42.499559539 -0300
++++ wazapp//ui.py	2012-10-04 14:14:07.000000000 -0300
+@@ -125,7 +125,6 @@
+ 		self.messageStore = MessageStore(self.store);
+ 		self.messageStore.messagesReady.connect(self.rootObject().messagesReady)
+ 		self.messageStore.conversationReady.connect(self.rootObject().conversationReady)
+-		self.messageStore.conversationExported.connect(self.rootObject().onConversationExported)
+ 		self.rootObject().loadMessages.connect(self.messageStore.loadMessages);
+ 		
+ 		
+@@ -133,7 +132,6 @@
+ 		self.rootObject().deleteMessage.connect(self.messageStore.deleteMessage)
+ 		self.rootObject().conversationOpened.connect(self.messageStore.onConversationOpened)
+ 		self.rootObject().removeSingleContact.connect(self.messageStore.removeSingleContact)
+-		self.rootObject().exportConversation.connect(self.messageStore.exportConversation)
+ 		self.dbusService = WAService(self);
+ 		
+ 	
+@@ -321,6 +319,7 @@
+ 			if os.path.isfile(curFile):
+ 				curFileExtention = curFile.split(".")[-1]
+ 				if curFileExtention in data and not curFile in self.filelist and not "No sound.wav" in curFile:
++					print "Adding file: " + curFile;
+ 					self.filelist.append(curFile)
+ 			elif not "." in curFile: #Don't process hidden folders
+ 				#if not curFile in ignored:
+@@ -416,8 +415,12 @@
+ 		print "GETTING RING TONES..."
+ 		self.filelist = []
+ 		data = ["mp3","MP3","wav","WAV"]
+-		self.processFiles("/usr/share/sounds/ring-tones/", data) #, ignored)
+-		self.processFiles("/home/user/MyDocs/Ringtones", data) #, ignored)
++		if os.path.exists("/usr/share/sounds/ring-tones/"):
++			self.processFiles("/usr/share/sounds/ring-tones/", data) #, ignored)
++		if os.path.exists("/home/user/MyDocs/Ringtones/"):
++			self.processFiles("/home/user/MyDocs/Ringtones/", data) #, ignored)
++		if os.path.exists("/home/user/.ring-tones/"):
++			self.processFiles("/home/user/.ring-tones/", data) #, ignored)
+ 
+ 		myfiles = []
+ 		for f in self.filelist:
+diff -urN client//utilities.py wazapp//utilities.py
+--- client//utilities.py	2012-10-07 13:17:42.499559539 -0300
++++ wazapp//utilities.py	2012-09-24 01:34:55.000000000 -0300
+@@ -24,7 +24,7 @@
+ 
+ 	debug_mode = 1;
+ 	
+-	waversion = "0.8.11.7"
++	waversion = "0.8.11.5"
+ 	
+ 
+ 	
+diff -urN client//warequeststatus.py wazapp//warequeststatus.py
+--- client//warequeststatus.py	2012-10-07 13:17:42.499559539 -0300
++++ wazapp//warequeststatus.py	1969-12-31 21:00:00.000000000 -0300
+@@ -1,97 +0,0 @@
+-'''
+-Copyright (c) 2012, Tarek Galal <tarek@wazapp.im>
+-
+-This file is part of Wazapp, an IM application for Meego Harmattan platform that
+-allows communication with Whatsapp users
+-
+-Wazapp is free software: you can redistribute it and/or modify it under the 
+-terms of the GNU General Public License as published by the Free Software 
+-Foundation, either version 2 of the License, or (at your option) any later 
+-version.
+-
+-Wazapp is distributed in the hope that it will be useful, but WITHOUT ANY 
+-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+-PARTICULAR PURPOSE. See the GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along with 
+-Wazapp. If not, see http://www.gnu.org/licenses/.
+-'''
+-import httplib,urllib
+-from utilities import Utilities
+-from xml.dom import minidom
+-
+-import threading
+-from PySide import QtCore
+-from PySide.QtCore import QThread
+-from wadebug import StatusRequestDebug
+-
+-class WARequestStatus(QThread):
+-
+-
+-	#BASE_URL = [ 97, 61, 100, 123, 114, 103, 96, 114, 99, 99, 61, 125, 118, 103 ];
+-	status = None
+-	result = None
+-	params = []
+-	#v = "v1"
+-	#method = None
+-	conn = None
+-	
+-	done = QtCore.Signal(str);
+-	fail = QtCore.Signal();
+-
+-	def __init__(self):
+-		_d = StatusRequestDebug();
+-		self._d = _d.debug;
+-		super(WARequestStatus,self).__init__();
+-
+-	def onResponse(self, name, value):
+-		if name == "status":
+-			self.status = value
+-		elif name == "result":
+-			self.result = value
+-			
+-	def addParam(self,name,value):
+-		self.params.append({name:value.encode('utf-8')});
+-
+-	def clearParams(self):
+-		self.params = [];
+-	
+-	def getUrl(self):
+-		return  self.base_url+self.req_file;
+-
+-	def getUserAgent(self):
+-		#agent = "WhatsApp/1.2 S40Version/microedition.platform";
+-		agent = "WhatsApp/2.6.7 iPhone_OS/5.0.1 Device/Unknown_(iPhone4,1)";
+-		return agent;	
+-	
+-	
+-
+-	def sendRequest(self):
+-		
+-		self.params =  [param.items()[0] for param in self.params];
+-		
+-		params = urllib.urlencode(self.params);
+-		
+-		self._d("Opening connection to "+self.base_url);
+-		self.conn = httplib.HTTPSConnection(self.base_url,443);
+-		headers = {"User-Agent":self.getUserAgent(),
+-			"Content-Type":"application/x-www-form-urlencoded",
+-			"Accept":"*/*",
+-			"Accept-Language":"en-us",
+-			"Accept-Encoding":"gzip, deflate"
+-			};
+-		
+-		self._d(headers);
+-		self._d(params);
+-		
+-		self.conn.request("POST",self.req_file,params,headers);
+-		resp=self.conn.getresponse()
+- 		response=resp.read();
+- 		self._d(response);
+- 		#doc = minidom.parseString(response);
+- 		self.done.emit(response);
+- 		return response;
+-		#response_node  = doc.getElementsByTagName("response")[0];
+-
+-		#for (name, value) in response_node.attributes.items():
+-		#self.onResponse(name,value);
