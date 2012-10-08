@@ -423,15 +423,11 @@ WAPage {
 					GroupSeparator {
 						title: qsTr("Personal messages")
 					}
-					SelectionItemTr {
+					SelectionItemTrSound {
 						id: personalTone
 					    title: qsTr("Notification tone")
-					    model: ringtoneModel
-						//initialValue: MySettings.getSetting("PersonalRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
-					    onValueChosen: { 
-							MySettings.setSetting("PersonalRingtone", value)
-							setPersonalRingtone(value)
-						}
+						profile: "PersonalRingtone"
+					    initialValue: personalRingtone
 					}
 					SwitchItem {
 						title: qsTr("Vibrate")
@@ -446,15 +442,11 @@ WAPage {
 					GroupSeparator {
 						title: qsTr("Group messages")
 					}
-					SelectionItemTr {
+					SelectionItemTrSound {
 						id: groupTone
 					    title: qsTr("Notification tone")
-					    model: ringtoneModel
-						//initialValue: MySettings.getSetting("GroupRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
-					    onValueChosen: { 
-							MySettings.setSetting("GroupRingtone", value)
-							setGroupRingtone(value)
-						}
+						profile: "GroupRingtone"
+					    initialValue: groupRingtone
 					}
 					SwitchItem {
 						id: groupVibra

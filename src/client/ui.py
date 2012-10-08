@@ -107,6 +107,7 @@ class WAUI(QDeclarativeView):
 		self.rootObject().stopRecording.connect(self.stopRecording)
 		self.rootObject().playRecording.connect(self.playRecording)
 		self.rootObject().deleteRecording.connect(self.deleteRecording)
+		self.rootObject().browseFiles.connect(self.browseFiles)
 
 
 		self.rootObject().openContactPicker.connect(self.openContactPicker)
@@ -416,8 +417,11 @@ class WAUI(QDeclarativeView):
 		print "GETTING RING TONES..."
 		self.filelist = []
 		data = ["mp3","MP3","wav","WAV"]
-		self.processFiles("/usr/share/sounds/ring-tones/", data) #, ignored)
-		self.processFiles("/home/user/MyDocs/Ringtones", data) #, ignored)
+		self.processFiles("/usr/share/sounds/ring-tones/", data)
+		#if os.path.exists("/home/user/MyDocs/Ringtones"):
+		#	self.processFiles("/home/user/MyDocs/Ringtones", data)
+		if os.path.exists("/home/user/.ring-tones"):
+			self.processFiles("/home/user/.ring-tones", data)
 
 		myfiles = []
 		for f in self.filelist:
@@ -508,6 +512,29 @@ class WAUI(QDeclarativeView):
 	def deleteRecording(self):
 		if os.path.exists(WAConstants.CACHE_PATH+'/temprecord.wav'):
 			os.remove(WAConstants.CACHE_PATH+'/temprecord.wav')
+
+
+	def browseFiles(self, folder, format):
+		print "Processing " + folder
+		currentDir = os.path.abspath(folder)
+		filesInCurDir = os.listdir(currentDir)
+		myfiles = []
+
+		for file in filesInCurDir:
+			curFile = os.path.join(currentDir, file)
+			curFileName = curFile.split('/')[-1]
+			if curFileName[0] != ".":
+				if os.path.isfile(curFile):
+					curFileExtention = curFile.split(".")[-1]
+					if curFileExtention in format:
+						myfiles.append({"fileName":curFileName,"filepath":curFile, 
+										"filetype":"send-audio", "name":"a"+curFile.split('/')[-1]})
+				else:
+					myfiles.append({"fileName":curFileName,"filepath":curFile, 
+									"filetype":"folder", "name":"a"+curFile.split('/')[-1]})
+
+		self.rootObject().pushBrowserFiles( sorted(myfiles, key=lambda k: k['name']), folder);
+
 
 
 	def initConnection(self):
@@ -613,6 +640,8 @@ class WAUI(QDeclarativeView):
 		self.rootObject().getVideoFiles.connect(self.getVideoFiles)
 		
 		self.rootObject().populatePhoneContacts.connect(self.populatePhoneContacts)
+		self.rootObject().playSoundFile.connect(whatsapp.eventHandler.notifier.playSound)
+		self.rootObject().stopSoundFile.connect(whatsapp.eventHandler.notifier.stopSound)
 
 
 		#self.reg = Registration();
