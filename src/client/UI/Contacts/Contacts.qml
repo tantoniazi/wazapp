@@ -126,7 +126,7 @@ WAPage {
         Contact{
             property bool filtered: model.name.match(new RegExp(searchInput.text,"i")) != null
             id: contactComp
-            height: filtered ? 80 : 0
+            height: model.iscontact =="yes" && filtered ? 80 : 0
 			visible: height!=0
             Component.onCompleted: {
                 ContactsManager.contactsViews.push(contactComp)

@@ -41,12 +41,17 @@ import subprocess
 
 class WAUI(QDeclarativeView):
 	quit = QtCore.Signal()
+	splashOperationUpdated = QtCore.Signal(str)
+	initialized = QtCore.Signal()
+	phoneContactsReady = QtCore.Signal(list)
+
 	
 	def __init__(self):
 		
 		_d = UIDebug();
 		self._d = _d.d;
 	
+		self.initializationDone = False
 		bus = dbus.SessionBus()
 		mybus = bus.get_object('com.nokia.video.Thumbnailer1', '/com/nokia/video/Thumbnailer1')
 		self.iface = dbus.Interface(mybus, 'org.freedesktop.thumbnails.SpecializedThumbnailer1')
@@ -78,9 +83,11 @@ class WAUI(QDeclarativeView):
 	
 	def preQuit(self):
 		self._d("pre quit")
-		del self.whatsapp
-		del self.c
 		self.quit.emit()
+		
+	def onProcessEventsRequested(self):
+		#self._d("Processing events")
+		QtCore.QCoreApplication.processEvents()
 		
 	def initConnections(self,store):
 		self.store = store;
@@ -107,7 +114,7 @@ class WAUI(QDeclarativeView):
 		self.rootObject().stopRecording.connect(self.stopRecording)
 		self.rootObject().playRecording.connect(self.playRecording)
 		self.rootObject().deleteRecording.connect(self.deleteRecording)
-		self.rootObject().browseFiles.connect(self.browseFiles)
+		self.rootObject().breathe.connect(self.onProcessEventsRequested)
 
 
 		self.rootObject().openContactPicker.connect(self.openContactPicker)
@@ -118,6 +125,11 @@ class WAUI(QDeclarativeView):
 		#self.c.manager.manager.contactsChanged.connect(self.rootObject().onContactsChanged);
 		#self.c.manager.manager.contactsAdded.connect(self.rootObject().onContactsChanged);
 		#self.c.manager.manager.contactsRemoved.connect(self.rootObject().onContactsChanged);
+		
+		#self.contactsReady.connect(self.rootObject().pushContacts)
+		self.phoneContactsReady.connect(self.rootObject().pushPhoneContacts)
+		self.splashOperationUpdated.connect(self.rootObject().setSplashOperation)
+		self.initialized.connect(self.rootObject().onInitDone)
 
 
 		
@@ -126,7 +138,6 @@ class WAUI(QDeclarativeView):
 		self.messageStore = MessageStore(self.store);
 		self.messageStore.messagesReady.connect(self.rootObject().messagesReady)
 		self.messageStore.conversationReady.connect(self.rootObject().conversationReady)
-		self.messageStore.conversationExported.connect(self.rootObject().onConversationExported)
 		self.rootObject().loadMessages.connect(self.messageStore.loadMessages);
 		
 		
@@ -139,6 +150,9 @@ class WAUI(QDeclarativeView):
 		
 	
 	def focusChanged(self,old,new):
+		if not self.initializationDone:
+			return
+		
 		if new is None:
 			self.onUnfocus();
 		else:
@@ -269,6 +283,9 @@ class WAUI(QDeclarativeView):
 			self.rootObject().updateContactStatus(status)
 
 		else:
+			if not self.initializationDone:
+				self.splashOperationUpdated.emit("Loading Contacts")
+
 			contacts = self.c.getContacts();
 			self._d("POPULATE CONTACTS: " + str(len(contacts)));
 			self.rootObject().pushContacts(mode,contacts);
@@ -278,13 +295,20 @@ class WAUI(QDeclarativeView):
 
 		
 	def populateConversations(self):
+		if not self.initializationDone:
+			self.splashOperationUpdated.emit("Loading Conversations")
 		self.messageStore.loadConversations()
 		
 
 	def populatePhoneContacts(self):
+		
+		if not self.initializationDone:
+			self.splashOperationUpdated.emit("Loading Phone Contacts")
+		
 		self._d("POPULATE PHONE CONTACTS");
 		contacts = self.c.getPhoneContacts();
 		self.rootObject().pushPhoneContacts(contacts);
+		#self.phoneContactsReady.emit(contacts)
 
 	
 	def login(self):
@@ -313,6 +337,10 @@ class WAUI(QDeclarativeView):
 
 	def processFiles(self, folder, data): #, ignored):
 		#print "Processing " + folder
+		
+		if not os.path.exists(folder):
+			return
+		
 		currentDir = os.path.abspath(folder)
 		filesInCurDir = os.listdir(currentDir)
 
@@ -417,11 +445,8 @@ class WAUI(QDeclarativeView):
 		print "GETTING RING TONES..."
 		self.filelist = []
 		data = ["mp3","MP3","wav","WAV"]
-		self.processFiles("/usr/share/sounds/ring-tones/", data)
-		#if os.path.exists("/home/user/MyDocs/Ringtones"):
-		#	self.processFiles("/home/user/MyDocs/Ringtones", data)
-		if os.path.exists("/home/user/.ring-tones"):
-			self.processFiles("/home/user/.ring-tones", data)
+		self.processFiles("/usr/share/sounds/ring-tones/", data) #, ignored)
+		self.processFiles("/home/user/MyDocs/Ringtones", data) #, ignored)
 
 		myfiles = []
 		for f in self.filelist:

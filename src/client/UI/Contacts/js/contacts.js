@@ -56,6 +56,7 @@ function populateContacts(contacts)
     }
 
     console.log("Gathered conversations before clearing: "+ccount);
+    breathe()
 
     contactsModel.clear();
     contactsViews = new Array();
@@ -70,6 +71,14 @@ function populateContacts(contacts)
 		//console.log("APPENDING CONTACT: " + contacts[i].jid + " - " + contacts[i].name)
 		//contacts[i].newContact = false;
         contactsModel.append(contacts[i]);
+
+        if(!initializationDone){
+            splashPage.setSubOperation(contacts[i].jid)
+            breathe()
+         }
+        else if(i%4 == 0) {
+            breathe();
+        }
 
         var cachedConv =   conversations[contacts[i].jid];
         if(cachedConv){

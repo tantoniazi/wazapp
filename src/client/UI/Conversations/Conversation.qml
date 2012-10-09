@@ -108,7 +108,7 @@ WAPage {
 
 		onUpdateContactName: {
 			if (jid == ujid) {
-				if (title = jids.split('@')[0]) {
+				if (title = jid.split('@')[0]) {
 					consoleDebug("Update push name in Conversation")
 					conversationTitle.text = npush
 				}
