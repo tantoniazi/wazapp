@@ -114,7 +114,7 @@ WAPage {
 			property string value: model.value
 			color: "transparent"
 
-			height: model.value==qsTr("browse") ? 80 : 72
+			height: model.value=="browse" ? 80 : 72
 			width: appWindow.inPortrait? 480:854
 
 			Rectangle {

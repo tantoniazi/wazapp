@@ -57,6 +57,9 @@ WAStackWindow {
 		vibraForGroup = MySettings.getSetting("GroupVibrate", "Yes")
 		personalRingtone = MySettings.getSetting("PersonalRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
 		groupRingtone = MySettings.getSetting("GroupRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
+		myBackgroundImage = MySettings.getSetting("Background", "none")
+		myBackgroundOpacity = MySettings.getSetting("BackgroundOpacity", "5")
+		setBackground(myBackgroundImage)
 	}
 
     property string waversiontype:waversion.split('.').length == 4?'developer':'beta'
@@ -78,6 +81,8 @@ WAStackWindow {
 	property string vibraForGroup
 	property string currentSelectionProfile
 	property string currentSelectionProfileValue
+	property string myBackgroundImage
+	property int myBackgroundOpacity
 
     /****** Signal and Slot definitions *******/
 
@@ -151,6 +156,8 @@ WAStackWindow {
 	signal vibrateNow();
 
 	signal setRingtone(string ringtonevalue);
+	signal setBackground(string backgroundimg);
+
 
 	signal openPreviewPicture(string ujid, string picturefile, int rotation, string previewimg, string capturemode)
 	function capturedPreviewPicture(ujid, picturefile, rotation, previewimg, capturemode) {
@@ -199,8 +206,10 @@ WAStackWindow {
 	}
 	function pushRingtones(files) {
 		ringtoneModel.clear()
-		ringtoneModel.append({ name: QT_TR_NOOP("Browse"), value: "browse"})
-		ringtoneModel.append({ name: QT_TR_NOOP("(no sound)"), value: "/usr/share/sounds/ring-tones/No sound.wav"})
+		var nosound = qsTr("(no sound)")
+		var browse = qsTr("Browse")
+		ringtoneModel.append({ name: browse, value: "browse"})
+		ringtoneModel.append({ name: nosound, value: "/usr/share/sounds/ring-tones/No sound.wav"})
 		for (var i=0; i<files.length; ++i) {
 			ringtoneModel.append(files[i])
 		}

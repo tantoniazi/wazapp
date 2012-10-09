@@ -34,7 +34,6 @@ WAPage {
 							 qsTr("You are trying it at your own risk.") + "\n" + 
 							 qsTr("Please report any bugs to") + "\n" + "tarek@wazapp.im"
 
-
     Component.onCompleted: {
 		MySettings.initialize()
 		getRingtones()
@@ -101,6 +100,12 @@ WAPage {
         id: myButtonStyleRight
         pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-horizontal-right"
         checkedBackground: "image://theme/color3-meegotouch-button-background-selected-horizontal-right"
+    }
+
+    SliderStyle {
+        id: mySliderStyle
+        grooveItemBackground: "image://theme/color3-meegotouch-slider-elapsed-background-horizontal"
+        grooveItemElapsedBackground: "image://theme/color3-meegotouch-slider-elapsed-background-horizontal"
     }
 
 
@@ -268,8 +273,46 @@ WAPage {
 					spacing: 10
 
 					GroupSeparator {
+						title: qsTr("Background")
+					}
+
+					SelectionItem {
+						id: backgroundSelector
+					    title: qsTr("Image")
+					    initialValue: MySettings.getSetting("Background", "none")
+						onClicked: pageStack.push(Qt.resolvedUrl("SetBackground.qml") );
+					}
+
+
+					Label {
+						verticalAlignment: Text.AlignBottom
+						text: qsTr("Opacity:")
+						y: 24
+						height: 50
+					}
+		            Slider {
+		                //visible:settingsPage.status!=PageStatus.Inactive
+		                id: themeslider
+						x: 20; width: parent.width -40
+		                maximumValue: 10
+		                minimumValue: 0
+		                stepSize: 1
+		                value: MySettings.getSetting("BackgroundOpacity", "0.5")
+		                platformStyle: mySliderStyle
+		                onValueChanged: {
+		                    myBackgroundOpacity = value
+							MySettings.setSetting("BackgroundOpacity", value)
+		                }
+
+		            }
+
+
+
+					GroupSeparator {
 						title: qsTr("Appearance")
 					}
+
+
 					Label {
 						verticalAlignment: Text.AlignBottom
 						text: qsTr("Orientation:")
@@ -331,6 +374,7 @@ WAPage {
 					        }
 					    }
 					}
+
 					Label {
 						verticalAlignment: Text.AlignBottom
 						text: qsTr("Bubble color:")

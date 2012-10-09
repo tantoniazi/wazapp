@@ -16,9 +16,15 @@ Item {
 
 	Component.onCompleted: {
 		MySettings.initialize()
+		getSubtitle()
+	}
+
+	function getSubtitle() {
 		var res = initialValue.split('/')
 		res = res[res.length-1]
 		subtitle = res.charAt(0).toUpperCase() + res.slice(1);
+		subtitle = subtitle.split('.')[0]
+		if (subtitle=="No sound") subtitle = qsTr("(no sound)")
 	}
 
 	Connections {
@@ -26,9 +32,7 @@ Item {
 		onSetRingtone: {
 			if (currentSelectionProfile==profile) {
 				initialValue = ringtonevalue
-				var res = initialValue.split('/')
-				res = res[res.length-1]
-				subtitle = res.charAt(0).toUpperCase() + res.slice(1);
+				getSubtitle()
 				MySettings.setSetting(currentSelectionProfile, ringtonevalue)
 				if (currentSelectionProfile=="GroupRingtone")
 					setGroupRingtone(ringtonevalue)
@@ -37,6 +41,16 @@ Item {
 			}
 		}
 	}
+
+
+    /*Rectangle {
+        id: highlight
+
+        anchors { fill: parent; bottomMargin: 1; topMargin: 1 }
+        color: mouseArea.pressed ? "#4d4d4d" : "transparent"
+        opacity: 0.5
+        smooth: true
+    }*/
 
 
     Column {
@@ -55,7 +69,7 @@ Item {
             id: subTitle
             color: "gray"
             verticalAlignment: Text.AlignVCenter
-            text: subtitle.split('.')[0]
+            text: subtitle
             font.pixelSize: 22
         }
     }
