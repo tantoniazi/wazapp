@@ -115,6 +115,7 @@ class WAUI(QDeclarativeView):
 		self.rootObject().playRecording.connect(self.playRecording)
 		self.rootObject().deleteRecording.connect(self.deleteRecording)
 		self.rootObject().breathe.connect(self.onProcessEventsRequested)
+		self.rootObject().browseFiles.connect(self.browseFiles)
 
 
 		self.rootObject().openContactPicker.connect(self.openContactPicker)
@@ -141,6 +142,8 @@ class WAUI(QDeclarativeView):
 		self.rootObject().loadMessages.connect(self.messageStore.loadMessages);
 		
 		
+		self.messageStore.conversationMedia.connect(self.rootObject().onConversationMedia)
+		self.rootObject().getConversationMediaByJid.connect(self.messageStore.getConversationMedia)
 		self.rootObject().deleteConversation.connect(self.messageStore.deleteConversation)
 		self.rootObject().deleteMessage.connect(self.messageStore.deleteMessage)
 		self.rootObject().conversationOpened.connect(self.messageStore.onConversationOpened)
