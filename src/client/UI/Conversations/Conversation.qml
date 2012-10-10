@@ -982,6 +982,8 @@ WAPage {
 				sendMediaWindow.opacity = 0
                 emojiDialog.openDialog();
 				showSendButton=true; 
+                chat_text.lastPosition = chat_text.cursorPosition
+                consoleDebug("LAST POSITION: " + chat_text.cursorPosition)
 		    }
 		}
 
