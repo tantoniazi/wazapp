@@ -664,13 +664,20 @@ WAStackWindow {
 
     /****Conversation related slots****/
 
-    function conversationReady(conv){
+	function setTotalConvs(val) {
+		splashPage.resetProgress()
+		splashPage.setProgressMax(val)
+	}
+
+    function conversationReady(conv,current){
         //This should be called if and only if conversation start point is backend
-        consoleDebug("Got a conv in conversationReady slot: " + conv.jid);
+        consoleDebug("Got a conv in conversationReady slot: " + conv.jid + " - current: " + current);
 
 
-        if(!initializationDone)
+        if(!initializationDone) {
+			splashPage.setProgress(current)
             splashPage.setSubOperation(conv.jid)
+		}
 
         breathe()
         var conversation = waChats.getOrCreateConversation(conv.jid);

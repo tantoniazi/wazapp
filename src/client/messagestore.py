@@ -32,8 +32,9 @@ class MessageStore(QObject):
 
 	messageStatusUpdated = QtCore.Signal(str,int,int);
 	messagesReady = QtCore.Signal(dict,bool);
-	conversationReady = QtCore.Signal(dict);
+	conversationReady = QtCore.Signal(dict,int);
 	conversationExported = QtCore.Signal(str, str); #jid, exportePath
+	setTotalConvs = QtCore.Signal(int);
 	
 	currKeyId = 0
 
@@ -186,9 +187,13 @@ class MessageStore(QObject):
 		convList = sorted(convList, key=lambda k: k['lastdate']);
 		convList.reverse();
 
+		self.setTotalConvs.emit(len(convList))
+		current = 0;
+
 		for ci in convList:
 			messages = []
-			self.sendConversationReady(ci['jid']);
+			current = current +1
+			self.sendConversationReady(ci['jid'],current);
 			messages.append(ci['message']);
 			self.sendMessagesReady(ci['jid'],messages,False);
 
@@ -206,7 +211,7 @@ class MessageStore(QObject):
 		return messages
 	
 	
-	def sendConversationReady(self,jid):
+	def sendConversationReady(self,jid,current=0):
 		#self._d("SENDING CONV READY %s"%jid)
 		tmp = {}
 		'''
@@ -229,7 +234,7 @@ class MessageStore(QObject):
 				tmp["contacts"].append(contact.getModelData());
 		
 		#self._d("emitting ready ")
-		self.conversationReady.emit(tmp);
+		self.conversationReady.emit(tmp,current);
 	
 	def sendMessagesReady(self,jid,messages,reorder=True):
 		if not len(messages):

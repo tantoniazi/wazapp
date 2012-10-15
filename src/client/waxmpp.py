@@ -46,6 +46,17 @@ import Image
 from PIL.ExifTags import TAGS
 import subprocess
 from Context.Provider import *
+from HTMLParser import HTMLParser
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
 
 class WAEventHandler(WAEventBase):
 	
@@ -404,7 +415,14 @@ class WAEventHandler(WAEventBase):
 		
 	
 	def sendMessage(self,jid,msg_text):
-		self._d("sending message now")
+		n = msg_text.find("</body>")
+		msg_text = msg_text[:n]
+		s = MLStripper()
+		s.feed(msg_text)
+		msg_text = s.get_data().replace("p, li { white-space: pre-wrap; }","")
+		msg_text = msg_text.strip()
+
+		self._d("sending message to: " + jid + ":\n" + msg_text)
 		fmsg = WAXMPP.message_store.createMessage(jid);
 		
 		
@@ -2197,6 +2215,13 @@ class WAXMPP():
 		self.out.write(iqNode)
 
 	def sendSetGroupSubject(self,gjid,subject):
+		n = subject.find("</body>")
+		subject = subject[:n]
+		s = MLStripper()
+		s.feed(subject)
+		subject = s.get_data().replace("p, li { white-space: pre-wrap; }","")
+		subject = subject.strip()
+
 		subject = subject.encode('utf-8')
 		#self._d("setting group subject of " + gjid + " to " + subject)
 		idx = self.makeId("set_group_subject_")
@@ -2311,6 +2336,13 @@ class WAXMPP():
 		self.out.write(iqNode)
 
 	def sendChangeStatus(self,status):
+		n = status.find("</body>")
+		status = status[:n]
+		s = MLStripper()
+		s.feed(status)
+		status = s.get_data().replace("p, li { white-space: pre-wrap; }","")
+		status = status.strip()
+
 		self._d("updating status to: %s"%(status))
 
 		fmsg = WAXMPP.message_store.createMessage(self.eventHandler.account);
