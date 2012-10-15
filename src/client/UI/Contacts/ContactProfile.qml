@@ -298,7 +298,7 @@ WAPage {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.top: separator3.bottom
-            height: 96
+            height: 20 #when not implemented height 20 is good
             //delegate: Image {source: local_path}
         }
 
@@ -319,7 +319,7 @@ WAPage {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.top: separator2.bottom
-            height: 200
+            height: 20 #when not implemented height 20 is good
         }
 
         GroupSeparator {
@@ -357,12 +357,12 @@ WAPage {
                     width: parent.width
                     font.bold: true
                     font.pixelSize: 24
-                    text: contactNumber
+                    text: "+"+contactNumber
                 }
                 MouseArea {
                     id: bArea
                     anchors.fill: parent
-                    onClicked: makeCall(contactNumber)
+                    onClicked: makeCall("+"+contactNumber)
                 }
             }
 
@@ -382,7 +382,7 @@ WAPage {
                 MouseArea {
                     id: bcArea
                     anchors.fill: parent
-                    onClicked: sendSMS(contactNumber)
+                    onClicked: sendSMS("+"+contactNumber)
                 }
             }
         }
