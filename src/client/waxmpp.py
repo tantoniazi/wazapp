@@ -1538,6 +1538,11 @@ class WAXMPP():
 	def setContactsManager(self,contactsManager):
 		self.contactsManager = contactsManager
 		
+	def changeMyPushName(self, pushname):
+		print "Changing my push name to " + pushname
+		self.push_name = pushname
+		if self.state == 2:
+			#here should be the new sendAvailableForChat(pushname) :P
 
 
 	
