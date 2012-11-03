@@ -156,7 +156,7 @@ WAStackWindow {
     signal breathe()
     signal playSoundFile(string soundfile);
     signal stopSoundFile();
-
+	signal setMyPushName(string pushname);
 
     signal openContactPicker(string multi, string title); //TESTING...
     signal setBlockedContacts(string contacts);

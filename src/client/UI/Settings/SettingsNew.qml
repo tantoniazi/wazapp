@@ -43,6 +43,7 @@ WAPage {
         if(status == PageStatus.Activating){
 
             myStatus.text = Helpers.emojify2(currentStatus); //reset status to cancel unsaved modifications
+			push_text.text = myPushName
 
             if(!loaded){
                 MySettings.initialize()
