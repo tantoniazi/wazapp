@@ -13,6 +13,16 @@ Item {
     width: parent.width
     height: 72
 
+    BorderImage
+    {
+        id: background2
+        x: -16; y:0
+        height: parent.height
+        width: parent.width +32
+        visible:  mouseArea.pressed
+        source: "image://theme/meegotouch-list-fullwidth" + (theme.inverted ? "-inverted" : "") + "-background-pressed-center"
+    }
+
     Column {
 
         anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter }

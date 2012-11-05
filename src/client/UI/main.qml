@@ -62,6 +62,7 @@ WAStackWindow {
         vibraForGroup = MySettings.getSetting("GroupVibrate", "Yes")
         personalRingtone = MySettings.getSetting("PersonalRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
         groupRingtone = MySettings.getSetting("GroupRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
+		showUnknownContacts = MySettings.getSetting("ShowUnknownContacts", "No")=="Yes"
         myBackgroundImage = MySettings.getSetting("Background", "none")
         myBackgroundOpacity = MySettings.getSetting("BackgroundOpacity", "5")
         setBackground(myBackgroundImage)
@@ -89,6 +90,7 @@ WAStackWindow {
     property string currentSelectionProfileValue//@@THIS IS FUCKING RETARDED!!!!!!!!
     property string myBackgroundImage
     property int myBackgroundOpacity
+	property bool showUnknownContacts
 
     property string currentProfilePicture: currentPicture;
     property string currentStatus:MySettings.getSetting("Status", "Hi there I'm using Wazapp")

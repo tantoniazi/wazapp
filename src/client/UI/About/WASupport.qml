@@ -59,22 +59,24 @@ WAPage {
 
            Label{
                text:qsTr("Wazapp is a free open source software created entirely by the N9 Community. If you enjoy using Wazapp, you can support it by making a donation. Your donation helps maintain Wazapp and further development, as well as keeping it always a Free Software")
-               width:parent.width
-               horizontalAlignment: Text.AlignHCenter
+               width:parent.width-24
+               x: 12
+               horizontalAlignment: appWindow.inPortrait? Text.AlignHCenter : Text.AlignLeft
            }
 
-           Button{
+           /*Button{
                anchors.horizontalCenter: parent.horizontalCenter
-               text:"Donate"
+               text: qsTr("Donate")
                onClicked: {
                    Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PWX6647R3CD5L")
                }
-           }
+           }*/
 
            Label{
                id:bugReportText
-               width:parent.width
-               horizontalAlignment: Text.AlignHCenter
+               width:parent.width -24
+               x: 12
+               horizontalAlignment: appWindow.inPortrait? Text.AlignHCenter : Text.AlignLeft
                text:qsTr("Please Report any bugs to") + " <a href='http://bugs.wazapp.im'>http://bugs.wazapp.im</a>"
                onLinkActivated: Qt.openUrlExternally(link)
            }
@@ -87,6 +89,15 @@ WAPage {
        ToolIcon{
            platformIconId: "toolbar-back"
            onClicked: pageStack.pop()
+       }
+
+       ToolButton{
+           anchors.centerIn: parent
+           width: parent.width - 180
+           text: qsTr("Donate")
+           onClicked: {
+               Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PWX6647R3CD5L")
+           }
        }
    }
 

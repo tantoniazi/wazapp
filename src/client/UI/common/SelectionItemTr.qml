@@ -30,14 +30,15 @@ Item {
     onInitialValueChanged: getInitialValue()
     Component.onCompleted: getInitialValue()
 
-    /*Rectangle {
-        id: highlight
-
-        anchors { fill: parent; bottomMargin: 1; topMargin: 1 }
-        color: mouseArea.pressed ? "#4d4d4d" : "transparent"
-        opacity: 0.5
-        smooth: true
-    }*/
+    BorderImage
+    {
+        id: background2
+        x: -16; y:0
+        height: parent.height
+        width: parent.width +32
+        visible:  mouseArea.pressed
+        source: "image://theme/meegotouch-list-fullwidth" + (theme.inverted ? "-inverted" : "") + "-background-pressed-center"
+    }
 
 
     Column {

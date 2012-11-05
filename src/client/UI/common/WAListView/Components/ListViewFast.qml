@@ -20,7 +20,7 @@ Item {
         cacheBuffer: 30000
         highlightFollowsCurrentItem: false
 
-        section.property: "name"
+        section.property: "alphabet"
         section.criteria: ViewSection.FirstCharacter
 
         section.delegate: SectionDelegate{
@@ -30,6 +30,14 @@ Item {
             renderSection: fast.sectionExists(section)
             height:renderSection?50:0
             currSection: section
+
+			Connections {
+				target: settingsPage
+				onShowUnknownContactsChanged: {
+					fast.listViewChanged()
+					renderSection = fast.sectionExists(section)
+				}
+			}
         }
 
         Component.onCompleted: {  fast.listViewChanged();}

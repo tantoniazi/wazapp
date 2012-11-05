@@ -29,10 +29,10 @@ function initSectionData(list) {
     } else if (list.section.criteria == ViewSection.FirstCharacter) {
         for (var i = 0, count = list.model.count; i < count; i++) {
             item = list.model.get(i)
-            if(item.norender && item.norender == true)
+            if (item.norender && item.norender==true && !showUnknownContacts)
                 continue;
             if (item[prop].substring(0, 1) !== current) {
-                current = item[prop].substring(0, 1);
+                current = item[prop];
                 _sections.push(current);
                 sectionData.push({ index: i, header: current });
             }

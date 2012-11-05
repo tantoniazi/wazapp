@@ -126,7 +126,7 @@ WAPage {
         Contact{
             property bool filtered: model.name.match(new RegExp(searchInput.text,"i")) != null
             id: contactComp
-            height: model.iscontact =="yes" && filtered ? 80 : 0
+            height: (model.iscontact=="yes" || showUnknownContacts) && filtered ? 80 : 0
 			visible: height!=0
             Component.onCompleted: {
                 ContactsManager.contactsViews.push(contactComp)
@@ -294,25 +294,34 @@ WAPage {
             spacing: 1
 			cacheBuffer: 30000 // contactsModel.count * 81 --> this should work too.
 			highlightFollowsCurrentItem: false
-            section.property: "name"
+            section.property: "alphabet"
             section.criteria: ViewSection.FirstCharacter
 
             /*section.delegate: GroupSeparator {
 				anchors.left: parent.left
 				anchors.leftMargin: 16
                 width: parent.width - 44
-                visible: fast.sectionExists(section)
-                height: visible && searchInput.text==="" ? 50 : 0
-				title: section
+                height: searchInput.text==="" ? 50 : 0
+				title: section.toUpperCase()
             }*/
 
             section.delegate: SectionDelegate{
+				id: sectDelegate
                 anchors.left: parent.left
                 anchors.leftMargin: 16
-                width:parent.width-44
-                renderSection: fast.sectionExists(section) && searchInput.text===""
-                height:renderSection?50:0
-                currSection: section
+                width: parent.width-44
+                renderSection: fast.sectionExists(section)
+                height: renderSection && searchInput.text===""? 50 : 0
+                currSection: section.toUpperCase()
+
+				Connections {
+					target: settingsPage
+					onShowUnknownContactsChanged: {
+						fast.listViewChanged()
+						renderSection = fast.sectionExists(section) && searchInput.text===""
+					}
+				}
+
             }
 
 			Component.onCompleted: fast.listViewChanged()
@@ -326,6 +335,7 @@ WAPage {
                         showSearchBar()
                 }
             }
+
         }
 
 		FastScroll {

@@ -33,7 +33,18 @@ WAPage {
         id: toolBar
         ToolIcon {
             platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
+            onClicked: {
+				if (chatHistoryDeleted)
+					appWindow.pageStack.pop(1)
+				else
+					pageStack.pop()
+			}
+        }
+        ToolIcon {
+            platformStyle: ToolButtonStyle{inverted:theme.inverted}
+            id:toolbar_menu_item
+            platformIconId: "toolbar-view-menu"
+			onClicked: (myMenu.status === DialogStatus.Closed) ? myMenu.open() : myMenu.close()
         }
     }
 
@@ -43,6 +54,7 @@ WAPage {
     property string contactPicture
     property string contactStatus
     property bool inContacts
+	property bool chatHistoryDeleted: false
 
 
     onStatusChanged: {
@@ -75,32 +87,6 @@ WAPage {
         }
     }
 
-
-    ButtonStyle {
-        id: buttonStyleTop
-        property string __invertedString: theme.inverted ? "-inverted" : ""
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-vertical-top"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-vertical-top"
-        disabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-vertical-top"
-        checkedDisabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-selected-vertical-top"
-    }
-    ButtonStyle {
-        id: buttonStyleCenter
-        property string __invertedString: theme.inverted ? "-inverted" : ""
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-vertical-center"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-vertical-center"
-        disabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-vertical-center"
-        checkedDisabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-selected-vertical-center"
-    }
-    ButtonStyle {
-        id: buttonStyleBottom
-        property string __invertedString: theme.inverted ? "-inverted" : ""
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-vertical-bottom"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-vertical-bottom"
-        disabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-vertical-bottom"
-        checkedDisabledBackground: "image://theme/color3-meegotouch-button"+__invertedString+"-background-disabled-selected-vertical-bottom"
-    }
-
     QueryDialog {
         id: chatHistoryDelete
         titleText: qsTr("Confirm Delete")
@@ -108,6 +94,7 @@ WAPage {
         acceptButtonText: qsTr("Yes")
         rejectButtonText: qsTr("No")
         onAccepted: {
+			chatHistoryDeleted = true
             deleteConversation(contactJid)
             removeChatItem(contactJid)
         }
@@ -126,171 +113,187 @@ WAPage {
         cache: false
     }
 
-    Column {
-        id: column1
-        width: parent.width -32
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
-        anchors.topMargin: 12
-        spacing: 12
-
-        Row {
-            width: parent.width
-            height: col1.heigth + 48
-            spacing: 10
-
-            ProfileImage {
-                id: picture
-                size: 80
-                height: size
-                width: size
-                y: 0
-                imgsource: contactPicture
-                onClicked: {
-                     pageStack.push(contactPictureViewer)
-                }
-            }
-
-            Column {
-                id: col1
-                width: parent.width - picture.size -10
-                anchors.verticalCenter: parent.verticalCenter
-
-                Label {
-                    text: contactName
-                    font.bold: true
-                    font.pixelSize: 26
-                    width: parent.width
-                    elide: Text.ElideRight
-                }
-
-                Label {
-                    id: statuslabel
-                    font.pixelSize: 22
-                    color: "gray"
-                    visible: contactStatus!==""
-                    text: Helpers.emojify(contactStatus)
-                    width: parent.width
-                }
-            }
-        }
-
-        Separator {
-            width: parent.width
-        }
-    }
-
     Flickable {
         id: flickArea
-        anchors.top: column1.bottom
-        anchors.topMargin: 12
-        width: parent.width
-        height: parent.height - column1.height - 32 //toolbar
+        anchors.fill: parent
         contentWidth: parent.width
-        contentHeight: buttonColumn.height+separator1.height+blockLabel.height+telephonyItem.height+separator2.height+groupsList.height+separator3.height+mediaList.height
-        clip: true
+        contentHeight: column1.height +20
+        //clip: true
         
-        Column{
-	    width: parent.width
+		Column {
+		    id: column1
+		    width: parent.width -32
+		    anchors.top: parent.top
+		    anchors.left: parent.left
+		    anchors.leftMargin: 16
+		    anchors.rightMargin: 16
+		    anchors.topMargin: 12
+		    spacing: 12
 
-        Label {
-            id: blockLabel
-            text: qsTr("Contact blocked")
-            font.bold: true
-            font.pixelSize: 26
-            color: "red"
-            width: parent.width
-            visible: blockedContacts.indexOf(contactJid)!=-1
-            height: visible ? 50 : 0
-            horizontalAlignment: Text.AlignHCenter
-            elide: Text.ElideRight
-        }
+		    Row {
+		        width: parent.width
+		        height: col1.heigth + 48
+		        spacing: 10
 
-        ButtonColumn{
-            id: buttonColumn
-            width: parent.width
+		        ProfileImage {
+		            id: picture
+		            size: 80
+		            height: size
+		            width: size
+		            y: 0
+		            imgsource: contactPicture
+		            onClicked: {
+		                 pageStack.push(contactPictureViewer)
+		            }
+		        }
 
-            Button {
-                id: statusButton
-                platformStyle: buttonStyleTop
-                height: 50
-                width: parent.width
-                font.pixelSize: 22
-                text: qsTr("Update status")
-                onClicked: {
-                        updateSingleStatus=true //@@retarded
-                        statusButton.enabled=false
-                        contactForStatus = contactJid //@@retarded
-                        refreshContacts("STATUS", contactJid.split('@')[0]) //@@retarded
-                }
-            }
+		        Column {
+		            id: col1
+		            width: parent.width - picture.size -10
+		            anchors.verticalCenter: parent.verticalCenter
 
-            Button {
-                id: blockButton
-                platformStyle: buttonStyleCenter
-                height: 50
-                width: parent.width
-                font.pixelSize: 22
-                text: blockedContacts.indexOf(contactJid)==-1? qsTr("Block contact") : qsTr("Unblock contact")
-                onClicked: {
-                    if (blockedContacts.indexOf(contactJid)==-1)
-                        blockContact(contactJid)
-                    else
-                        unblockContact(contactJid)
-                }
-            }
+		            Label {
+		                text: contactName
+		                font.bold: true
+		                font.pixelSize: 26
+		                width: parent.width
+		                elide: Text.ElideRight
+		            }
 
-            Button {
-                height: 50
-                platformStyle: buttonStyleCenter
-                width: parent.width
-                font.pixelSize: 22
-                text: qsTr("Add to contacts")
-                visible: !inContacts
-                onClicked: Qt.openUrlExternally("tel:"+contactNumber)
-            }
-
-            Button {
-                id: sendChatButton
-                platformStyle: buttonStyleCenter
-                height: 50
-                width: parent.width
-                font.pixelSize: 22
-                text: qsTr("Send chat history")
-                onClicked: { exportConversation(contactJid); }
-            }
-
-            Button {
-                id: deleteChatButton
-                platformStyle: buttonStyleBottom
-                height: 50
-                width: parent.width
-                font.pixelSize: 22
-                text: qsTr("Delete chat history")
-                onClicked: {
-                    chatHistoryDelete.open()
-                }
-            }
-        }
-
-        GroupSeparator {
-			id: separator3
-		        anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.rightMargin: 5
-		        height: conversationMediaModel.count>0? 36 : 0
-		        title: qsTr("Media")
-			visible: conversationMediaModel.count>0
+		            Label {
+		                id: statuslabel
+		                font.pixelSize: 22
+		                color: "gray"
+		                visible: contactStatus!==""
+		                text: Helpers.emojify(contactStatus)
+		                width: parent.width
+		            }
+		        }
 		    }
 
-		    ListView {
-		        id: mediaList
+		    Separator {
+		        width: parent.width
+		    }
+
+		    MyButton {
+		        id: statusButton
+				//platformStyle: myButtonStyle
+		        height: 50
+		        width: parent.width
+		        font.pixelSize: 22
+		        text: qsTr("Update status")
+		        visible: contactJid.indexOf("g.us")==-1
+		        onClicked: {
+	                updateSingleStatus=true
+	                statusButton.enabled=false
+	                refreshContacts("STATUS", contactJid.split('@')[0])
+		        }
+		    }
+
+		    Separator {
+		        width: parent.width
+		    }
+
+		    Label {
+		        id: blockLabel
+		        text: qsTr("Contact blocked")
+		        font.bold: true
+		        font.pixelSize: 24
+		        color: "red"
+		        width: parent.width
+		        visible: blockedContacts.indexOf(contactJid)!=-1
+		        height: visible ? 36 : 0
+		        horizontalAlignment: Text.AlignHCenter
+		        elide: Text.ElideRight
+		    }
+
+		    MyButton {
+		        //id: blockButton
+				//platformStyle: myButtonStyle
+		        height: 50
+		        width: parent.width
+		        font.pixelSize: 22
+		        text: blockedContacts.indexOf(contactJid)==-1? qsTr("Block contact") : qsTr("Unblock contact")
+		        onClicked: {
+		            if (blockedContacts.indexOf(contactJid)==-1)
+		                blockContact(contactJid)
+		            else
+		                unblockContact(contactJid)
+		        }
+		    }
+
+		    Separator {
+		        width: parent.width
+		    }
+
+		    Item {
+		        id: telephonyItem
+		        height: 84
+		        width: parent.width
+		        x: 0
+
+		        BorderImage {
+		            height: 84
+		            width: parent.width -80
+		            x: 0; y: 0
+		            source: "pics/buttons/button-left"+(theme.inverted?"-inverted":"")+(bArea.pressed? "-pressed" : "")+".png"
+		            border { left: 22; right: 22; bottom: 22; top: 22; }
+
+		            Label {
+		                x: 20; y: 14
+		                width: parent.width
+		                font.pixelSize: 20
+		                text: qsTr("Mobile phone")
+		            }
+		            Label {
+		                x: 20; y: 40
+		                width: parent.width
+		                font.bold: true
+		                font.pixelSize: 24
+		                text: "+"+contactNumber
+		            }
+		            MouseArea {
+		                id: bArea
+		                anchors.fill: parent
+		                onClicked: makeCall("+"+contactNumber)
+		            }
+		        }
+
+		        BorderImage {
+		            height: 84
+		            anchors.right: parent.right
+		            width: 80
+		            x: 0; y: 0
+		            source: "pics/buttons/button-right"+(theme.inverted?"-inverted":"")+(bcArea.pressed? "-pressed" : "")+".png"
+		            border { left: 22; right: 22; bottom: 22; top: 22; }
+
+		            Image {
+		                x: 18
+		                anchors.verticalCenter: parent.verticalCenter
+		                source: "image://theme/icon-m-toolbar-new-message"+(theme.inverted?"-white":"")
+		            }
+		            MouseArea {
+		                id: bcArea
+		                anchors.fill: parent
+		                onClicked: sendSMS("+"+contactNumber)
+		            }
+		        }
+		    }
+
+		    GroupSeparator {
+				id: separator3
+		        width: parent.width
+				height: conversationMediaModel.count>0? 36 : 0
+				title: qsTr("Media")
+				visible: conversationMediaModel.count>0
+			}
+
+			ListView {
+			    id: mediaList
 
 				function mediaTypePicker(type) {
 					var thumb = ""
-					switch(type){
+					switch(type) {
 						case 3: {
 							thumb = "image://theme/icon-m-content-audio"+(theme.inverted?"-inverse":"")
 							break
@@ -306,7 +309,7 @@ WAPage {
 						case 6: {
 							thumb = "image://theme/icon-m-content-avatar-placeholder"+(theme.inverted?"-inverse":"")
 							break
-							}
+						}
 					}
 					return thumb
 				}
@@ -354,9 +357,7 @@ WAPage {
 
 			GroupSeparator {
 				id: separator2
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.rightMargin: 5
+				width: parent.width
 				visible: groupsRepeater.model.count==0 ? false : true
 				height: visible ? 36 : 0
 				title: qsTr("Groups")
@@ -364,9 +365,10 @@ WAPage {
 
 			Column {
 				id: groupsList
-				width: parent.width
-				clip: true
-				anchors.left: parent.left
+				width: parent.width + 24
+				x: -12
+				//clip: true
+				//anchors.left: parent.left
 
 				Repeater {
 					id: groupsRepeater
@@ -434,73 +436,45 @@ WAPage {
 				}
 			}
 
-        GroupSeparator {
-		id: separator1
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.rightMargin: 5
-		height: 50
-		title: qsTr("Phone")
-        }
 
-        Item {
-            id: telephonyItem
-            height: 84
-            width: parent.width
-            x: 0
-
-            BorderImage {
-                height: 84
-                width: parent.width -80
-                x: 0; y: 0
-                source: "pics/buttons/button-left"+(theme.inverted?"-inverted":"")+(bArea.pressed? "-pressed" : "")+".png"
-                border { left: 22; right: 22; bottom: 22; top: 22; }
-
-                Label {
-                    x: 20; y: 14
-                    width: parent.width
-                    font.pixelSize: 20
-                    text: qsTr("Mobile phone")
-                }
-                Label {
-                    x: 20; y: 40
-                    width: parent.width
-                    font.bold: true
-                    font.pixelSize: 24
-                    text: "+"+contactNumber
-                }
-                MouseArea {
-                    id: bArea
-                    anchors.fill: parent
-                    onClicked: makeCall("+"+contactNumber)
-                }
-            }
-
-            BorderImage {
-                height: 84
-                anchors.right: parent.right
-                width: 80
-                x: 0; y: 0
-                source: "pics/buttons/button-right"+(theme.inverted?"-inverted":"")+(bcArea.pressed? "-pressed" : "")+".png"
-                border { left: 22; right: 22; bottom: 22; top: 22; }
-
-                Image {
-                    x: 18
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "image://theme/icon-m-toolbar-new-message"+(theme.inverted?"-white":"")
-                }
-                MouseArea {
-                    id: bcArea
-                    anchors.fill: parent
-                    onClicked: sendSMS("+"+contactNumber)
-                }
-            }
-        }
-	}
+		}
     }
 
     WAImageViewer{
         id:contactPictureViewer
         imagePath: bigImage.width?bigImage.source:(contactPicture != defaultProfilePicture?contactPicture:"")
     }
+
+    Menu {
+        id: myMenu
+
+        onStatusChanged: {
+            if ( myMenu.status == DialogStatus.Open ) {
+                dialogOpened = true
+            } else {
+                dialogOpened = false
+            }
+        }
+
+        MenuLayout {
+            /*MenuItem {
+	            text: qsTr("Add to contacts")
+	            visible: !inContacts
+	            onClicked: Qt.openUrlExternally("tel:"+contactNumber)
+            }*/
+	        MenuItem {
+	            text: qsTr("Send chat history")
+	            onClicked: { exportConversation(contactJid); }
+	        }
+
+	        MenuItem {
+	            text: qsTr("Delete chat history")
+	            onClicked: {
+	                chatHistoryDelete.open()
+	            }
+	        }
+
+        }
+    }
+
 }
