@@ -690,16 +690,21 @@ WAStackWindow {
         phoneContactsModel.clear()
         consoleDebug("APPENDING PHONE CONTACTS:" + contacts.length)
 
+		splashPage.resetProgress()
+		splashPage.setProgressMax(contacts.length)
+
+
         var tmpModelData = new Array
         for (var i=0; i<contacts.length; i++) {
-           //phoneContactsModel.insert(phoneContactsModel.count,{"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
-            // "numbers":contacts[i][2].toString(), "selected":false})
 
             tmpModelData.push({"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
                                                             "numbers":contacts[i][2].toString(), "selected":false})
+			
+			splashPage.addProgress()
+			breathe()
         }
 
-        breathe()
+        //breathe()
 
         modelworker.sendMessage({"model":phoneContactsModel,"data":tmpModelData})
 
@@ -744,13 +749,20 @@ WAStackWindow {
 
     /****Conversation related slots****/
 
+	function setTotalConvs(val) {
+		splashPage.resetProgress()
+		splashPage.setProgressMax(val)
+	}
+
     function conversationReady(conv){
         //This should be called if and only if conversation start point is backend
         consoleDebug("Got a conv in conversationReady slot: " + conv.jid);
 
 
-        if(!initializationDone)
+        if(!initializationDone) {
             splashPage.setSubOperation(conv.jid)
+			splashPage.addProgress()
+		}
 
         breathe()
         var conversation = waChats.getOrCreateConversation(conv.jid);

@@ -145,7 +145,7 @@ class WAUI(QDeclarativeView):
 		self.messageStore.messagesReady.connect(self.rootObject().messagesReady)
 		self.messageStore.conversationReady.connect(self.rootObject().conversationReady)
 		self.rootObject().loadMessages.connect(self.messageStore.loadMessages);
-		
+		self.messageStore.setTotalConvs.connect(self.rootObject().setTotalConvs)
 		
 		self.rootObject().deleteConversation.connect(self.messageStore.deleteConversation)
 		self.rootObject().deleteMessage.connect(self.messageStore.deleteMessage)
@@ -295,7 +295,7 @@ class WAUI(QDeclarativeView):
 
 		else:
 			if not self.initializationDone:
-				self.splashOperationUpdated.emit("Loading Contacts")
+				self.splashOperationUpdated.emit("contacts")
 
 			contacts = self.c.getContacts();
 			self._d("POPULATE CONTACTS: " + str(len(contacts)));
@@ -311,14 +311,14 @@ class WAUI(QDeclarativeView):
 		
 	def populateConversations(self):
 		if not self.initializationDone:
-			self.splashOperationUpdated.emit("Loading Conversations")
+			self.splashOperationUpdated.emit("convs")
 		self.messageStore.loadConversations()
 		
 
 	def populatePhoneContacts(self):
 		
 		if not self.initializationDone:
-			self.splashOperationUpdated.emit("Loading Phone Contacts")
+			self.splashOperationUpdated.emit("phone")
 		
 		self._d("POPULATE PHONE CONTACTS");
 		contacts = self.c.getPhoneContacts();

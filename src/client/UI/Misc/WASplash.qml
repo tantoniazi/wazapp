@@ -2,17 +2,24 @@
 import QtQuick 1.1
 import "../common"
 import com.nokia.meego 1.0
+import com.nokia.extras 1.0
 WAPage {
 
     property string operation:qsTr("Initializing")
     property string subOperation:""
-    property string version
+    property string version:waversion
     orientationLock: PageOrientation.LockPortrait
 
+	property int curProgress
+	property int maximumValue
+	property int currentValue
+
     function setCurrentOperation(op) {
-		progress.visible = false
+		progress.opacity = 0
         subOperation = ""
-        operation = qsTr(op)
+		if (op=="contacts") operation = qsTr("Loading Contacts")
+		else if (op=="convs") operation = qsTr("Loading Conversations")
+		else if (op=="phone") operation = qsTr("Loading Phone Contacts")
     }
 
     function setSubOperation(subop) {
@@ -20,16 +27,23 @@ WAPage {
     }
 
 	function setProgressMax(val) {
-		progress.maximumValue = val
+		maximumValue = val
+	}
+
+	function addProgress() {
+		currentValue = currentValue +1
+		setProgress(currentValue)
 	}
 
 	function setProgress(val) {
-		progress.value = val
+		var part = 100/maximumValue
+		curProgress = parseInt(part*val /10)
 	}
 
 	function resetProgress() {
-        //progress.visible = true
-		progress.value = 0
+        progress.opacity = 1
+		curProgress = 0
+		currentValue = 0
 	}
 
     onStatusChanged: {
@@ -57,38 +71,39 @@ WAPage {
 
         Label{
             text:operation
-            color: "white"
+            color: "gray"
             horizontalAlignment: Text.AlignHCenter
-            font.bold: true
+            //font.bold: true
             width:parent.width
         }
 
-		ProgressBar{
+		Image {
 			id: progress
-			width: 360
-            visible:false
+			width: 55
+			height: 55
+			smooth: true
+            visible: true
+			opacity: 0
 			anchors.horizontalCenter: parent.horizontalCenter
-			minimumValue: 0
-			platformStyle: ProgressBarStyle {
-				knownTexture: "../common/images/splashprogress.png"
-			}
+			source: "images/" + curProgress + "0.png"
         }
 
-        Label{
+        /*Label{
             text:subOperation
             color: "white"
             horizontalAlignment: Text.AlignHCenter
             width:parent.width
-        }
+        }*/
     }
 
     Label{
         text:version
         width:parent.width
         horizontalAlignment: Text.AlignHCenter
-        color:"white"
+        color:"#269f1a"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
+		opacity: 0.8
     }
 
 }

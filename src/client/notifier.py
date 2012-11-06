@@ -41,7 +41,7 @@ class Notifier():
 		self.groupRingtone = WAConstants.DEFAULT_SOUND_NOTIFICATION;
 		self.groupVibrate = True;
 		
-		#QCoreApplication.setApplicationName("Wazapp");  used to get media volume
+		QCoreApplication.setApplicationName("Wazapp");
 
 
 		self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, None)

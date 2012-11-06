@@ -36,7 +36,8 @@ class MessageStore(QObject):
 	conversationExported = QtCore.Signal(str, str); #jid, exportePath
 	conversationMedia = QtCore.Signal(list);
 	conversationGroups = QtCore.Signal(list);
-	
+	setTotalConvs = QtCore.Signal(int);
+
 	currKeyId = 0
 
 	def __init__(self,dbstore):
@@ -227,6 +228,8 @@ class MessageStore(QObject):
 		conversations = self.store.ConversationManager.findAll();
 		self._d("init load convs")
 		convList = []
+
+		
 		for c in conversations:
 			self._d("loading messages")
 			jid = c.getJid();
@@ -243,6 +246,8 @@ class MessageStore(QObject):
 
 		convList = sorted(convList, key=lambda k: k['lastdate']);
 		convList.reverse();
+
+		self.setTotalConvs.emit(len(convList))
 
 		for ci in convList:
 			messages = []
