@@ -130,7 +130,7 @@ WAPage {
 
             if(!loaded){
                 getInfo()
-                //loaded = true
+                loaded = true
             }
 
             genericSyncedContactsSelector.tools = participantsSelectorTools
@@ -141,7 +141,10 @@ WAPage {
         id: toolBar
         ToolIcon {
             platformIconId: "toolbar-back"
-            onClicked: pageStack.pop()
+            onClicked: {
+				loaded = false
+				pageStack.pop()
+			}
         }
         ToolButton
         {
@@ -368,7 +371,7 @@ WAPage {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 22; font.bold: true
-                    text: qsTr("Add")
+                    text: qsTr("Edit")
                 }
                 MouseArea {
                     id: bcArea
