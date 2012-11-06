@@ -322,6 +322,14 @@ WAPage {
 					}
 				}
 
+				Connections {
+					target: appWindow
+					onRefreshSuccessed: {
+						fast.listViewChanged()
+						renderSection = fast.sectionExists(section) && searchInput.text===""
+					}
+				}
+
             }
 
 			Component.onCompleted: fast.listViewChanged()

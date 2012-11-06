@@ -78,7 +78,7 @@ function populateContacts(contacts)
         contactsModel.append(contacts[i]);
 
         if(!initializationDone){
-            splashPage.setSubOperation(contacts[i].jid)
+            //splashPage.setSubOperation(contacts[i].jid)
             splashPage.setProgress(i)
             breathe()
          }
