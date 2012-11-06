@@ -408,6 +408,10 @@ class WAEventHandler(QObject):
 			contact = message.getContact()
 			conversation = message.getConversation()
 
+			if contact.jid in self.blockedContacts:
+				print "CONTACT BLOCKED!!!"
+				return;
+
 			try:
 				contact = WAXMPP.message_store.store.getCachedContacts()[contact.number];
 			except:
