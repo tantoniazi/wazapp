@@ -535,13 +535,14 @@ WAStackWindow {
 
 
 
-    property string contactForStatus //@@FUCKING RETARTED
-    function updateContactStatus(status) {
+    //property string contactForStatus //@@FUCKING RETARTED
+    function updateContactStatus(ujid,status) {
         for(var i =0; i<contactsModel.count; i++)
         {
-            if(contactForStatus == contactsModel.get(i).jid) {
+            if(ujid == contactsModel.get(i).jid) {
                 consoleDebug("FOUNDED CONTACT " + contactsModel.get(i).jid +" - " + status)
                 contactsModel.get(i).status = status
+				break;
             }
         }
 

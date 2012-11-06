@@ -306,7 +306,12 @@ class MessageStore(QObject):
 		for m in messages:
 			msg = m.getModelData()
 			msg['formattedDate'] = datetime.datetime.fromtimestamp(int(msg['timestamp'])/1000).strftime('%d-%m-%Y %H:%M')
-			msg['content'] = msg['content'].decode('utf-8');
+			undecoded = msg['content'].decode('utf-8');
+			undecoded = undecoded.replace("\"","&quot;")
+			undecoded = undecoded.replace("&","&amp;")
+			undecoded = undecoded.replace("<","&lt;")
+			undecoded = undecoded.replace(">","&gt;")
+			msg['content'] = undecoded;
 			msg['jid'] = jid
 			msg['contact'] = m.getContact().getModelData()
 			media = m.getMedia()

@@ -752,6 +752,8 @@ WAPage {
                         {
 							var cleanedmessage = Helpers.getCode(chat_text.text);
 							appWindow.sendMessage(jid,cleanedmessage);
+							//var res  = chat_text.getCleanText()
+							//appWindow.sendMessage(jid,res[0]);
                             chat_text.text = "";
                         }
                         forceFocusToChatText()
@@ -820,18 +822,44 @@ WAPage {
 							forceFocusToChatText()
 						} else {
 							lastPosition = chat_text.cursorPosition
-							var res  = chat_text.getCleanText(true)
+
+							var res  = chat_text.getCleanText()
 							var str = res[0];
-							var pos = str.indexOf("<br />")
 							var newPosition = lastPosition
+							
+							var pos = str.indexOf("<br />")
 							while(pos>-1 && pos<lastPosition) {
 								lastPosition = lastPosition +5
 								pos = str.indexOf("<br />", pos+1)
 							}
 							
+							var pos = str.indexOf("&lt;")
+							while(pos>-1 && pos<lastPosition) {
+								lastPosition = lastPosition +3		
+								pos = str.indexOf("&lt;", pos+1)
+							}
+
+							var pos = str.indexOf("&gt;")
+							while(pos>-1 && pos<lastPosition) {
+								lastPosition = lastPosition +3		
+								pos = str.indexOf("&gt;", pos+1)
+							}
+
+							var pos = str.indexOf("&amp;")
+							while(pos>-1 && pos<lastPosition) {
+								lastPosition = lastPosition +4		
+								pos = str.indexOf("&amp;", pos+1)
+							}
+
+							var pos = str.indexOf("&quot;")
+							while(pos>-1 && pos<lastPosition) {
+								lastPosition = lastPosition +5		
+								pos = str.indexOf("&quot;", pos+1)
+							}
+
 							str = str.substring(0,lastPosition) + "<br />" + str.slice(lastPosition)
 							chat_text.text = Helpers.emojify2(str)
-							chat_text.cursorPosition = newPosition + 1
+							chat_text.cursorPosition = newPosition +1
 						}
 					}
 
