@@ -12,7 +12,7 @@ Rectangle {
    visible:landscape && screen.currentOrientation == Screen.Landscape || !landscape &&  screen.currentOrientation == Screen.Portrait
 
 
-   signal selected(string code);
+   signal selected(string code, bool hide);
 
    Behavior on y {
        enabled:spawned && visible
@@ -36,7 +36,8 @@ Rectangle {
        anchors.fill: parent
        onClicked: {
            //selectEmoji(emojiDelegate.codeS)
-           selected(code)
+           selected(code, true)
        }
+       //onPressAndHold: { selected(code, false) }
    }
 }

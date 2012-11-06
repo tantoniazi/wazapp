@@ -53,14 +53,18 @@ FocusScope {
         platformSipAttributes.registerInputElement(textEdit)
     }
 
-    function _getCleanText() {
+    function _getCleanText(keepLines) {
         var repl = "p, li { white-space: pre-wrap; }";
         var res = root.text
+        if (keepLines)
+            while(res.indexOf("<br />")>-1) res = res.replace("<br />", "wazappLineBreak");
         var result = Helpers.getCode(res);
         res = result[0]
         var pos = result[1]
         res = res.replace(/<[^>]*>?/g, "").replace(repl,"");
         res = res.replace(/^\s+/,"");
+        if (keepLines)
+            while(res.indexOf("wazappLineBreak")>-1) res = res.replace("wazappLineBreak", "<br />");
         return [res, pos];
     }
 

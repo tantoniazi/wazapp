@@ -773,20 +773,6 @@ WAPage {
 
                     property bool alreadyFocused: false
 
-					function cleanTextWithoutLines(txt){
-						var repl = "p, li { white-space: pre-wrap; }";
-						var res = txt;
-						var pos = 0;
-						var result = Helpers.getCode(res);
-						res = result[0]
-						pos = result[1]
-						while(res.indexOf("<br />")>-1) res = res.replace("<br />", "wazappLineBreak");
-						res = res.replace(/<[^>]*>?/g, "").replace(repl,"");
-						res = res.replace(/^\s+/,"");
-						while(res.indexOf("wazappLineBreak")>-1) res = res.replace("wazappLineBreak", "<br />");
-						return [res, pos];
-					}
-
 					onHeightChanged: {
 						//consoleDebug("TEXT AREA HEIGHT: " + parseInt(chat_text.height))
 						currentTextHeight = chat_text.height<72 ? 72 : chat_text.height+12
@@ -834,8 +820,8 @@ WAPage {
 							forceFocusToChatText()
 						} else {
 							lastPosition = chat_text.cursorPosition
-							var str = cleanTextWithoutLines(chat_text.text)
-
+							var res  = chat_text.getCleanText(true)
+							var str = res[0];
 							var pos = str.indexOf("<br />")
 							var newPosition = lastPosition
 							while(pos>-1 && pos<lastPosition) {
@@ -1055,7 +1041,7 @@ WAPage {
             width:conv_items.width
             //height:visible?loadMoreButton.height+20:0;
 			height: Math.max(hasMore?60:0, conv_panel.height -conv_items.contentHeight -myTextArea.height)
-            Button{
+            MyButton{
 				visible: hasMore
 				height: 44
                 id:loadMoreButton

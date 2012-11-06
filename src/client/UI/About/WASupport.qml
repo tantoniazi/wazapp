@@ -28,7 +28,7 @@ WAPage {
    WAHeader{
        id:header
        height: 73
-       title: "Support Wazapp"
+       title: qsTr("Support Wazapp")
    }
 
    Row{

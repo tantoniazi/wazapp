@@ -53,7 +53,7 @@ Dialog {
     }
 
     function getGrids(){
-        return [peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
+        return [recentGrid, peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
     }
 
     function loadAll(){
@@ -149,36 +149,43 @@ Dialog {
             y: 10
 
             Button {
+                id: recentEmoji
+            	platformStyle: ButtonStyle { inverted: true }
+                iconSource: get32("E02C");
+                onClicked: showGrid(recentGrid)
+            }
+
+           	Button {
                 id: peopleEmoji
-            platformStyle: ButtonStyle { inverted: true }
+            	platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E057");
                 onClicked: showGrid(peopleGrid)
             }
 
             Button {
                 id: natureEmoji
-            platformStyle: ButtonStyle { inverted: true }
+            	platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E303");
                 onClicked: showGrid(natureGrid)
             }
 
             Button {
                 id: placesEmoji
-            platformStyle: ButtonStyle { inverted: true }
+            	platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E325")
                 onClicked: showGrid(placesGrid)
             }
 
             Button {
                 id: objectsEmoji
-            platformStyle: ButtonStyle { inverted: true }
+            	platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E036")
                 onClicked: showGrid(objectsGrid)
             }
 
             Button {
                 id: symbolsEmoji
-            platformStyle: ButtonStyle { inverted: true }
+            	platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E210")
                 onClicked: showGrid(symbolsGrid)
             }
@@ -193,11 +200,16 @@ Dialog {
             anchors.topMargin: 5
             color: "#000000"//"#1a1a1a"
 
+            RecentGrid{
+                id:recentGrid
+                anchors.fill: parent
+            }
+
             EmojiGrid{
                 id:peopleGrid
                 anchors.fill: parent
                 start: 0;
-                end: 187;
+                end: 188;
             }
 
             EmojiGrid{
@@ -234,7 +246,7 @@ Dialog {
         }
 	}
 
-    function selectEmoji(emojiCode){
+    function selectEmoji(emojiCode, hide){
 
         //console.log("GOT "+emojiCode)
         //emojiSelected(emojiCode);
@@ -288,10 +300,15 @@ Dialog {
         textarea.text = Helpers.emojify2(str,emojiRelativePath)
         textarea.cursorPosition = newPosition + 1
         textarea.forceActiveFocus();
+	
+		addRecentEmoji(emojiCode);
 
        // console.log(textarea.text)
-        emojiSelector.accept();
-        hideAll();
+		if (hide)
+		{
+		  emojiSelector.accept();
+		  hideAll();
+		}
     }
 
 }
