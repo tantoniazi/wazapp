@@ -917,7 +917,9 @@ class WAEventHandler(QObject):
 		
 	
 	def sendMessage(self,jid,msg_text):
-		msg_text = self.strip(msg_text);
+		#why? it kill anything good
+		#msg_text = self.strip(msg_text);
+		msg_text = msg_text.strip()
 		self._d("sending message now")
 		fmsg = WAXMPP.message_store.createMessage(jid);
 		
@@ -926,11 +928,12 @@ class WAEventHandler(QObject):
 			contact = WAXMPP.message_store.store.Contact.getOrCreateContactByJid(self.conn.jid)
 			fmsg.setContact(contact);
 		
-		msg_text = msg_text.replace("&quot;","\"")
-		msg_text = msg_text.replace("&amp;", "&");
-		msg_text = msg_text.replace("&lt;", "<");
-		msg_text = msg_text.replace("&gt;", ">");
-		msg_text = msg_text.replace("<br />", "\n");
+		#why? it killing anything good
+		#msg_text = msg_text.replace("&quot;","\"")
+		#msg_text = msg_text.replace("&amp;", "&");
+		#msg_text = msg_text.replace("&lt;", "<");
+		#msg_text = msg_text.replace("&gt;", ">");
+		#msg_text = msg_text.replace("<br />", "\n");
 
 		fmsg.setData({"status":0,"content":msg_text.encode('utf-8'),"type":1})
 		WAXMPP.message_store.pushMessage(jid,fmsg)

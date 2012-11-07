@@ -1,7 +1,9 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../common/js/Global.js" as Helpers
+import "../common/js/settings.js" as MySettings;
 import "js/emojihelper.js" as EmojiHelper
+import QtMobility.feedback 1.1
 import "Components"
 
 Dialog {
@@ -14,12 +16,19 @@ Dialog {
     property string titleText: qsTr("Select Emoji")
     property string emojiPath:"../common/images/emoji/";
     property string emojiRelativePath; //relative to textfield
+    
+    property int activeGrid: 1
 
     /*function setCallback(func){
 
         EmojiHelper.emojiSelectCallback = func;
 
     }*/
+    
+    ThemeEffect {
+      id: feedbackEffect
+      effect: "BasicButton"
+    }
 
     function get32(code){
         var c = ""+code;
@@ -48,12 +57,24 @@ Dialog {
         emojiRelativePath = relativePath?relativePath:"/opt/waxmppplugin/bin/wazapp/UI/common/images/emoji"
 
         emojiSelector.open();
+	
+	var emojilist= MySettings.getSetting("RecentEmoji", "")
+	if (emojilist!="")
+	{
+		emojiCategory.checkedButton = recentEmoji
+		activeGrid = 0
+		showGrid(recentGrid)
+	}
+	else
+	{
 		emojiCategory.checkedButton = peopleEmoji
-        showGrid(peopleGrid)
+		activeGrid = 1
+		showGrid(peopleGrid)
+	}
     }
 
     function getGrids(){
-        return [peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
+        return [recentGrid, peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
     }
 
     function loadAll(){
@@ -74,6 +95,24 @@ Dialog {
     function showGrid(grid){
         hideAll();
         grid.showEmoji();
+    }
+    
+    function selectButton(index){
+	recentEmoji.checked = false
+	peopleEmoji.checked = false
+	natureEmoji.checked = false
+	placesEmoji.checked = false
+	objectsEmoji.checked = false
+	symbolsEmoji.checked = false
+	switch (index)
+	{
+	  case 0: recentEmoji.checked = true; break;
+	  case 1: peopleEmoji.checked = true; break;
+	  case 2: natureEmoji.checked = true; break;
+	  case 3: placesEmoji.checked = true; break;
+	  case 4: objectsEmoji.checked = true; break;
+	  case 5: symbolsEmoji.checked = true; break;
+	}
     }
 
 	SelectionDialogStyle { id: selectionDialogStyle }
@@ -149,38 +188,63 @@ Dialog {
             y: 10
 
             Button {
+                id: recentEmoji
+            platformStyle: ButtonStyle { inverted: true }
+                iconSource: get32("E02C");
+                onClicked: {
+		  activeGrid = 0
+		  showGrid(recentGrid)
+		}
+            }
+
+            Button {
                 id: peopleEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E057");
-                onClicked: showGrid(peopleGrid)
+                onClicked: {
+		  activeGrid = 1
+		  showGrid(peopleGrid)
+		}
             }
 
             Button {
                 id: natureEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E303");
-                onClicked: showGrid(natureGrid)
+                onClicked: {
+		  activeGrid = 2
+		  showGrid(natureGrid)
+		}
             }
 
             Button {
                 id: placesEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E325")
-                onClicked: showGrid(placesGrid)
+                onClicked: {
+		  activeGrid = 3
+		  showGrid(placesGrid)
+		}
             }
 
             Button {
                 id: objectsEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E036")
-                onClicked: showGrid(objectsGrid)
+                onClicked: {
+		  activeGrid = 40
+		  showGrid(objectsGrid)
+		}
             }
 
             Button {
                 id: symbolsEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E210")
-                onClicked: showGrid(symbolsGrid)
+                onClicked: {
+		  activeGrid = 5
+		  showGrid(symbolsGrid)
+		}
             }
         }
 
@@ -192,6 +256,12 @@ Dialog {
             anchors.top:emojiCategory.bottom
             anchors.topMargin: 5
             color: "#000000"//"#1a1a1a"
+
+            EmojiGrid{
+                id:recentGrid
+                anchors.fill: parent
+                showRecent: true
+            }
 
             EmojiGrid{
                 id:peopleGrid
@@ -231,10 +301,37 @@ Dialog {
                 start: 637;
                 end: 845
             }
-        }
+            
+            MouseArea {
+	      property int posX: 0
+	      
+	      anchors.fill: parent
+	      
+	      onPressed: {
+		posX = mouseX
+	      }
+	      
+	      onReleased: {
+		if (mouseX < posX && (posX - mouseX) > (width/2)) {
+		  activeGrid++
+		  if (activeGrid > 5)
+		    activeGrid = 0
+		  selectButton(activeGrid)
+		  showGrid(getGrids()[activeGrid])
+		}
+		else if (mouseX > posX && (mouseX - posX) > (width/2)) {
+		  activeGrid--
+		  if (activeGrid < 0)
+		    activeGrid = 5
+		  selectButton(activeGrid)
+		  showGrid(getGrids()[activeGrid])
+		}
+	      }      
+	    }
+	  }
 	}
 
-    function selectEmoji(emojiCode){
+    function selectEmoji(emojiCode, hide){
 
         //console.log("GOT "+emojiCode)
         //emojiSelected(emojiCode);
@@ -245,53 +342,22 @@ Dialog {
 
 
         var textarea = EmojiHelper.emojiTextarea;
+	var emojiImg = '<img src="'+emojiRelativePath+'/24/'+emojiCode+'.png" />'
+	textarea.insert(emojiImg)
 
-        var cresult = textarea.getCleanText();
-        var str = cresult[0]
-        var npos = cresult[1]
-
-        var pos = str.indexOf("&quot;")
-        var newPosition = textarea.lastPosition
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +5
-            pos = str.indexOf("&quot;", pos+1)
-
-        }
-        pos = str.indexOf("&amp;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +4
-            pos = str.indexOf("&amp;", pos+1)
-        }
-        pos = str.indexOf("&lt;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +3
-            pos = str.indexOf("&lt;", pos+1)
-        }
-        pos = str.indexOf("&gt;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +3
-            pos = str.indexOf("&gt;", pos+1)
-        }
-        pos = str.indexOf("<br />")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +5
-            pos = str.indexOf("<br />", pos+1)
-        }
-
-        textarea.lastPosition = textarea.lastPosition + parseInt(npos);
-
-        var emojiImg = '<img src="'+emojiRelativePath+'/24/'+emojiCode+'.png" />'
-        str = str.substring(0,textarea.lastPosition) + emojiImg + str.slice(textarea.lastPosition)
-
-        //console.log(str);
-       // console.log("_______")
-        textarea.text = Helpers.emojify2(str,emojiRelativePath)
-        textarea.cursorPosition = newPosition + 1
-        textarea.forceActiveFocus();
+	addRecentEmoji(emojiCode);
 
        // console.log(textarea.text)
-        emojiSelector.accept();
-        hideAll();
+	if (hide)
+	{
+	    textarea.forceActiveFocus();
+	    emojiSelector.accept();
+	    hideAll();
+	}
+	else
+	{
+	    feedbackEffect.play();
+	}
     }
 
 }
