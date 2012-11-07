@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../common/js/Global.js" as Helpers
+import "../common/js/settings.js" as MySettings;
 import "js/emojihelper.js" as EmojiHelper
 import "Components"
 
@@ -48,12 +49,22 @@ Dialog {
         emojiRelativePath = relativePath?relativePath:"/opt/waxmppplugin/bin/wazapp/UI/common/images/emoji"
 
         emojiSelector.open();
+	
+	var emojilist= MySettings.getSetting("RecentEmoji", "")
+	if (emojilist!="")
+	{
+		emojiCategory.checkedButton = recentEmoji
+		showGrid(recentGrid)
+	}
+	else
+	{
 		emojiCategory.checkedButton = peopleEmoji
-        showGrid(peopleGrid)
+		showGrid(peopleGrid)
+	}
     }
 
     function getGrids(){
-        return [peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
+        return [recentGrid, peopleGrid, natureGrid, objectsGrid, placesGrid, symbolsGrid];
     }
 
     function loadAll(){
@@ -149,6 +160,13 @@ Dialog {
             y: 10
 
             Button {
+                id: recentEmoji
+            platformStyle: ButtonStyle { inverted: true }
+                iconSource: get32("E02C");
+                onClicked: showGrid(recentGrid)
+            }
+
+            Button {
                 id: peopleEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E057");
@@ -192,6 +210,12 @@ Dialog {
             anchors.top:emojiCategory.bottom
             anchors.topMargin: 5
             color: "#000000"//"#1a1a1a"
+
+            EmojiGrid{
+                id:recentGrid
+                anchors.fill: parent
+                showRecent: true
+            }
 
             EmojiGrid{
                 id:peopleGrid
@@ -288,6 +312,8 @@ Dialog {
         textarea.text = Helpers.emojify2(str,emojiRelativePath)
         textarea.cursorPosition = newPosition + 1
         textarea.forceActiveFocus();
+	
+	addRecentEmoji(emojiCode);
 
        // console.log(textarea.text)
         emojiSelector.accept();
