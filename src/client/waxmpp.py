@@ -160,9 +160,10 @@ class WAEventHandler(QObject):
 	def strip(self, text):
 		n = text.find("</body>")
 		text = text[:n]
-		s = MLStripper()
-		s.feed(text)
-		text = s.get_data().replace("p, li { white-space: pre-wrap; }","")
+		#why? it kill anything good
+		#s = MLStripper()
+		#s.feed(text)
+		#text = s.get_data().replace("p, li { white-space: pre-wrap; }","")
 		text = text.strip()
 		return text;
 
@@ -919,6 +920,7 @@ class WAEventHandler(QObject):
 	def sendMessage(self,jid,msg_text):
 		msg_text = self.strip(msg_text);
 		self._d("sending message now")
+		self._d(msg_text)
 		fmsg = WAXMPP.message_store.createMessage(jid);
 		
 		
@@ -926,11 +928,13 @@ class WAEventHandler(QObject):
 			contact = WAXMPP.message_store.store.Contact.getOrCreateContactByJid(self.conn.jid)
 			fmsg.setContact(contact);
 		
+		msg_text = msg_text.replace("<br />", "\n");
 		msg_text = msg_text.replace("&quot;","\"")
-		msg_text = msg_text.replace("&amp;", "&");
 		msg_text = msg_text.replace("&lt;", "<");
 		msg_text = msg_text.replace("&gt;", ">");
-		msg_text = msg_text.replace("<br />", "\n");
+		msg_text = msg_text.replace("&amp;", "&");
+		
+		self._d(msg_text)
 
 		fmsg.setData({"status":0,"content":msg_text.encode('utf-8'),"type":1})
 		WAXMPP.message_store.pushMessage(jid,fmsg)
