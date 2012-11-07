@@ -262,14 +262,18 @@ Dialog {
         var str = cresult[0]
         var npos = cresult[1]
 
-        var pos = str.indexOf("&quot;")
         var newPosition = textarea.lastPosition
+
+		while (str.indexOf("&quot;")>-1)
+			str = str.replace("&quot;","\"")
+
+        /*var pos = str.indexOf("&quot;")
         while(pos>-1 && pos<textarea.lastPosition) {
             textarea.lastPosition = textarea.lastPosition +5
             pos = str.indexOf("&quot;", pos+1)
 
-        }
-        pos = str.indexOf("&amp;")
+        }*/
+        var pos = str.indexOf("&amp;")
         while(pos>-1 && pos<textarea.lastPosition) {
             textarea.lastPosition = textarea.lastPosition +4
             pos = str.indexOf("&amp;", pos+1)
