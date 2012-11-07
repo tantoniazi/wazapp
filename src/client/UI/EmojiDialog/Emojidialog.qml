@@ -16,8 +16,6 @@ Dialog {
     property string titleText: qsTr("Select Emoji")
     property string emojiPath:"../common/images/emoji/";
     property string emojiRelativePath; //relative to textfield
-    
-    property int activeGrid: 1
 
     /*function setCallback(func){
 
@@ -62,13 +60,11 @@ Dialog {
 	if (emojilist!="")
 	{
 		emojiCategory.checkedButton = recentEmoji
-		activeGrid = 0
 		showGrid(recentGrid)
 	}
 	else
 	{
 		emojiCategory.checkedButton = peopleEmoji
-		activeGrid = 1
 		showGrid(peopleGrid)
 	}
     }
@@ -97,24 +93,6 @@ Dialog {
         grid.showEmoji();
     }
     
-    function selectButton(index){
-	recentEmoji.checked = false
-	peopleEmoji.checked = false
-	natureEmoji.checked = false
-	placesEmoji.checked = false
-	objectsEmoji.checked = false
-	symbolsEmoji.checked = false
-	switch (index)
-	{
-	  case 0: recentEmoji.checked = true; break;
-	  case 1: peopleEmoji.checked = true; break;
-	  case 2: natureEmoji.checked = true; break;
-	  case 3: placesEmoji.checked = true; break;
-	  case 4: objectsEmoji.checked = true; break;
-	  case 5: symbolsEmoji.checked = true; break;
-	}
-    }
-
 	SelectionDialogStyle { id: selectionDialogStyle }
 
     title: Item {
@@ -191,60 +169,42 @@ Dialog {
                 id: recentEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E02C");
-                onClicked: {
-		  activeGrid = 0
-		  showGrid(recentGrid)
-		}
+                onClicked: showGrid(recentGrid)
             }
 
             Button {
                 id: peopleEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E057");
-                onClicked: {
-		  activeGrid = 1
-		  showGrid(peopleGrid)
-		}
+                onClicked: showGrid(peopleGrid)
             }
 
             Button {
                 id: natureEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E303");
-                onClicked: {
-		  activeGrid = 2
-		  showGrid(natureGrid)
-		}
+                onClicked: showGrid(natureGrid)
             }
 
             Button {
                 id: placesEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E325")
-                onClicked: {
-		  activeGrid = 3
-		  showGrid(placesGrid)
-		}
+                onClicked: showGrid(placesGrid)
             }
 
             Button {
                 id: objectsEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E036")
-                onClicked: {
-		  activeGrid = 40
-		  showGrid(objectsGrid)
-		}
+                onClicked: showGrid(objectsGrid)
             }
 
             Button {
                 id: symbolsEmoji
             platformStyle: ButtonStyle { inverted: true }
                 iconSource: get32("E210")
-                onClicked: {
-		  activeGrid = 5
-		  showGrid(symbolsGrid)
-		}
+                onClicked: showGrid(symbolsGrid)
             }
         }
 
@@ -267,7 +227,7 @@ Dialog {
                 id:peopleGrid
                 anchors.fill: parent
                 start: 0;
-                end: 187;
+                end: 188;
             }
 
             EmojiGrid{
@@ -301,33 +261,6 @@ Dialog {
                 start: 637;
                 end: 845
             }
-            
-            MouseArea {
-	      property int posX: 0
-	      
-	      anchors.fill: parent
-	      
-	      onPressed: {
-		posX = mouseX
-	      }
-	      
-	      onReleased: {
-		if (mouseX < posX && (posX - mouseX) > (width/2)) {
-		  activeGrid++
-		  if (activeGrid > 5)
-		    activeGrid = 0
-		  selectButton(activeGrid)
-		  showGrid(getGrids()[activeGrid])
-		}
-		else if (mouseX > posX && (mouseX - posX) > (width/2)) {
-		  activeGrid--
-		  if (activeGrid < 0)
-		    activeGrid = 5
-		  selectButton(activeGrid)
-		  showGrid(getGrids()[activeGrid])
-		}
-	      }      
-	    }
 	  }
 	}
 
