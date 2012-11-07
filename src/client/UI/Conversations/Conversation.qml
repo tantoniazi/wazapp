@@ -821,47 +821,7 @@ WAPage {
 							sendButtonClicked();
 							forceFocusToChatText()
 						} else {
-							lastPosition = chat_text.cursorPosition
-							var res = chat_text.getCleanText();
-							var str = res[0]
-							lastPosition = lastPosition + res[1]
-
-							var newPosition = lastPosition
-
-							/*var pos = str.indexOf("&quot;")
-							while(pos>-1 && pos<lastPosition) {
-								lastPosition = lastPosition +5
-								pos = str.indexOf("&quot;", pos+1)
-
-							}*/
-							while (str.indexOf("&quot;")>-1)
-								str = str.replace("&quot;","\"")
-
-							var pos = str.indexOf("&amp;")
-							while(pos>-1 && pos<lastPosition) {
-								lastPosition = lastPosition +4
-								pos = str.indexOf("&amp;", pos+1)
-							}
-							pos = str.indexOf("&lt;")
-							while(pos>-1 && pos<lastPosition) {
-								lastPosition = lastPosition +3
-								pos = str.indexOf("&lt;", pos+1)
-							}
-							pos = str.indexOf("&gt;")
-							while(pos>-1 && pos<lastPosition) {
-								lastPosition = lastPosition +3
-								pos = str.indexOf("&gt;", pos+1)
-							}
-							pos = str.indexOf("<br />")
-							while(pos>-1 && pos<lastPosition) {
-								lastPosition = lastPosition +5
-								pos = str.indexOf("<br />", pos+1)
-							}
-							
-							str = str.substring(0,lastPosition) + "<br />" + str.slice(lastPosition)
-							chat_text.text = Helpers.emojify2(str)
-							chat_text.cursorPosition = newPosition + 1
-
+							chat_text.insert("<br />")
 						}
 					}
 

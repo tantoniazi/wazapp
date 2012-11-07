@@ -312,7 +312,7 @@ class MessageStore(QObject):
 			msg = m.getModelData()
 			msg['formattedDate'] = datetime.datetime.fromtimestamp(int(msg['timestamp'])/1000).strftime('%d-%m-%Y %H:%M')
 			undecoded = msg['content'].decode('utf-8');
-			undecoded = undecoded.replace("\"","&quot;")
+			#undecoded = undecoded.replace("\"","&quot;")
 			undecoded = undecoded.replace("&","&amp;")
 			undecoded = undecoded.replace("<","&lt;")
 			undecoded = undecoded.replace(">","&gt;")

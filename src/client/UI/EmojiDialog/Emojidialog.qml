@@ -248,61 +248,9 @@ Dialog {
 
     function selectEmoji(emojiCode, hide){
 
-        //console.log("GOT "+emojiCode)
-        //emojiSelected(emojiCode);
-
-        /*if(EmojiHelper.emojiSelectCallback){
-            EmojiHelper.emojiSelectCallback(emojiCode);
-        }*/
-
-
         var textarea = EmojiHelper.emojiTextarea;
-
-        var cresult = textarea.getCleanText();
-        var str = cresult[0]
-        var npos = cresult[1]
-
-        var newPosition = textarea.lastPosition
-
-		while (str.indexOf("&quot;")>-1)
-			str = str.replace("&quot;","\"")
-
-        /*var pos = str.indexOf("&quot;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +5
-            pos = str.indexOf("&quot;", pos+1)
-
-        }*/
-        var pos = str.indexOf("&amp;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +4
-            pos = str.indexOf("&amp;", pos+1)
-        }
-        pos = str.indexOf("&lt;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +3
-            pos = str.indexOf("&lt;", pos+1)
-        }
-        pos = str.indexOf("&gt;")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +3
-            pos = str.indexOf("&gt;", pos+1)
-        }
-        pos = str.indexOf("<br />")
-        while(pos>-1 && pos<textarea.lastPosition) {
-            textarea.lastPosition = textarea.lastPosition +5
-            pos = str.indexOf("<br />", pos+1)
-        }
-
-        textarea.lastPosition = textarea.lastPosition + parseInt(npos);
-
         var emojiImg = '<img src="'+emojiRelativePath+'/24/'+emojiCode+'.png" />'
-        str = str.substring(0,textarea.lastPosition) + emojiImg + str.slice(textarea.lastPosition)
-
-        //console.log(str);
-       // console.log("_______")
-        textarea.text = Helpers.emojify2(str,emojiRelativePath)
-        textarea.cursorPosition = newPosition + 1
+        textarea.insert(emojiImg)
         textarea.forceActiveFocus();
 	
 		addRecentEmoji(emojiCode);
