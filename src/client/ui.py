@@ -149,7 +149,7 @@ class WAUI(QDeclarativeView):
 		self.messageStore.messagesReady.connect(self.rootObject().messagesReady)
 		self.messageStore.conversationReady.connect(self.rootObject().conversationReady)
 		self.rootObject().loadMessages.connect(self.messageStore.loadMessages);
-		
+		self.messageStore.setTotalConvs.connect(self.rootObject().setTotalConvs)
 		
 		self.rootObject().deleteConversation.connect(self.messageStore.deleteConversation)
 		self.rootObject().deleteMessage.connect(self.messageStore.deleteMessage)
@@ -272,8 +272,8 @@ class WAUI(QDeclarativeView):
 	def updatePushName(self, jid, push):
 		self._d("UPDATING CONTACTS");
 		contacts = self.c.getContacts();
-		self.rootObject().updateContactsData(contacts);
-		self.rootObject().updateContactName.emit(jid,push);
+		self.rootObject().updateContactsData(contacts, jid);
+		#self.rootObject().updateContactName.emit(jid,push);
 
 
 	def updateContactsData(self):
@@ -288,25 +288,26 @@ class WAUI(QDeclarativeView):
 
 		
 
-	def populateContacts(self, mode, status=""):
+	def populateContacts(self, mode, contact=[]):
 		#syncer = ContactsSyncer(self.store);
 		
 		#self.c.refreshing.connect(syncer.onRefreshing);
 		#syncer.done.connect(c.updateContacts);
 		if (mode == "STATUS"):
-			self._d("UPDATE CONTACT STATUS");
-			self.rootObject().updateContactStatus(status)
+			self._d("UPDATE CONTACT STATUS FOR "+ str(contact.jid));
+			self.rootObject().updateContactStatus(contact.jid, contact.status.decode("utf8"))
 
 		else:
 			if not self.initializationDone:
-				self.splashOperationUpdated.emit("Loading Contacts")
+				self.splashOperationUpdated.emit("contacts")
 
 			contacts = self.c.getContacts();
 			self._d("POPULATE CONTACTS: " + str(len(contacts)));
 			
 			
-			contactsFiltered = filter(lambda c: c["jid"]!=self.accountJid, contacts)
-			self.rootObject().pushContacts(mode,contactsFiltered);
+			#contactsFiltered = filter(lambda c: c["jid"]!=self.accountJid, contacts)
+			#self.rootObject().pushContacts(mode,contactsFiltered);
+			self.rootObject().pushContacts(mode,contacts);
 
 		#if self.whatsapp is not None:
 		#	self.whatsapp.eventHandler.networkDisconnected()
@@ -314,14 +315,14 @@ class WAUI(QDeclarativeView):
 		
 	def populateConversations(self):
 		if not self.initializationDone:
-			self.splashOperationUpdated.emit("Loading Conversations")
+			self.splashOperationUpdated.emit("convs")
 		self.messageStore.loadConversations()
 		
 
 	def populatePhoneContacts(self):
 		
 		if not self.initializationDone:
-			self.splashOperationUpdated.emit("Loading Phone Contacts")
+			self.splashOperationUpdated.emit("phone")
 		
 		self._d("POPULATE PHONE CONTACTS");
 		contacts = self.c.getPhoneContacts();

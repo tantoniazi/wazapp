@@ -62,6 +62,7 @@ WAStackWindow {
         vibraForGroup = MySettings.getSetting("GroupVibrate", "Yes")
         personalRingtone = MySettings.getSetting("PersonalRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
         groupRingtone = MySettings.getSetting("GroupRingtone", "/usr/share/sounds/ring-tones/Message 1.mp3")
+		showUnknownContacts = MySettings.getSetting("ShowUnknownContacts", "No")=="Yes"
         myBackgroundImage = MySettings.getSetting("Background", "none")
         myBackgroundOpacity = MySettings.getSetting("BackgroundOpacity", "5")
         setBackground(myBackgroundImage)
@@ -89,6 +90,7 @@ WAStackWindow {
     property string currentSelectionProfileValue//@@THIS IS FUCKING RETARDED!!!!!!!!
     property string myBackgroundImage
     property int myBackgroundOpacity
+	property bool showUnknownContacts
 
     property string currentProfilePicture: currentPicture;
     property string currentStatus:MySettings.getSetting("Status", "Hi there I'm using Wazapp")
@@ -251,7 +253,23 @@ WAStackWindow {
         browserUpdated();
     }
 
+    function addRecentEmoji(emojicode) {
+	    var emoji = []
+	    var emojilist = MySettings.getSetting("RecentEmoji", "")
 
+	    if (emojilist!="")
+		    emoji = emojilist.split(',')
+
+	    for (var i=0; i<emoji.length; ++i) {
+		    if (emoji[i]==emojicode) {
+			    emoji.splice(i,1)
+			    break;
+		    }
+	    }
+
+	    emoji.push(emojicode)
+	    MySettings.setSetting("RecentEmoji", emoji.toString())
+    }
 
     signal groupCreated(string group_id)
     signal groupCreateFailed(int errorCode)
@@ -518,13 +536,14 @@ WAStackWindow {
 
 
 
-    property string contactForStatus //@@FUCKING RETARTED
-    function updateContactStatus(status) {
+    //property string contactForStatus //@@FUCKING RETARTED
+    function updateContactStatus(ujid,status) {
         for(var i =0; i<contactsModel.count; i++)
         {
-            if(contactForStatus == contactsModel.get(i).jid) {
+            if(ujid == contactsModel.get(i).jid) {
                 consoleDebug("FOUNDED CONTACT " + contactsModel.get(i).jid +" - " + status)
                 contactsModel.get(i).status = status
+				break;
             }
         }
 
@@ -576,24 +595,30 @@ WAStackWindow {
         setBlockedContacts(blockedContacts)
     }
 
-    function updateContactsData(contacts){
-        var added = 0
+    function updateContactsData(contacts, ujid){
         for(var i =0; i<contacts.length; i++) {
             var add = true
-            for(var j =0; j<contactsModel.count; j++) {
-                if (contactsModel.get(j).jid==contacts[i].jid) {
-                    contactsModel.get(j).name = contacts[i].name
-                    add = false
-                    break
-                }
-            }
-            if (add) {
-                //contacts[i].newContact = true;
-                contactsModel.insert(i, contacts[i]);
-                currentContacts = currentContacts + "," + contacts[i].jid
-                newContacts = newContacts +1
-                //contactsAdded.title = newContacts
-            }
+			if (contacts[i].jid==ujid) {
+		        for(var j =0; j<contactsModel.count; j++) {
+		            if (contactsModel.get(j).jid==contacts[i].jid) {
+		                contactsModel.get(j).name = contacts[i].name
+						contactsModel.get(j).alphabet = contacts[i].alphabet
+						contactsModel.move(j ,i, 1)
+						updateContactName(contacts[i].jid,contacts[i].name);
+						refreshSuccessed()
+		                add = false
+		                break
+		            }
+		        }
+		        if (add) {
+		            consoleDebug("Adding new contact using push name")
+		            contactsModel.insert(i, contacts[i]);
+		            currentContacts = currentContacts + "," + contacts[i].jid
+		            newContacts = newContacts +1
+		            //contactsAdded.title = newContacts
+		        } 
+				break;
+			}
         }
     }
 
@@ -672,16 +697,21 @@ WAStackWindow {
         phoneContactsModel.clear()
         consoleDebug("APPENDING PHONE CONTACTS:" + contacts.length)
 
+		splashPage.resetProgress()
+		splashPage.setProgressMax(contacts.length)
+
+
         var tmpModelData = new Array
         for (var i=0; i<contacts.length; i++) {
-           //phoneContactsModel.insert(phoneContactsModel.count,{"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
-            // "numbers":contacts[i][2].toString(), "selected":false})
 
             tmpModelData.push({"name":contacts[i][0] || contacts[i][2].toString(), "picture":contacts[i][1],
                                                             "numbers":contacts[i][2].toString(), "selected":false})
+			
+			splashPage.addProgress()
+			breathe()
         }
 
-        breathe()
+        //breathe()
 
         modelworker.sendMessage({"model":phoneContactsModel,"data":tmpModelData})
 
@@ -726,13 +756,20 @@ WAStackWindow {
 
     /****Conversation related slots****/
 
+	function setTotalConvs(val) {
+		splashPage.resetProgress()
+		splashPage.setProgressMax(val)
+	}
+
     function conversationReady(conv){
         //This should be called if and only if conversation start point is backend
         consoleDebug("Got a conv in conversationReady slot: " + conv.jid);
 
 
-        if(!initializationDone)
+        if(!initializationDone) {
             splashPage.setSubOperation(conv.jid)
+			splashPage.addProgress()
+		}
 
         breathe()
         var conversation = waChats.getOrCreateConversation(conv.jid);
