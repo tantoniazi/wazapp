@@ -32,12 +32,12 @@ WAPage {
    }
 
    Row{
-       id:landscapeRow
-       anchors.top:header.bottom
-       anchors.topMargin: 30
-       //anchors.verticalCenter: parent.verticalCenter
-       anchors.horizontalCenter: parent.horizontalCenter
-
+	id:landscapeRow
+	anchors.top:header.bottom
+	anchors.topMargin: 30
+	//anchors.verticalCenter: parent.verticalCenter
+	anchors.horizontalCenter: parent.horizontalCenter
+	spacing: 10
       }
 
    Column {
@@ -55,26 +55,18 @@ WAPage {
        Column{
            id:supportData
            width:root.width
-           spacing:10
+           spacing:20
 
            Label{
                text:qsTr("Wazapp is a free open source software created entirely by the N9 Community. If you enjoy using Wazapp, you can support it by making a donation. Your donation helps maintain Wazapp and further development, as well as keeping it always a Free Software")
                width:parent.width
-               horizontalAlignment: Text.AlignHCenter
-           }
-
-           Button{
-               anchors.horizontalCenter: parent.horizontalCenter
-               text:qsTr("Donate")
-               onClicked: {
-                   Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PWX6647R3CD5L")
-               }
+               horizontalAlignment: appWindow.inPortrait? Text.AlignHCenter : Text.AlignLeft
            }
 
            Label{
                id:bugReportText
                width:parent.width
-               horizontalAlignment: Text.AlignHCenter
+               horizontalAlignment: appWindow.inPortrait? Text.AlignHCenter : Text.AlignLeft
                text:qsTr("Please Report any bugs to") + " <a href='http://bugs.wazapp.im'>http://bugs.wazapp.im</a>"
                onLinkActivated: Qt.openUrlExternally(link)
            }
@@ -82,12 +74,20 @@ WAPage {
    }
 
    ToolBarLayout {
-       id:supportTools
+      id:supportTools
 
-       ToolIcon{
-           platformIconId: "toolbar-back"
-           onClicked: pageStack.pop()
-       }
+      ToolIcon{
+	  platformIconId: "toolbar-back"
+	  onClicked: pageStack.pop()
+      }
+
+      ToolButton{
+	  anchors.horizontalCenter: parent.horizontalCenter
+	  text:qsTr("Donate")
+	  onClicked: {
+	      Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PWX6647R3CD5L")
+	  }
+      }
    }
 
 }
