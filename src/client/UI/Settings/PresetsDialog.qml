@@ -21,6 +21,7 @@
 ****************************************************************************/
 import QtQuick 1.1
 import com.nokia.meego 1.0 
+import "../common/js/settings.js" as MySettings;
 
 SelectionDialog {
      id: singleSelectionDialog
@@ -31,23 +32,52 @@ SelectionDialog {
      model: ListModel {
 		id:presetsModel
      }
+     
+     property string magic: "[WZPPRST]"
+     
+     function openDialog(textarea) {
+	loadPresets()
+	singleSelectionDialog.open()
+	if (singleSelectionDialog.selectedIndex > -1)
+	    textarea.text = singleSelectionDialog.model.get(singleSelectionDialog.selectedIndex).name
+     }
+     
+     function loadPresets() {
+	var presets = MySettings.getSetting("StatusPresets", "")
+	if (presets.length == 0)
+	{
+	    presets ="Available"
+	    presets+=magic
+	    presets+="Busy"
+	    presets+=magic
+	    presets+="At school"
+	    presets+=magic
+	    presets+="At the movies"
+	    presets+=magic
+	    presets+="At work"
+	    presets+=magic
+	    presets+="Battery about to die"
+	    presets+=magic
+	    presets+="Can't talk, WhatsApp only"
+	    presets+=magic
+	    presets+="In a meeting"
+	    presets+=magic
+	    presets+="At the gym"
+	    presets+=magic
+	    presets+="Sleeping"
+	    presets+=magic
+	    presets+="Urgent calls only"
+	    presets+=magic
+	    presets+="I love Wazapp"
+	    MySettings.setSetting("StatusPresets", presets)
+	}
+	var presetsList = presets.split(magic)
+	while (presetsList.length>0)
+	    presetsModel.append({"name": qsTr(presetsList.pop())});
+     }
 
      onSelectedIndexChanged: {
 	status_text.text = singleSelectionDialog.model.get(singleSelectionDialog.selectedIndex).name	
      }
 
-     Component.onCompleted: {
-	 presetsModel.append({"name": qsTr("Available")});
-         presetsModel.append({"name": qsTr("Busy")});
-         presetsModel.append({"name": qsTr("At school")});
-         presetsModel.append({"name": qsTr("At the movies")});
-         presetsModel.append({"name": qsTr("At work")});
-         presetsModel.append({"name": qsTr("Battery about to die")});
-         presetsModel.append({"name": qsTr("Can't talk, WhatsApp only")});
-         presetsModel.append({"name": qsTr("In a meeting")});
-         presetsModel.append({"name": qsTr("At the gym")});
-         presetsModel.append({"name": qsTr("Sleeping")});
-         presetsModel.append({"name": qsTr("Urgent calls only")});
-         presetsModel.append({"name": qsTr("I love Wazapp")});
-     }	
 }

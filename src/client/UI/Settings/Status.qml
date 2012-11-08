@@ -48,6 +48,7 @@ Item {
                 send_button.enabled = true
                 status_text.enabled = true
                 emoji_button.enabled = true
+		presets_button.enabled = true
 
                 showNotification(qsTr("Status updated"))
 
@@ -56,6 +57,8 @@ Item {
             }
         }
 	}
+	
+	PresetsDialog { id: statusPresets }
 	
     Column {
 		id: column1
@@ -90,39 +93,51 @@ Item {
 				//platformStyle: ButtonStyle { inverted: true }
 				width:50
 				height:50
-                iconSource: "../common/images/emoji/32/E415.png"
+				iconSource: "../common/images/emoji/32/E415.png"
 				anchors.left: parent.left
 				anchors.leftMargin: 0
 				anchors.verticalCenter: send_button.verticalCenter
-                onClicked: {
-                    emojiDialog.openDialog(status_text);
-                }
+				onClicked: { emojiDialog.openDialog(status_text); }
 			}
-
+							
+			Button
+			{
+				id:presets_button
+				//platformStyle: ButtonStyle { inverted: true }
+				width:160
+				height:50
+				text: qsTr("Presets")
+				anchors.right: send_button.left
+				anchors.rightMargin: 20
+				anchors.verticalCenter: send_button.verticalCenter
+				onClicked: { statusPresets.openDialog(status_text); }
+			}
 		
 			Button
 			{
 				id:send_button
-				platformStyle: ButtonStyle { inverted: true }
+				//platformStyle: ButtonStyle { inverted: true }
 				width:160
 				height:50
 				text: qsTr("Done")
 				anchors.right: parent.right
-                anchors.rightMargin: 0
+				anchors.rightMargin: 0
 				y: 0
 				onClicked:{
-                    var toSend = status_text.getCleanText();
-                    var res = toSend[0];
+				    var toSend = status_text.getCleanText();
+				    var res = toSend[0];
 					if ( res.trim() != "")
-                    {
-                        requested = true;
-						tempStatus = res.trim();
-                        var cleanedmessage = Helpers.getCode(status_text.text);
-                        changeStatus(cleanedmessage);
-                        send_button.text = qsTr("Updating") + "..."
-                        send_button.enabled = false
-                        status_text.enabled = false
-                        emoji_button.enabled = false
+					{
+					    requested = true;
+					    tempStatus = res.trim();
+					    var cleanedmessage = Helpers.getCode(status_text.text);
+					    addRecentPreset(Helpers.emojify2(tempStatus))
+					    changeStatus(cleanedmessage);
+					    send_button.text = qsTr("Updating") + "..."
+					    send_button.enabled = false
+					    status_text.enabled = false
+					    emoji_button.enabled = false
+					    presets_button.enabled = false
 					}
 				}
 			}
