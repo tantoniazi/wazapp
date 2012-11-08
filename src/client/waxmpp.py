@@ -101,6 +101,7 @@ class WAEventHandler(QObject):
 	imageRotated = QtCore.Signal(str);
 	getPicturesFinished = QtCore.Signal();
 	changeStatus = QtCore.Signal(str);
+	setMyPushName = QtCore.Signal(str);
 	statusChanged = QtCore.Signal();
 	doQuit = QtCore.Signal();
 
@@ -152,6 +153,7 @@ class WAEventHandler(QObject):
 		self.setGroupSubject.connect(lambda jid, subject: self.interfaceHandler.call("group_setSubject", (jid, self.strip(subject))));
 		self.getPictureIds.connect(lambda *args: self.interfaceHandler.call("picture_getIds", args));
 		self.changeStatus.connect(lambda status: self.interfaceHandler.call("profile_setStatus", (self.strip(status),)));
+		self.setMyPushName.connect(lambda pushname: self.interfaceHandler.call("presence_sendAvailableForChat", (pushname,)));
 
 		self.state = 0
 		
@@ -408,6 +410,10 @@ class WAEventHandler(QObject):
 			contact = message.getContact()
 			conversation = message.getConversation()
 
+			if contact.jid in self.blockedContacts:
+				print "CONTACT BLOCKED!!!"
+				return;
+
 			try:
 				contact = WAXMPP.message_store.store.getCachedContacts()[contact.number];
 			except:
@@ -436,6 +442,17 @@ class WAEventHandler(QObject):
 	@preMessageReceived
 	@postMessageReceived
 	def onMessageReceived(self, message, content, timestamp, wantsReceipt, pushName=""):
+
+		contact = WAXMPP.message_store.store.Contact.getOrCreateContactByJid(message.getContact().jid)
+
+		if contact.pushname != pushName:
+			self._d("Setting Push Name: "+pushName+" to "+contact.jid)
+			contact.setData({"jid":contact.jid,"pushname":pushName})
+			contact.save()
+			self.setPushName.emit(contact.jid,pushName)
+
+		if contact.pictureid == None:
+			self.getPictureIds.emit(contact.jid)
 
 		if content is not None:
 
@@ -911,9 +928,9 @@ class WAEventHandler(QObject):
 	def conversationOpened(self,jid):
 		self.notifier.hideNotification(jid);
 	
-	def onAvailable(self):
+	def onAvailable(self, pushname):
 		if self.state == 2:
-			self.interfaceHandler.call("presence_sendAvailable")
+			self.interfaceHandler.call("presence_sendAvailableForChat", (pushname,))
 		
 	
 	def sendMessage(self,jid,msg_text):

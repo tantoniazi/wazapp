@@ -31,6 +31,8 @@ WAPage {
 
     property bool loaded:false
 
+	signal showUnknownContactsChanged()
+
     //property string contactPicture: WAConstants.CACHE_PROFILE + "/" + myAccount.split("@")[0] + ".jpg"
     property string profilePicture:currentProfilePicture?currentProfilePicture:defaultProfilePicture
 
@@ -209,27 +211,49 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea1
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column.height + 40
-				clip: true
 
 				Column {
 					id: column
 					anchors { top: parent.top; left: parent.left; right: parent.right; }
+					width: parent.width -32
+					anchors.leftMargin: 16
 					spacing: 10
 
+					GroupSeparator {
+						title: qsTr("Contacts")
+						height: 50
+						width: parent.width -16
+					}
+
+					SwitchItem {
+						title: qsTr("Add unknown contacts to list")
+						width: parent.width -16
+						check: showUnknownContacts
+						onCheckChanged: {
+							MySettings.setSetting("ShowUnknownContacts", value)
+							showUnknownContacts = value=="Yes"
+							showUnknownContactsChanged()
+						}
+					}
 
 					GroupSeparator {
 						title: qsTr("Chats")
+						height: 50
+						width: parent.width -16
 					}
+
 					SwitchItem {
 						title: qsTr("Enter key sends the message")
+						width: parent.width -16
 						check: sendWithEnterKey
 						onCheckChanged: {
 							MySettings.setSetting("SendWithEnterKey", value)
@@ -239,9 +263,13 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Media sending")
+						height: 50
+						width: parent.width -16
 					}
+
 					SwitchItem {
 						title: qsTr("Resize images before sending")
+						width: parent.width -16
 						check: resizeImages
 						onCheckChanged: {
 							MySettings.setSetting("ResizeImages", value)
@@ -252,9 +280,13 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Language")
+						height: 50
+						width: parent.width -16
 					}
+
 					SelectionItemTr {
 					    title: qsTr("Current language")
+						width: parent.width -16
 					    model: ListModel {
 							ListElement { name: "Albanian"; value: "sq" }
 							ListElement { name: "Arabic"; value: "ar" }
@@ -331,27 +363,32 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea2
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column2.height + 40
-				clip: true
 
 				Column {
 					id: column2
 					anchors { top: parent.top; left: parent.left; right: parent.right;}
+					width: parent.width -32
+					anchors.leftMargin: 16
 					spacing: 10
 
 					GroupSeparator {
 						title: qsTr("Background")
+						height: 50
+						width: parent.width -16
 					}
 
 					SelectionItem {
 						id: backgroundSelector
+						width: parent.width -16
 					    title: qsTr("Image")
 					    subtitle: getBackgroundSubtitle()
 						onClicked: pageStack.push(Qt.resolvedUrl("SetBackground.qml") );
@@ -360,31 +397,33 @@ WAPage {
 					Row {
 						width: parent.width
 						spacing: 16
+						visible: backgroundSelector.subtitle!=qsTr("(no background)")
 
-					Label {
-							id: sliderText
-						verticalAlignment: Text.AlignBottom
-						text: qsTr("Opacity:")
-						height: 50
-					}
-		            Slider {
-		                id: themeslider
-		                maximumValue: 10
-		                minimumValue: 0
-		                stepSize: 1
-							width: parent.width - sliderText.paintedWidth-16
-		                value: MySettings.getSetting("BackgroundOpacity", "0.5")
-		                platformStyle: mySliderStyle
-		                onValueChanged: {
-		                    myBackgroundOpacity = value
-							MySettings.setSetting("BackgroundOpacity", value)
-		                }
+						Label {
+								id: sliderText
+							verticalAlignment: Text.AlignBottom
+							text: qsTr("Opacity:")
+							height: 50
+						}
+				        Slider {
+				            id: themeslider
+				            maximumValue: 10
+				            minimumValue: 0
+				            stepSize: 1
+								width: parent.width - sliderText.paintedWidth-16
+				            value: MySettings.getSetting("BackgroundOpacity", "0.5")
+				            platformStyle: mySliderStyle
+				            onValueChanged: {
+				                myBackgroundOpacity = value
+								MySettings.setSetting("BackgroundOpacity", value)
+				            }
 
-		            }
+				        }
 					}
 
 					GroupSeparator {
 						title: qsTr("Appearance")
+						width: parent.width -16
 					}
 
 
@@ -514,29 +553,35 @@ WAPage {
 			anchors.top: parent.top
 			anchors.topMargin: 73
 			height: parent.height -73
-            anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			anchors.left: parent.left
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea3
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column3.height + 40
-				clip: true
+				width: parent.width -32
 
 				Column {
 					id: column3
 					anchors { top: parent.top; left: parent.left; right: parent.right;}
+					width: parent.width -16
+					anchors.leftMargin: 16
 					spacing: 10
 
 					GroupSeparator {
 						title: qsTr("Personal messages")
+						height: 50
+						width: parent.width -16
 					}
 					SelectionItem {
 						id: personalTone
 					    title: qsTr("Notification tone")
 					    subtitle: getRingtoneSubtitle(personalRingtone)
+						width: parent.width -16
 						onClicked: {
 							currentSelectionProfile = "PersonalRingtone"
 							currentSelectionProfileValue = personalRingtone
@@ -546,6 +591,7 @@ WAPage {
 					SwitchItem {
 						title: qsTr("Vibrate")
 						check: MySettings.getSetting("PersonalVibrate", "Yes")=="Yes"
+						width: parent.width -16
 						onCheckChanged: {
 							MySettings.setSetting("PersonalVibrate", value)
 							vibraForPersonal = value
@@ -555,12 +601,15 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Group messages")
+						height: 50
+						width: parent.width -16
 					}
 
 					SelectionItem {
 						id: groupTone
 					    title: qsTr("Notification tone")
 					    subtitle: getRingtoneSubtitle(groupRingtone)
+						width: parent.width -16
 						onClicked: {
 							currentSelectionProfile = "GroupRingtone"
 							currentSelectionProfileValue = groupRingtone
@@ -571,6 +620,7 @@ WAPage {
 						id: groupVibra
 						title: qsTr("Vibrate")
 						check: MySettings.getSetting("GroupVibrate", "Yes")=="Yes"
+						width: parent.width -16
 						onCheckChanged: {
 							MySettings.setSetting("GroupVibrate", value)
 							vibraForGroup = value
@@ -594,16 +644,17 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea4
 				anchors.fill: parent
-				contentWidth: width 
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column4.height + 20
-				anchors.centerIn: parent
-				clip: true
+				width: parent.width -32
+				anchors.leftMargin: 16
 
 				Image {
 					id: bigImage
@@ -614,12 +665,13 @@ WAPage {
 
 				Column {
 					id: column4
-					width: parent.width
-					anchors { top: parent.top; left: parent.left; right: parent.right;}
-					spacing: 24
+					anchors { top: parent.top; left: parent.left }
+					width: parent.width -32
+					spacing: 20
 
 					GroupSeparator {
 						title: qsTr("Profile picture")
+						height: 50
 					}
 
 					ProfileImage {
@@ -652,11 +704,34 @@ WAPage {
 						id: myStatus
 						//height: 140
 						clip: true
-						width: parent.width
+						width: parent.width 
                         text: Helpers.emojify2(currentStatus)
 					}
 
 
+					GroupSeparator {
+						title: qsTr("Push Name")
+						height: 36
+					}
+
+					WATextArea {
+						id: push_text
+						width: parent.width
+						wrapMode: TextEdit.Wrap
+						textFormat: Text.PlainText
+						textColor: "black"
+						text: myPushName
+					}
+
+					Button
+					{
+						platformStyle: ButtonStyle { inverted: true }
+						width: 160
+						height: 50
+						text: qsTr("Save")
+						anchors.right: push_text.right
+						onClicked: setMyPushName(push_text.text)
+					}
 
 					
 				}
@@ -678,12 +753,13 @@ WAPage {
 			height: parent.height -73
 			anchors.left: parent.left
 			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width -16
 
 			Flickable {
 				id: flickArea6
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: width -16
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column6.height + 20
 				anchors.centerIn: parent
 				clip: true

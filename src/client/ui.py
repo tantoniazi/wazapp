@@ -24,6 +24,7 @@ from QtMobility.Messaging import *
 from contacts import WAContacts
 from waxmpp import WAXMPP
 from utilities import Utilities
+from accountsmanager import AccountsManager;
 #from registration import Registration
 
 from messagestore import MessageStore
@@ -45,7 +46,7 @@ class WAUI(QDeclarativeView):
 	phoneContactsReady = QtCore.Signal(list)
 
 	
-	def __init__(self, accountJid):
+	def __init__(self, accountJid, accountPushName):
 		
 		_d = UIDebug();
 		self._d = _d.d;
@@ -71,10 +72,12 @@ class WAUI(QDeclarativeView):
 
 		self.filelist = []
 		self.accountJid = accountJid;
+		self.accountPushName = accountPushName;
 
 		self.rootContext().setContextProperty("waversion", Utilities.waversion);
 		self.rootContext().setContextProperty("WAConstants", WAConstants.getAllProperties());
 		self.rootContext().setContextProperty("myAccount", accountJid);
+		self.rootContext().setContextProperty("myPushName", accountPushName);
 		
 		currProfilePicture = WAConstants.CACHE_PROFILE + "/" + accountJid.split("@")[0] + ".jpg"
 		self.rootContext().setContextProperty("currentPicture", currProfilePicture if os.path.exists(currProfilePicture) else "")
@@ -122,6 +125,7 @@ class WAUI(QDeclarativeView):
 		self.rootObject().deleteRecording.connect(self.deleteRecording)
 		self.rootObject().breathe.connect(self.onProcessEventsRequested)
 		self.rootObject().browseFiles.connect(self.browseFiles)
+		self.rootObject().setMyPushName.connect(self.setMyPushName)
 
 		self.rootObject().openContactPicker.connect(self.openContactPicker)
 
@@ -191,7 +195,7 @@ class WAUI(QDeclarativeView):
 			self.idleTimeout.cancel()
 		
 		self.whatsapp.eventHandler.onFocus();
-		self.whatsapp.eventHandler.onAvailable();
+		self.whatsapp.eventHandler.onAvailable(self.accountPushName);
 	
 	def closeEvent(self,e):
 		self._d("HIDING")
@@ -573,6 +577,12 @@ class WAUI(QDeclarativeView):
 									"filetype":"folder", "name":"a"+curFile.split('/')[-1]})
 
 		self.rootObject().pushBrowserFiles( sorted(myfiles, key=lambda k: k['name']), folder);
+
+
+	def setMyPushName(self, pushname):
+		AccountsManager.setPushName(pushname);
+		self.rootContext().setContextProperty("myPushName", pushname);
+		self.whatsapp.eventHandler.setMyPushName.emit(pushname)
 
 
 
