@@ -43,6 +43,7 @@ SelectionDialog {
      }
      
      function loadPresets() {
+	presetsModel.clear()
 	var presets = MySettings.getSetting("StatusPresets", "")
 	if (presets.length == 0)
 	{
