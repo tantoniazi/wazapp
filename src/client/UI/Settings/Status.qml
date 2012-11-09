@@ -131,7 +131,7 @@ Item {
 					    requested = true;
 					    tempStatus = res.trim();
 					    var cleanedmessage = Helpers.getCode(status_text.text);
-					    addRecentPreset(Helpers.emojify2(tempStatus))
+					    statusPresets.addRecentPreset(Helpers.emojify2(tempStatus))
 					    changeStatus(cleanedmessage);
 					    send_button.text = qsTr("Updating") + "..."
 					    send_button.enabled = false
