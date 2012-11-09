@@ -110,7 +110,7 @@ Item {
 				anchors.right: send_button.left
 				anchors.rightMargin: 20
 				anchors.verticalCenter: send_button.verticalCenter
-				onClicked: { statusPresets.openDialog(status_text); }
+				onClicked: { statusPresets.openDialog(); }
 			}
 		
 			Button

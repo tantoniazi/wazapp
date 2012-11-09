@@ -30,55 +30,93 @@ SelectionDialog {
      selectedIndex: -1
 
      model: ListModel {
-		id:presetsModel
+	  id:presetsModel
      }
      
      property string magic: "[WZPPRST]"
      
-     function openDialog(textarea) {
+     function openDialog() {
 	loadPresets()
 	singleSelectionDialog.open()
-	if (singleSelectionDialog.selectedIndex > -1)
-	    textarea.text = singleSelectionDialog.model.get(singleSelectionDialog.selectedIndex).name
      }
+     
+     //call not implemented
+     function removePreset(preset) {
+	consoleDebug(preset)
+	var presetsList = []
+	var presets = MySettings.getSetting("StatusPresets", "")
+
+	if (presets!="")
+		presetsList = presets.split(magic)
+
+	for (var i=0; i<presetsList.length; ++i) {
+		consoleDebug(presetsList[i])
+		if (presetsList[i]==preset) {
+			presetsList.splice(i,1)
+			break;
+		}
+	}
+
+	MySettings.setSetting("StatusPresets", presetsList.join(magic))
+     }
+
+    function addRecentPreset(preset) {
+	consoleDebug(preset)
+	var presetsList = []
+	var presets = MySettings.getSetting("StatusPresets", "")
+
+	if (presets!="")
+		presetsList = presets.split(magic)
+
+	for (var i=0; i<presetsList.length; ++i) {
+		consoleDebug(presetsList[i])
+		if (presetsList[i]==preset) {
+			presetsList.splice(i,1)
+			break;
+		}
+	}
+
+	presetsList.push(preset)
+	MySettings.setSetting("StatusPresets", presetsList.join(magic))
+    }
      
      function loadPresets() {
 	presetsModel.clear()
 	var presets = MySettings.getSetting("StatusPresets", "")
 	if (presets.length == 0)
 	{
-	    presets ="Available"
+	    presets =qsTr("Available")
 	    presets+=magic
-	    presets+="Busy"
+	    presets+=qsTr("Busy")
 	    presets+=magic
-	    presets+="At school"
+	    presets+=qsTr("At school")
 	    presets+=magic
-	    presets+="At the movies"
+	    presets+=qsTr("At the movies")
 	    presets+=magic
-	    presets+="At work"
+	    presets+=qsTr("At work")
 	    presets+=magic
-	    presets+="Battery about to die"
+	    presets+=qsTr("Battery about to die")
 	    presets+=magic
-	    presets+="Can't talk, WhatsApp only"
+	    presets+=qsTr("Can't talk, WhatsApp only")
 	    presets+=magic
-	    presets+="In a meeting"
+	    presets+=qsTr("In a meeting")
 	    presets+=magic
-	    presets+="At the gym"
+	    presets+=qsTr("At the gym")
 	    presets+=magic
-	    presets+="Sleeping"
+	    presets+=qsTr("Sleeping")
 	    presets+=magic
-	    presets+="Urgent calls only"
+	    presets+=qsTr("Urgent calls only")
 	    presets+=magic
-	    presets+="I love Wazapp"
+	    presets+=qsTr("I love Wazapp")
 	    MySettings.setSetting("StatusPresets", presets)
 	}
 	var presetsList = presets.split(magic)
 	while (presetsList.length>0)
-	    presetsModel.append({"name": qsTr(presetsList.pop())});
+	    presetsModel.append({"name": presetsList.pop()});
      }
 
      onSelectedIndexChanged: {
-	status_text.text = singleSelectionDialog.model.get(singleSelectionDialog.selectedIndex).name	
+	status_text.text = singleSelectionDialog.model.get(singleSelectionDialog.selectedIndex).name
      }
 
 }

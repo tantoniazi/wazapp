@@ -240,25 +240,6 @@ WAStackWindow {
     ListModel {
         id: browserModel
     }
-
-    function addRecentPreset(preset) {
-	var magic = "[WZPPRST]"
-	var presetsList = []
-	var presets = MySettings.getSetting("StatusPresets", "")
-
-	if (presets!="")
-		presetsList = presets.split(magic)
-
-	for (var i=0; i<presetsList.length; ++i) {
-		if (presetsList[i]==preset) {
-			presetsList.splice(i,1)
-			break;
-		}
-	}
-
-	presetsList.push(preset)
-	MySettings.setSetting("StatusPresets", presetsList.join(magic))
-    }
     
     function pushBrowserFiles(files, folder) {
         browserModel.clear()
