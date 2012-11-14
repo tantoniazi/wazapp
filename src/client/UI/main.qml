@@ -846,6 +846,7 @@ WAStackWindow {
             contact.setConversation(conversation);
 
         }
+		if (conversation.title=="") conversation.rebind()
 
     }
 
@@ -863,6 +864,9 @@ WAStackWindow {
 
         conversation.unreadCount=messages.conversation.unreadCount?messages.conversation.unreadCount:0;
         conversation.remainingMessagesCount = messages.conversation.remainingMessagesCount;
+
+		// gotGroups() makes conversationReady() get dumb sometimes, so I'm rebinding conve here too
+		if (conversation.title=="") conversation.rebind()
 
         consoleDebug("Adding messages to conv")
         for (var i =0; i< messages.data.length; i++)
