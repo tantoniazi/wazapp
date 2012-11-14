@@ -954,10 +954,10 @@ WAPage {
 			}
 		}
 
-		Button
+		MyButton
 		{
 		    id:send_button
-			platformStyle: ButtonStyle { inverted: true }
+			colorinverted: true
 		    width:160
 		    height:50
 			text: qsTr("Send")
@@ -1027,7 +1027,7 @@ WAPage {
             width:conv_items.width
             //height:visible?loadMoreButton.height+20:0;
 			height: Math.max(hasMore?60:0, conv_panel.height -conv_items.contentHeight -myTextArea.height)
-            Button{
+            MyButton{
 				visible: hasMore
 				height: 44
                 id:loadMoreButton

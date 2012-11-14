@@ -120,6 +120,12 @@ WAPage {
         }
     }
 
+    TextFieldStyle {
+        id: myTextFieldStyle
+        backgroundSelected: "image://theme/color3-meegotouch-textedit-background-selected"
+        selectionColor: "#27a01b"
+    }
+
     Component{
         id:myDelegate
 
@@ -229,6 +235,7 @@ WAPage {
 			    id: searchInput
 			    inputMethodHints: Qt.ImhNoPredictiveText
 			    placeholderText: qsTr("Quick search")
+				platformStyle: myTextFieldStyle
 			    anchors.top: srect.top
 			    anchors.left: srect.left
 			    width: parent.width
@@ -343,7 +350,7 @@ WAPage {
 		MenuLayout {
 			WAMenuItem {
 				height: 80
-                text: blockedContacts.indexOf(contactMenu.selectedJid)==-1? qsTr("Ignore messages") : qsTr("Allow messages")
+                text: blockedContacts.indexOf(contactMenu.selectedJid)==-1? qsTr("Block contact") : qsTr("Unblock contact")
 				onClicked: { 
                     if (blockedContacts.indexOf(contactMenu.selectedJid)==-1)
                         blockContact(contactMenu.selectedJid)

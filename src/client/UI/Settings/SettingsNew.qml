@@ -147,36 +147,17 @@ WAPage {
 
     }
 
-	TextFieldStyle {
-        id: myTextFieldStyle
-        backgroundSelected: ""
-        background: ""
-		backgroundDisabled: ""
-		backgroundError: ""
-    }
-
-    ButtonStyle {
-        id: myButtonStyleLeft
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-horizontal-left"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-horizontal-left"
-    }
-    ButtonStyle {
-        id: myButtonStyleCenter
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-horizontal-center"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-horizontal-center"
-    }
-    ButtonStyle {
-        id: myButtonStyleRight
-        pressedBackground: "image://theme/color3-meegotouch-button-background-pressed-horizontal-right"
-        checkedBackground: "image://theme/color3-meegotouch-button-background-selected-horizontal-right"
-    }
-
     SliderStyle {
         id: mySliderStyle
         grooveItemBackground: "image://theme/color3-meegotouch-slider-elapsed-background-horizontal"
         grooveItemElapsedBackground: "image://theme/color3-meegotouch-slider-elapsed-background-horizontal"
     }
 
+    TextFieldStyle {
+        id: myTextFieldStyle
+        backgroundSelected: "image://theme/color3-meegotouch-textedit-background-selected"
+        selectionColor: "#27a01b"
+    }
 
     QueryDialog {
         property string phone_number;
@@ -209,27 +190,32 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea1
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column.height + 40
-				clip: true
 
 				Column {
 					id: column
 					anchors { top: parent.top; left: parent.left; right: parent.right; }
+					width: parent.width -32
+					anchors.leftMargin: 16
 					spacing: 10
 
-
 					GroupSeparator {
-						title: qsTr("Chats")
+						title: qsTr("Contacts")
+						height: 50
+						width: parent.width -16
 					}
+
 					SwitchItem {
 						title: qsTr("Enter key sends the message")
+						width: parent.width -16
 						check: sendWithEnterKey
 						onCheckChanged: {
 							MySettings.setSetting("SendWithEnterKey", value)
@@ -239,9 +225,13 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Media sending")
+						height: 50
+						width: parent.width -16
 					}
+
 					SwitchItem {
 						title: qsTr("Resize images before sending")
+						width: parent.width -16
 						check: resizeImages
 						onCheckChanged: {
 							MySettings.setSetting("ResizeImages", value)
@@ -252,9 +242,13 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Language")
+						height: 50
+						width: parent.width -16
 					}
+
 					SelectionItemTr {
 					    title: qsTr("Current language")
+						width: parent.width -16
 					    model: ListModel {
 							ListElement { name: "Albanian"; value: "sq" }
 							ListElement { name: "Arabic"; value: "ar" }
@@ -331,27 +325,32 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea2
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column2.height + 40
-				clip: true
 
 				Column {
 					id: column2
 					anchors { top: parent.top; left: parent.left; right: parent.right;}
+					width: parent.width -32
+					anchors.leftMargin: 16
 					spacing: 10
 
 					GroupSeparator {
 						title: qsTr("Background")
+						height: 50
+						width: parent.width -16
 					}
 
 					SelectionItem {
 						id: backgroundSelector
+						width: parent.width -16
 					    title: qsTr("Image")
 					    subtitle: getBackgroundSubtitle()
 						onClicked: pageStack.push(Qt.resolvedUrl("SetBackground.qml") );
@@ -360,32 +359,33 @@ WAPage {
 					Row {
 						width: parent.width
 						spacing: 16
-						visible: backgroundSelector.subtitle == qsTr("(no background)") ? false : true
+						visible: backgroundSelector.subtitle!=qsTr("(no background)")
 
-					Label {
-							id: sliderText
-						verticalAlignment: Text.AlignBottom
-						text: qsTr("Opacity:")
-						height: 50
-					}
-		            Slider {
-		                id: themeslider
-		                maximumValue: 10
-		                minimumValue: 0
-		                stepSize: 1
-							width: parent.width - sliderText.paintedWidth-16
-		                value: MySettings.getSetting("BackgroundOpacity", "0.5")
-		                platformStyle: mySliderStyle
-		                onValueChanged: {
-		                    myBackgroundOpacity = value
-							MySettings.setSetting("BackgroundOpacity", value)
-		                }
+						Label {
+								id: sliderText
+							verticalAlignment: Text.AlignBottom
+							text: qsTr("Opacity:")
+							height: 50
+						}
+				        Slider {
+				            id: themeslider
+				            maximumValue: 10
+				            minimumValue: 0
+				            stepSize: 1
+								width: parent.width - sliderText.paintedWidth-16
+				            value: MySettings.getSetting("BackgroundOpacity", "0.5")
+				            platformStyle: mySliderStyle
+				            onValueChanged: {
+				                myBackgroundOpacity = value
+								MySettings.setSetting("BackgroundOpacity", value)
+				            }
 
-		            }
+				        }
 					}
 
 					GroupSeparator {
 						title: qsTr("Appearance")
+						width: parent.width -16
 					}
 
 
@@ -395,28 +395,28 @@ WAPage {
 						height: 30
 					}
 					ButtonRow {
-					    Button {
+					    MyButton {
 					        text: qsTr("Automatic")
 					        checked: orientation==0
-							platformStyle: myButtonStyleLeft
+							style: "left"
 					        onClicked: {
 								MySettings.setSetting("Orientation", "0")
 					            orientation=0
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Portrait")
 					        checked: orientation==1
-							platformStyle: myButtonStyleCenter
+							style: "center"
 					        onClicked: {
 								MySettings.setSetting("Orientation", "1")
 					            orientation=1
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Landscape")
 					        checked: orientation==2
-							platformStyle: myButtonStyleRight
+							style: "right"
 					        onClicked: {
 								MySettings.setSetting("Orientation", "2")
 					            orientation=2
@@ -431,19 +431,19 @@ WAPage {
 					}
 					ButtonRow {
 					    id: br1
-					    Button {
+					    MyButton {
 					        text: qsTr("White")
 					        checked: theme.inverted ? false : true
-					        platformStyle: myButtonStyleLeft
+					        style: "left"
 					        onClicked: {
 								MySettings.setSetting("ThemeColor", "White")
 					            theme.inverted = false
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Black")
 					        checked: theme.inverted ? true : false
-					        platformStyle: myButtonStyleRight
+					        style: "right"
 					        onClicked: {
 								MySettings.setSetting("ThemeColor", "Black")
 					            theme.inverted = true
@@ -459,37 +459,37 @@ WAPage {
 					ButtonRow {
 					    id: br2
 						height: 70
-					    Button {
+					    MyButton {
 					        text: qsTr("Cyan")
 					        checked: mainBubbleColor==1
-							platformStyle: myButtonStyleLeft
+							style: "left"
 					        onClicked: {
 								MySettings.setSetting("BubbleColor", "1")
 					            mainBubbleColor=1
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Green")
 					        checked: mainBubbleColor==4
-							platformStyle: myButtonStyleCenter
+							style: "center"
 					        onClicked: {
 								MySettings.setSetting("BubbleColor", "4")
 					            mainBubbleColor=4
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Pink")
 					        checked: mainBubbleColor==3
-							platformStyle: myButtonStyleCenter
+							style: "center"
 					        onClicked: {
 								MySettings.setSetting("BubbleColor", "3")
 					            mainBubbleColor=3
 					        }
 					    }
-					    Button {
+					    MyButton {
 					        text: qsTr("Orange")
 					        checked: mainBubbleColor==2
-							platformStyle: myButtonStyleRight
+							style: "right"
 					        onClicked: {
 								MySettings.setSetting("BubbleColor", "2")
 					            mainBubbleColor=2
@@ -515,29 +515,35 @@ WAPage {
 			anchors.top: parent.top
 			anchors.topMargin: 73
 			height: parent.height -73
-            anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			anchors.left: parent.left
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea3
 				anchors.fill: parent
-				contentWidth: width
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column3.height + 40
-				clip: true
+				width: parent.width -32
 
 				Column {
 					id: column3
 					anchors { top: parent.top; left: parent.left; right: parent.right;}
+					width: parent.width -16
+					anchors.leftMargin: 16
 					spacing: 10
 
 					GroupSeparator {
 						title: qsTr("Personal messages")
+						height: 50
+						width: parent.width -16
 					}
 					SelectionItem {
 						id: personalTone
 					    title: qsTr("Notification tone")
 					    subtitle: getRingtoneSubtitle(personalRingtone)
+						width: parent.width -16
 						onClicked: {
 							currentSelectionProfile = "PersonalRingtone"
 							currentSelectionProfileValue = personalRingtone
@@ -547,6 +553,7 @@ WAPage {
 					SwitchItem {
 						title: qsTr("Vibrate")
 						check: MySettings.getSetting("PersonalVibrate", "Yes")=="Yes"
+						width: parent.width -16
 						onCheckChanged: {
 							MySettings.setSetting("PersonalVibrate", value)
 							vibraForPersonal = value
@@ -556,12 +563,15 @@ WAPage {
 
 					GroupSeparator {
 						title: qsTr("Group messages")
+						height: 50
+						width: parent.width -16
 					}
 
 					SelectionItem {
 						id: groupTone
 					    title: qsTr("Notification tone")
 					    subtitle: getRingtoneSubtitle(groupRingtone)
+						width: parent.width -16
 						onClicked: {
 							currentSelectionProfile = "GroupRingtone"
 							currentSelectionProfileValue = groupRingtone
@@ -572,6 +582,7 @@ WAPage {
 						id: groupVibra
 						title: qsTr("Vibrate")
 						check: MySettings.getSetting("GroupVibrate", "Yes")=="Yes"
+						width: parent.width -16
 						onCheckChanged: {
 							MySettings.setSetting("GroupVibrate", value)
 							vibraForGroup = value
@@ -595,16 +606,17 @@ WAPage {
 			anchors.topMargin: 73
 			height: parent.height -73
 			anchors.left: parent.left
-			anchors.leftMargin: 16
-			width: parent.width -32
+			width: parent.width
+			clip: true
 
 			Flickable {
 				id: flickArea4
 				anchors.fill: parent
-				contentWidth: width 
+				contentWidth: parent.width
+				flickableDirection: Flickable.VerticalFlick
 				contentHeight: column4.height + 20
-				anchors.centerIn: parent
-				clip: true
+				width: parent.width -32
+				anchors.leftMargin: 16
 
 				Image {
 					id: bigImage
@@ -615,12 +627,13 @@ WAPage {
 
 				Column {
 					id: column4
-					width: parent.width
-					anchors { top: parent.top; left: parent.left; right: parent.right;}
-					spacing: 24
+					anchors { top: parent.top; left: parent.left }
+					width: parent.width -32
+					spacing: 20
 
 					GroupSeparator {
 						title: qsTr("Profile picture")
+						height: 50
 					}
 
 					ProfileImage {
@@ -665,6 +678,7 @@ WAPage {
 					WATextArea {
 						id: push_text
                         property string pushNameCached:typeof(myPushName) != "undefined"?myPushName:""
+						platformStyle: myTextFieldStyle
 						width: parent.width
 						wrapMode: TextEdit.Wrap
 						textFormat: Text.PlainText
@@ -672,9 +686,9 @@ WAPage {
                         text: typeof(myPushName) != "undefined"?myPushName:""
 					}
 
-					Button
+					MyButton
 					{
-						platformStyle: ButtonStyle { inverted: true }
+						colorinverted: true
 						width: 160
 						height: 50
                         text: qsTr("Save")

@@ -36,6 +36,12 @@ Item {
     property bool requested:false
 
 
+    TextFieldStyle {
+        id: myTextFieldStyle
+        backgroundSelected: "image://theme/color3-meegotouch-textedit-background-selected"
+        selectionColor: "#27a01b"
+    }
+
 	Connections {
 		target: appWindow
 
@@ -66,6 +72,7 @@ Item {
 
         WATextArea {
 		    id: status_text
+			platformStyle: myTextFieldStyle
 		    width:parent.width
 			wrapMode: TextEdit.Wrap
 			textFormat: Text.RichText
@@ -100,10 +107,10 @@ Item {
 			}
 
 		
-			Button
+			MyButton
 			{
 				id:send_button
-				platformStyle: ButtonStyle { inverted: true }
+				colorinverted: true
 				width:160
 				height:50
 				text: qsTr("Done")
