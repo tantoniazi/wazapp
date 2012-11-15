@@ -395,7 +395,7 @@ WAPage {
 						height: 30
 					}
 					ButtonRow {
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Automatic")
 					        checked: orientation==0
 							style: "left"
@@ -404,7 +404,7 @@ WAPage {
 					            orientation=0
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Portrait")
 					        checked: orientation==1
 							style: "center"
@@ -413,7 +413,7 @@ WAPage {
 					            orientation=1
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Landscape")
 					        checked: orientation==2
 							style: "right"
@@ -431,7 +431,7 @@ WAPage {
 					}
 					ButtonRow {
 					    id: br1
-					    MyButton {
+					    WAButton {
 					        text: qsTr("White")
 					        checked: theme.inverted ? false : true
 					        style: "left"
@@ -440,7 +440,7 @@ WAPage {
 					            theme.inverted = false
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Black")
 					        checked: theme.inverted ? true : false
 					        style: "right"
@@ -459,7 +459,7 @@ WAPage {
 					ButtonRow {
 					    id: br2
 						height: 70
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Cyan")
 					        checked: mainBubbleColor==1
 							style: "left"
@@ -468,7 +468,7 @@ WAPage {
 					            mainBubbleColor=1
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Green")
 					        checked: mainBubbleColor==4
 							style: "center"
@@ -477,7 +477,7 @@ WAPage {
 					            mainBubbleColor=4
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Pink")
 					        checked: mainBubbleColor==3
 							style: "center"
@@ -486,7 +486,7 @@ WAPage {
 					            mainBubbleColor=3
 					        }
 					    }
-					    MyButton {
+					    WAButton {
 					        text: qsTr("Orange")
 					        checked: mainBubbleColor==2
 							style: "right"
@@ -686,7 +686,7 @@ WAPage {
                         text: typeof(myPushName) != "undefined"?myPushName:""
 					}
 
-					MyButton
+					WAButton
 					{
 						colorinverted: true
 						width: 160

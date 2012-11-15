@@ -107,7 +107,7 @@ Item {
 			}
 
 		
-			MyButton
+			WAButton
 			{
 				id:send_button
 				colorinverted: true

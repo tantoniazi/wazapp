@@ -954,7 +954,7 @@ WAPage {
 			}
 		}
 
-		MyButton
+		WAButton
 		{
 		    id:send_button
 			colorinverted: true
@@ -1027,7 +1027,7 @@ WAPage {
             width:conv_items.width
             //height:visible?loadMoreButton.height+20:0;
 			height: Math.max(hasMore?60:0, conv_panel.height -conv_items.contentHeight -myTextArea.height)
-            MyButton{
+            WAButton{
 				visible: hasMore
 				height: 44
                 id:loadMoreButton
