@@ -25,6 +25,7 @@ from wadebug import WADebug
 import os
 import mimetypes
 import shutil, sys
+import time
 
 from Yowsup.Media.downloader import MediaDownloader
 from Yowsup.Media.uploader import MediaUploader
