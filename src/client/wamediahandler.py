@@ -109,16 +109,16 @@ class WAMediaHandler(QObject):
 	
 	def getFilenamePrefix(self, mediatype_id):
 		if mediatype_id == WAConstants.MEDIA_TYPE_IMAGE:
-			return "owhatsapp_image"
+			return "owhatsapp_image_%Y%m%d_%H-%M"
 		
 		if mediatype_id == WAConstants.MEDIA_TYPE_AUDIO:
-			return "owhatsapp_audio"
+			return "owhatsapp_audio_%Y%m%d_%H-%M"
 		
 		if mediatype_id == WAConstants.MEDIA_TYPE_VIDEO:
-			return "owhatsapp_video"
+			return "owhatsapp_video_%Y%m%d_%H-%M"
 
 		if mediatype_id == WAConstants.MEDIA_TYPE_VCARD:
-			return "owhatsapp_vcard"
+			return "owhatsapp_vcard_%Y%m%d_%H-%M"
 			
 		return ""
 	
