@@ -27,7 +27,7 @@ Reviver o WazApp (cliente não-oficial de WhatsApp para Nokia N9/Harmattan) como
 ### Fase 0 — Infra e orquestração (em andamento)
 - [x] Trazer todos os PRs (105) e forks (156 repos, 441 branches) para este repo (`pr/*`, `fork/*`)
 - [x] ROADMAP + issues públicas versionadas
-- [ ] CI multi-target: Linux/Windows/macOS × x86_64/ARM64
+- [x] CI multi-target: Linux/Windows/macOS × x86_64/ARM64 (run 39842852053: 6/6 verde)
 - [ ] Scaffold Rust + Tauri 2 compilando
 
 ### Fase 1 — Desktop minimal viável (WazApp Desktop)
