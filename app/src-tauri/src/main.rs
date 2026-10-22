@@ -3,8 +3,8 @@
 use tauri::{
     WebviewUrl, WebviewWindowBuilder,
     menu::{Menu, MenuItem},
-    tray::TrayIconBuilder,
     Manager,
+    tray::TrayIconBuilder,
 };
 
 fn main() {
@@ -25,7 +25,7 @@ fn main() {
             let abrir = MenuItem::with_id(app, "open", "Abrir WazApp", true, None::<&str>)?;
             let sair = MenuItem::with_id(app, "quit", "Sair", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&abrir, &sair])?;
-            tray::TrayIconBuilder::with_id("main-tray")
+            TrayIconBuilder::with_id("main-tray")
                 .menu(&menu)
                 .show_menu_on_left_click(true)
                 .on_menu_event(|app, ev| match ev.id.as_ref() {
