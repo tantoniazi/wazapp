@@ -1,0 +1,17 @@
+[package]
+name = "wazapp"
+version = "0.1.0"
+description = "WazApp — WhatsApp desktop, reviver do wazapp para Harmattan/Maemo (Rust + Tauri 2)"
+edition = "2021"
+license = "GPL-2.0-or-later"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1

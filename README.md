@@ -1,5 +1,13 @@
-Wazapp
+# Wazapp
 ======
+
+> **🚀 Modernização em andamento (2026):** roadmap público em [`ROADMAP.md`](ROADMAP.md) e issues em [`/issues`](issues).
+> Repos foi enriquecido com todos os PRs de `tgalal/wazapp` (`pr/*`) e branches de todos os 156 forks (`fork/*`).
+> Direções: app desktop moderno (Rust + Tauri 2: Linux/Windows/macOS, x86_64+ARM64) com backend "linked device";
+> app nativo Harmattan (N9) e Maemo (N900) mantidos em QML, consumindo o núcleo Rust compartilhado (`wazapp-core`).
+>
+> **WazApp (histórico original):** IM application for N9 that allows you to chat with
+> your Whatsapp buddies
 
 Wazapp is an IM application for N9 that allows you to chat with your Whatsapp buddies
 
