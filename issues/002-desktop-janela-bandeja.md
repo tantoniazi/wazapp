@@ -11,3 +11,5 @@ Comportamento de app desktop real aprendido com o ZapZap.
 - [ ] Um clique no ícone restaura a janela
 - [ ] Perfis de conta: cada perfil = diretório de dados isolado do WebView
 - [ ] Passagem de perfil por CLI: `wazapp --profile <nome>`
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/2

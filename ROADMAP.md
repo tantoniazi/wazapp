@@ -31,25 +31,25 @@ Reviver o WazApp (cliente não-oficial de WhatsApp para Nokia N9/Harmattan) como
 - [ ] Scaffold Rust + Tauri 2 compilando
 
 ### Fase 1 — Desktop minimal viável (WazApp Desktop)
-- [ ] Janela WebView carregando `web.whatsapp.com` (QR login) — #001
-- [ ] Ícone/UA e tratamentos de janela (minimizar p/ bandeja, salvar sessão por perfil) — #002
-- [ ] Notificações nativas do desktop + badge — #003
+- [ ] Janela WebView carregando `web.whatsapp.com` (QR login) — GH #1
+- [ ] Ícone/UA e tratamentos de janela (minimizar p/ bandeja, salvar sessão por perfil) — GH #2
+- [ ] Notificações nativas do desktop + badge — GH #3
 - [ ] Empacotamento: Flatpak/AppImage/DEB (Linux), EXE + MSI (Windows), DMG (macOS) — #004
 - [ ] Tema claro/escuro, contas múltiplas com sessões isoladas — #005
 
 ### Fase 2 — Núcleo Rust compartilhado
-- [ ] Crate `wazapp-core`: sessão WhatsApp "linked device" (QR → E2E → recv/send texto) — #010
-- [ ] Testes de protocolo e fixtures; sem UI — #011
-- [ ] FFI (C ABI) para consumo pelo Qt4/QML do Harmattan — #012
+- [ ] Crate `wazapp-core`: sessão WhatsApp "linked device" (QR → E2E → recv/send texto) — GH #4
+- [ ] Testes de protocolo e fixtures; sem UI — (detalhe no GH #4)
+- [ ] FFI (C ABI) para consumo pelo Qt4/QML do Harmattan — GH #5
 
 ### Fase 3 — Harmattan (Nokia N9) nativo
-- [ ] QML atual consumindo `wazapp-core` via FFI no lugar do Yowsup — #020
-- [ ] Envio/recebimento de texto; mídia como follow-up — #021
-- [ ] Empacotamento `.deb` Harmattan com cross-compile armv7 — #022
+- [ ] QML atual consumindo `wazapp-core` via FFI no lugar do Yowsup — GH #6
+- [ ] Envio/recebimento de texto; mídia como follow-up (detalhe no GH #6)
+- [ ] Empacotamento `.deb` Harmattan com cross-compile armv7 (detalhe no GH #6)
 
 ### Fase 4 — Maemo (N900)
-- [ ] Porta do cliente QML para Maemo 5 (Qt 4.6, Fremantle) — #030
-- [ ] Validação de recursos: 256 MB RAM, TLS moderno no núcleo Rust (rustls) — #031
+- [ ] Porta do cliente QML para Maemo 5 (Qt 4.6, Fremantle) — GH #7
+- [ ] Validação de recursos: 256 MB RAM, TLS moderno no núcleo Rust (rustls) (detalhe no GH #7)
 
 ## Riscos conhecidos
 

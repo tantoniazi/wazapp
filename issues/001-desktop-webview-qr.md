@@ -12,3 +12,5 @@ usada como "linked device".
 - [ ] WhatsApp Web renderiza e o QR aparece
 - [ ] Sessão persiste entre reinícios (WebView data dir em perfil isolado)
 - [ ] `cargo build` roda no CI para Linux x86_64
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/1

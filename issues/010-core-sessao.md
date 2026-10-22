@@ -14,3 +14,5 @@ Signal, e envio/recebimento de texto. Referências: arquitetura documental do Un
 - [ ] Envia mensagem de texto para o seu próprio número (self-chat)
 - [ ] Testes de unidade para parser de binário XML e protobuf dos envelopes
 - [ ] TLS via `rustls` (portátil também para ARMv7/glibc antigo)
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/4

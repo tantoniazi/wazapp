@@ -10,3 +10,5 @@ Notificações nativas do sistema operacional quando chega mensagem.
 - [ ] Windows/macOS: notificação nativa do SO
 - [ ] Badge de não lidas no ícone da bandeja (onde o SO suportar)
 - [ ] Detectado por injeção JS no WebView (contador de envelopes) → evento Tauri → notificação
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/3

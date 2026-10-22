@@ -12,3 +12,5 @@ Yowsup pelo `wazapp-core` via FFI.
 - [ ] Notificação nativa Harmattan para mensagens novas
 - [ ] Sessão persiste no device entre reconexões
 - [ ] Desempenho: < 60 MB RAM para o processo do núcleo
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/6

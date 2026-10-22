@@ -11,3 +11,5 @@ substituindo o Yowsup morto.
 - [ ] API C chave: `wz_start`, `wz_stop`, `wz_send`, callback `wz_event`
 - [ ] Loop de eventos para o thread principal QML (sinal via QSocketNotifier)
 - [ ] `cargo build --target armv7-unknown-linux-musl` verde no CI
+
+> Publicado como GitHub Issue: https://github.com/tantoniazi/wazapp/issues/5
