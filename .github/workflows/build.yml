@@ -61,10 +61,15 @@ jobs:
       - name: Sysroot arm64 (multiarch)
         run: |
           sudo dpkg --add-architecture arm64
-          # pin do host para amd64 (o runner usa .sources nova, formato deb822)
-          sudo sed -i 's|^Types: deb$|Types: deb\nArchitectures: amd64|' /etc/apt/sources.list.d/*.sources || true
-          cat <<'EOF' | sudo tee /etc/apt/sources.list.d/arm64-ports.sources
+          # pin do host para amd64: adiciona "Architectures: amd64" após cada bloco
+          # "Types:" dos .sources deb822 (runner pode ter blocos deb e deb-src)
+          for f in /etc/apt/sources.list.d/*.sources; do
+            [ -f "$f" ] && awk '/^Types:/{print; print "Architectures: amd64"; next} {print}' "$f" | sudo tee "$f.tmp" >/dev/null && sudo mv "$f.tmp" "$f"
+          done
+          # arquivo arm64-only (ports.ubuntu.com tem só arm64)
+          sudo tee /etc/apt/sources.list.d/arm64-ports.sources >/dev/null <<'EOF'
           Types: deb
+          Architectures: arm64
           URIs: http://ports.ubuntu.com/ubuntu-ports/
           Suites: noble noble-updates noble-backports
           Components: main restricted universe multiverse
